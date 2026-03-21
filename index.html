@@ -1457,8 +1457,15 @@ function renderView(view) {
     bc.textContent = 'MCQ Practice';
     // Add filter tabs
     const chapters_mcq = [...new Set(mcqData.map(m => m.chapter))];
-    tabBar.innerHTML = `<button class="tab-btn active" onclick="filterMcq('all', this)">All (${mcqData.length})</button>` +
-      chapters_mcq.map(c => `<button class="tab-btn" onclick="filterMcq('${c}', this)">${c.split('—')[0].trim()}</button>`).join('');
+    tabBar.innerHTML =
+      `<button class="tab-btn active" onclick="filterMcq('all', this)">All (${mcqData.length})</button>` +
+      chapters_mcq.map(c => `<button class="tab-btn" onclick="filterMcq('${c}', this)">${c.split('—')[0].trim()}</button>`).join('') +
+      `<span style="display:inline-block;width:1px;background:var(--border);margin:0 6px;height:24px;vertical-align:middle;"></span>` +
+      `<button class="tab-btn" onclick="filterMcqYear('Apr/May 2023', this)" style="border-color:rgba(52,211,153,0.3);color:var(--green);">📅 Apr/May 2023</button>` +
+      `<button class="tab-btn" onclick="filterMcqYear('Jan/Feb 2024', this)" style="border-color:rgba(56,189,248,0.3);color:var(--accent3);">📅 Jan/Feb 2024</button>` +
+      `<button class="tab-btn" onclick="filterMcqYear('Jul/Aug 2024', this)" style="border-color:rgba(251,146,60,0.3);color:var(--orange);">📅 Jul/Aug 2024</button>` +
+      `<button class="tab-btn" onclick="filterMcqYear('Jun/Jul 2024', this)" style="border-color:rgba(251,146,60,0.3);color:var(--orange);">📅 Jun/Jul 2024</button>` +
+      `<button class="tab-btn" onclick="filterMcqYear('Dec 2024', this)" style="border-color:rgba(167,139,250,0.3);color:var(--accent2);">📅 Dec 2024</button>`;
     area.innerHTML = renderMcq('all');
   } else if(view === 'search') {
     bc.textContent = 'Search';
@@ -1497,6 +1504,59 @@ function switchTab(tab, el, view) {
   area.innerHTML = heroHtml + (tab === 'theory' ? renderTheory(view) : tab === 'important' ? renderImportant(view) : renderConcepts(view));
 }
 
+function filterMcqYear(year, el) {
+  document.querySelectorAll('#tab-bar .tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const yearFiltered = mcqData.filter(m => (m.year || 'Unknown') === year);
+  // Temporarily override to show only this year, grouped by chapter
+  const container = document.getElementById('mcq-list');
+  if(container) {
+    // Build chapter-grouped view for a single year
+    const chapters = [...new Set(yearFiltered.map(m => m.chapter))];
+    let html = `<div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:13px;color:var(--text2);">
+      Showing <strong style="color:var(--text)">${yearFiltered.length} questions</strong> from <strong style="color:var(--text)">${year}</strong> exam paper
+    </div>`;
+    chapters.forEach(ch => {
+      const chQs = yearFiltered.filter(m => m.chapter === ch);
+      const yearColors = {
+        'Apr/May 2023': {badge:'y2023', border:'rgba(52,211,153,0.3)', text:'var(--green)'},
+        'Jan/Feb 2024': {badge:'y2024a', border:'rgba(56,189,248,0.3)', text:'var(--accent3)'},
+        'Jul/Aug 2024': {badge:'y2024b', border:'rgba(251,146,60,0.3)', text:'var(--orange)'},
+        'Jun/Jul 2024': {badge:'y2024b', border:'rgba(251,146,60,0.3)', text:'var(--orange)'},
+        'Dec 2024':     {badge:'y2024c', border:'rgba(167,139,250,0.3)', text:'var(--accent2)'},
+      };
+      const col = yearColors[year] || {badge:'', border:'var(--border)', text:'var(--text3)'};
+      html += `<div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:${col.text};text-transform:uppercase;letter-spacing:0.06em;margin:20px 0 10px;padding-left:4px;">${ch}</div>`;
+      chQs.forEach((m, qi) => {
+        const globalIdx = mcqData.indexOf(m);
+        const userAnswer = mcqAnswers[globalIdx];
+        const wasAnswered = userAnswer !== undefined;
+        const wasCorrect = wasAnswered && userAnswer === m.correct;
+        html += `<div class="mcq-card ${wasAnswered?'answered':''}" id="mcq-${globalIdx}" style="border-left:3px solid ${col.border};">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+            <span class="mcq-num">Q${qi+1}</span>
+            <span class="year-tag ${col.badge}" style="font-size:10px;">${year}</span>
+            ${wasAnswered?`<span style="font-size:10px;padding:2px 8px;border-radius:10px;font-family:'JetBrains Mono',monospace;background:${wasCorrect?'rgba(52,211,153,0.15)':'rgba(248,113,113,0.15)'};color:${wasCorrect?'var(--green)':'var(--red)'};border:1px solid ${wasCorrect?'rgba(52,211,153,0.3)':'rgba(248,113,113,0.3)'}">${wasCorrect?'✅ Correct':'❌ Wrong'}</span>`:''}
+          </div>
+          <div class="mcq-question">${m.q}</div>
+          <div class="mcq-options">
+            ${m.options.map((opt,oi)=>{
+              let cls='';
+              if(wasAnswered){if(oi===m.correct)cls='show-correct';if(oi===userAnswer&&userAnswer!==m.correct)cls='selected-wrong';if(oi===userAnswer&&userAnswer===m.correct)cls='selected-correct';}
+              return `<div class="mcq-option ${cls} ${wasAnswered?'disabled':''}" onclick="answerMcq(${globalIdx},${oi})"><span class="opt-letter">${String.fromCharCode(65+oi)}</span>${opt}</div>`;
+            }).join('')}
+          </div>
+          <div class="mcq-explanation ${wasAnswered?'show':''}" id="exp-${globalIdx}">
+            <strong>${wasCorrect?'✅ Correct!':wasAnswered?'❌ Incorrect.':''}</strong> ${m.explain}
+          </div>
+        </div>`;
+      });
+    });
+    container.innerHTML = html;
+  }
+}
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
 function filterMcq(filter, el) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
@@ -1706,38 +1766,89 @@ function renderConcepts(view) {
 
 function getMcqHtml(filter) {
   const filtered = filter === 'all' ? mcqData : mcqData.filter(m => m.chapter === filter);
-  return filtered.map((m) => {
-    const globalIdx = mcqData.indexOf(m);
-    const userAnswer = mcqAnswers[globalIdx];  // renamed: no collision
-    const wasAnswered = userAnswer !== undefined;
-    const wasCorrect = wasAnswered && userAnswer === m.correct;
-    return `
-      <div class="mcq-card ${wasAnswered ? 'answered' : ''}" id="mcq-${globalIdx}">
-        <span class="mcq-num">Q${globalIdx+1} · ${m.chapter}</span>
-        <div class="mcq-question">${m.q}</div>
-        <div class="mcq-options">
-          ${m.options.map((opt, oi) => {
-            let cls = '';
-            if(wasAnswered) {
-              if(oi === m.correct) cls = 'show-correct';
-              if(oi === userAnswer && userAnswer !== m.correct) cls = 'selected-wrong';
-              if(oi === userAnswer && userAnswer === m.correct) cls = 'selected-correct';
-            }
-            return `
-              <div class="mcq-option ${cls} ${wasAnswered ? 'disabled' : ''}"
-                   onclick="answerMcq(${globalIdx}, ${oi})">
-                <span class="opt-letter">${String.fromCharCode(65+oi)}</span>
-                ${opt}
-              </div>
-            `;
-          }).join('')}
+
+  // Year ordering
+  const yearOrder = ['Apr/May 2023', 'Jan/Feb 2024', 'Jul/Aug 2024', 'Jun/Jul 2024', 'Dec 2024', 'Unknown'];
+  const yearColors = {
+    'Apr/May 2023':  { bg:'rgba(52,211,153,0.08)',  border:'rgba(52,211,153,0.3)',  text:'var(--green)',   badge:'y2023'  },
+    'Jan/Feb 2024':  { bg:'rgba(56,189,248,0.08)',  border:'rgba(56,189,248,0.3)',  text:'var(--accent3)', badge:'y2024a' },
+    'Jul/Aug 2024':  { bg:'rgba(251,146,60,0.08)',  border:'rgba(251,146,60,0.3)',  text:'var(--orange)',  badge:'y2024b' },
+    'Jun/Jul 2024':  { bg:'rgba(251,146,60,0.08)',  border:'rgba(251,146,60,0.3)',  text:'var(--orange)',  badge:'y2024b' },
+    'Dec 2024':      { bg:'rgba(167,139,250,0.08)', border:'rgba(167,139,250,0.3)', text:'var(--accent2)', badge:'y2024c' },
+    'Unknown':       { bg:'rgba(100,116,139,0.08)', border:'rgba(100,116,139,0.3)', text:'var(--text3)',   badge:''       },
+  };
+
+  // Group by year in order
+  const grouped = {};
+  yearOrder.forEach(y => grouped[y] = []);
+  filtered.forEach(m => {
+    const yr = m.year || 'Unknown';
+    const key = yearOrder.includes(yr) ? yr : 'Unknown';
+    grouped[key].push(m);
+  });
+
+  let qCounter = 0;  // sequential number within current view
+  let html = '';
+
+  yearOrder.forEach(year => {
+    const group = grouped[year];
+    if(!group || group.length === 0) return;
+    const col = yearColors[year] || yearColors['Unknown'];
+
+    // Year separator header
+    html += `
+      <div style="display:flex;align-items:center;gap:12px;margin:24px 0 14px;${qCounter===0?'margin-top:0;':''}">
+        <div style="height:1px;flex:1;background:${col.border}"></div>
+        <div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:${col.text};
+          background:${col.bg};border:1px solid ${col.border};padding:4px 14px;border-radius:20px;
+          letter-spacing:0.06em;white-space:nowrap;">
+          📅 ${year} &nbsp;·&nbsp; ${group.length} question${group.length!==1?'s':''}
         </div>
-        <div class="mcq-explanation ${wasAnswered ? 'show' : ''}" id="exp-${globalIdx}">
-          <strong>${wasCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${m.explain}
-        </div>
+        <div style="height:1px;flex:1;background:${col.border}"></div>
       </div>
     `;
-  }).join('');
+
+    group.forEach(m => {
+      qCounter++;
+      const globalIdx = mcqData.indexOf(m);
+      const userAnswer = mcqAnswers[globalIdx];
+      const wasAnswered = userAnswer !== undefined;
+      const wasCorrect = wasAnswered && userAnswer === m.correct;
+
+      html += `
+        <div class="mcq-card ${wasAnswered ? 'answered' : ''}" id="mcq-${globalIdx}"
+          style="border-left:3px solid ${col.border};">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+            <span class="mcq-num">Q${qCounter} · ${m.chapter}</span>
+            <span class="year-tag ${col.badge}" style="font-size:10px;">${year}</span>
+            ${wasAnswered ? `<span style="font-size:10px;padding:2px 8px;border-radius:10px;font-family:'JetBrains Mono',monospace;
+              background:${wasCorrect?'rgba(52,211,153,0.15)':'rgba(248,113,113,0.15)'};
+              color:${wasCorrect?'var(--green)':'var(--red)'};border:1px solid ${wasCorrect?'rgba(52,211,153,0.3)':'rgba(248,113,113,0.3)'}">${wasCorrect?'✅ Correct':'❌ Wrong'}</span>` : ''}
+          </div>
+          <div class="mcq-question">${m.q}</div>
+          <div class="mcq-options">
+            ${m.options.map((opt, oi) => {
+              let cls = '';
+              if(wasAnswered) {
+                if(oi === m.correct) cls = 'show-correct';
+                if(oi === userAnswer && userAnswer !== m.correct) cls = 'selected-wrong';
+                if(oi === userAnswer && userAnswer === m.correct) cls = 'selected-correct';
+              }
+              return `<div class="mcq-option ${cls} ${wasAnswered ? 'disabled' : ''}"
+                onclick="answerMcq(${globalIdx}, ${oi})">
+                <span class="opt-letter">${String.fromCharCode(65+oi)}</span>${opt}
+              </div>`;
+            }).join('')}
+          </div>
+          <div class="mcq-explanation ${wasAnswered ? 'show' : ''}" id="exp-${globalIdx}">
+            <strong>${wasCorrect ? '✅ Correct!' : wasAnswered ? '❌ Incorrect.' : ''}</strong> ${m.explain}
+          </div>
+        </div>
+      `;
+    });
+  });
+
+  return html || '<div style="text-align:center;padding:32px;color:var(--text3);">No questions found for this filter.</div>';
 }
 
 function renderMcq(filter) {
@@ -1748,7 +1859,7 @@ function renderMcq(filter) {
   return `
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
       <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">MCQ Practice Quiz</div>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Click an option to reveal the answer and explanation. All questions from past MEEG 315 exams.</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">${mcqData.length} questions from all 6 past MEEG 315 exam papers — sorted by year within each chapter. Click an option to reveal the answer.</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;">
           <div id="score-attempted" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--accent2);">${answered}/${mcqData.length}</div>
