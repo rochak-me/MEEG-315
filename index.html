@@ -1084,8 +1084,8 @@ const chapters = {
   ch1: {
     title: "Introduction to Mechanical Design Process",
     tag: "Chapter 1",
-    desc: "Design cycle stages, problem recognition, brainstorming, mind mapping, functional requirements, creative problem solving.",
-    pills: ["Design Cycle", "Brainstorming", "Mind Mapping", "Functional Requirements", "Creative Problem Solving"],
+    desc: "Design cycle stages, problem recognition, brainstorming, mind mapping, functional requirements, creative problem solving, and stress analysis methods.",
+    pills: ["Design Cycle", "Brainstorming", "Mind Mapping", "Functional Requirements", "Stress Analysis", "Photoelasticity", "Strain Gauge"],
     theory: [
       { q: "What are the stages involved in the mechanical design cycle? Provide a brief description of each stage and explain the importance of each stage. Also, provide an example of a product that underwent the mechanical design cycle.", marks: "3", years: ["Apr/May 2023"] },
       { q: "Elaborate on the concept of 'Design by Experience' in mechanical engineering, explaining how hands-on experience contributes to the design process. Provide a suitable example that showcases the role practical knowledge plays.", marks: "3", years: ["Jan/Feb 2024"] },
@@ -1096,18 +1096,33 @@ const chapters = {
       { q: "What is the primary purpose of a preliminary design in the design process? How does it differ from detailed design and analysis?", marks: "2", years: ["Jan/Feb 2024", "Jun/Jul 2024"] },
       { q: "Why is obtaining feedback from both the manufacturer and user important in the early stages of product development?", marks: "2", years: ["Jan/Feb 2024"] },
       { q: "The design process is often described as iterative. What does this imply about the relationship between different design activities?", marks: "2", years: ["Jun/Jul 2024"] },
+      { q: "⚡ NEW TOPIC — What is stress concentration? What are its main causes and effects on the performance of a mechanical component? Give two design strategies to minimize it.", marks: "3" },
+      { q: "⚡ NEW TOPIC — Explain the Peterson Chart Method for determining the stress concentration factor. What are the dimensionless geometric ratios used, and why is this method widely used in machine design?", marks: "3" },
+      { q: "⚡ NEW TOPIC — Describe the working principle of photoelastic stress analysis. Define the Stress-Optic Law and explain the significance of isochromatic and isoclinic fringes.", marks: "4" },
+      { q: "⚡ NEW TOPIC — Compare the three methods of experimental stress analysis: Photoelasticity, Brittle Coating Method, and Strain Gauge Method. State one key advantage and one limitation of each.", marks: "3" },
+      { q: "⚡ NEW TOPIC — Explain the strain gauge method for measuring stress concentration factor. Why is the extrapolation technique needed, and how is the Wheatstone bridge circuit used?", marks: "3" },
+      { q: "⚡ NEW TOPIC — Describe the brittle coating method of stress analysis. What do crack patterns indicate about the stress state, and what are the three possible crack patterns based on principal stress conditions?", marks: "3" },
+      { q: "⚡ NEW TOPIC — What is Thermoelastic Stress Analysis (TSA)? State the governing formula, describe the experimental setup, and list three industries where TSA is applied.", marks: "4" },
     ],
     important: [
       { q: "Mechanical design cycle stages with real product example — draw a flowchart.", priority: "high" },
       { q: "Brainstorming vs. Mind Mapping — difference + application to engineering problem + graphical mind map.", priority: "high" },
       { q: "What information does a designer need before starting? Factors to judge a design.", priority: "med" },
       { q: "Goals vs. Constraints — conceptual difference.", priority: "med" },
+      { q: "⚡ Stress concentration — causes, effects, design strategies to minimize. Likely new exam topic.", priority: "med" },
+      { q: "⚡ Compare experimental stress analysis methods: Photoelasticity vs. Brittle Coating vs. Strain Gauge.", priority: "med" },
     ],
     concepts: [
       { label: "Design Stages", title: "8 Stages of Design Cycle", body: "Recognition of Need → Problem Definition → Information Gathering → Concept Generation → Evaluation of Alternatives → Detailed Design → Manufacturing Plan → Feedback/Revision" },
       { label: "Brainstorming", title: "Brainstorming vs. Mind Mapping", body: "Brainstorming = free-flowing, divergent, no criticism allowed. Mind Mapping = structured, hierarchical, visual — great for organizing ideas around a central theme." },
       { label: "Design Concepts", title: "Goals vs. Constraints", body: "Goals = desired outcomes (what we want to achieve). Constraints = limitations that must be satisfied (budget, size, material). Both must be identified before design starts." },
       { label: "Creative Design", title: "Design by Experience", body: "Using practical, hands-on knowledge from past projects to inform design decisions. Complements analytical/theoretical approaches, especially in novel situations." },
+      { label: "Stress Analysis", title: "Stress Concentration — Causes & Strategies", body: "CAUSES: Geometric discontinuities (holes, notches, keyways, shoulders), material imperfections (inclusions, voids), uneven loading, poor surface finish.\nEFFECTS: Fatigue crack initiation, reduced service life.\nREDUCE BY: ① Add fillet radius ② Taper cross-sections ③ Shot peen surfaces ④ Use ductile materials ⑤ Apply higher FOS" },
+      { label: "Kt Methods", title: "3 Methods to Determine Stress Concentration Factor", body: "① ANALYTICAL: Kt = σ_max / σ_nom (from elasticity theory, only for simple shapes)\n② PETERSON CHART: Graphical method using D/d, r/d, d/w ratios — most widely used in practice\n③ FEM (Computational): ANSYS/COMSOL for complex geometries — numerically accurate" },
+      { label: "Photoelasticity", title: "Photoelastic Stress Analysis", body: "Principle: Transparent material becomes birefringent under stress → fringe patterns visible under polarised light.\nStress-Optic Law: σ₁ − σ₂ = (N × fσ) / t\n(N=fringe order, fσ=material fringe constant, t=thickness)\n✅ ISOCHROMATIC fringes = stress magnitude\n✅ ISOCLINIC fringes = stress direction\nSetup: Light → Polarizer → Specimen → Analyzer → Camera" },
+      { label: "Brittle Coating", title: "Brittle Coating (Stresscoat) Method", body: "Brittle lacquer sprayed on surface → cracks at threshold strain.\nCracks are PERPENDICULAR to maximum principal tensile stress.\n3 crack patterns:\n① Both stresses tensile → 2 crack families\n② One tensile, one compressive → 1 crack family\n③ Equal biaxial stress → random craze pattern\n✅ Simple, cheap, full-field visual\n❌ Only detects tensile strain, qualitative only" },
+      { label: "Strain Gauge", title: "Strain Gauge + Wheatstone Bridge", body: "Works by: Resistance changes when wire stretches (ΔR/R = GF × ε)\nWheatstone Bridge detects tiny ΔR → converts to voltage signal\nBridge types: Quarter (1 gauge), Half (2 gauges), Full (4 gauges, most accurate)\nSCF measurement: Place chain of gauges near notch → EXTRAPOLATE back to edge for true peak strain\nKt = σ_max/σ_nom = ε_max/ε_nom" },
+      { label: "TSA", title: "Thermoelastic Stress Analysis (TSA)", body: "Based on thermoelastic effect: cyclic stress → tiny surface temperature change (millikelvin)\nFormula: ΔT = −(Tα/ρC)(σ₁ + σ₂)\n(α=thermal expansion, ρ=density, C=specific heat)\nSetup: Cyclic load + IR camera → full-field stress map\n✅ Non-contact, non-destructive, full-field\n❌ Elastic conditions only, not for static loads" },
     ]
   },
   ch2: {
@@ -2800,6 +2815,118 @@ For S = 0.31, L/D ≈ 1.0 → f(R/c) ≈ 4.5 (read from chart)
 f = f(R/c) / (R/c) = 4.5 / 700 = 0.00643</div><h4>Step 5 — Verify and Calculate Power Loss</h4><div class="fml">Friction force = f × W = 0.00643 × 1500 = 9.65 N
 Surface velocity V = π×D×N/60 = π×0.035×30 = 3.30 m/s
 Power loss = F×V = 9.65 × 3.30 = 31.8 W</div><div class="kp">The exact f(R/c) value must be read from Chart 4 in the exam appendix or KU data book. The value 4.5 is approximate — interpolate between L/D curves for your exact L/D ratio. Always check h₀ adequacy: h₀_min = 0.00025×35 = 8.75μm.</div>` },
+
+  // ---- STRESS ANALYSIS (Ch1 New Topic) ----
+  'ch1_9': { marks:3, source:'KU Lecture Notes Ch.3, Bhandari (2010)',
+    content:`<h4>Stress Concentration — Causes, Effects & Reduction</h4>
+<p><strong>Definition:</strong> Kt = σ_max / σ_nom — quantifies how much a geometric discontinuity amplifies stress above the nominal (average) value.</p>
+<h4>Main Causes</h4>
+<ul><li><strong>Geometric:</strong> Holes, notches, keyways, grooves, sharp shoulders, threads — stress flow lines converge → local stress spikes</li><li><strong>Material imperfections:</strong> Inclusions, voids, grain boundaries (manufacturing defects)</li><li><strong>Surface:</strong> Poor surface finish, micro-notches, tool marks act as crack initiation sites</li></ul>
+<h4>Effects on Component Performance</h4>
+<div class="step">Fatigue crack initiation at stress concentration sites — even when nominal stress is safely below yield. Example: shaft keyway corner cracks under cyclic torsion at "safe" nominal torque values.</div>
+<div class="step">Brittle fracture under static overload — especially critical for brittle materials (cast iron, ceramics) where Kt must ALWAYS be applied.</div>
+<h4>Two Key Design Strategies</h4>
+<div class="kp">① <strong>Add generous fillet radius</strong> at any section change — spreads stress flow lines over a larger area. A fillet of r/d=0.15 reduces Kt from ~3.0 to ~1.5 for a stepped shaft.<br><br>② <strong>Shot peening</strong> — small steel/ceramic shots bombard the surface, introducing compressive residual stresses that directly oppose and cancel tensile fatigue stresses. Widely used on shafts, springs, and gears.</div>` },
+
+  'ch1_10': { marks:3, source:'KU Lecture Notes Ch.3 §3.4.2, Mahadevan & Reddy Data Book',
+    content:`<h4>Peterson Chart Method — Determining Kt Graphically</h4>
+<p>Developed by R.E. Peterson from elasticity theory, photoelasticity experiments, and practical data — compiled into dimensionless charts relating geometry to Kt. It is the most widely used method in machine design practice.</p>
+<h4>What it applies to</h4>
+<ul><li>Flat plates with central holes or edge notches</li><li>Stepped shafts with fillets or grooves</li><li>Keyways and shoulders under tension, bending, or torsion</li></ul>
+<h4>Dimensionless Geometric Ratios Used</h4>
+<div class="fml">D/d → large to small diameter ratio (stepped shaft)
+r/d → fillet radius to smaller diameter (stepped shaft)
+d/w → hole diameter to plate width (plate with hole)
+a/w → notch depth to plate width (notched plate)</div>
+<h4>How to Use (3 Steps)</h4>
+<div class="step"><strong>1.</strong> Calculate the ratios from given dimensions (D/d and r/d for shaft, etc.)</div>
+<div class="step"><strong>2.</strong> Enter the correct Peterson chart in Design Data Handbook (Mahadevan, Chapter II) for your loading type (tension/bending/torsion)</div>
+<div class="step"><strong>3.</strong> Read Kt from the chart → then σ_max = Kt × σ_nom</div>
+<div class="kp">Why widely used: Requires no FEA software — just geometry ratios + chart lookup. Validated empirically. Covers 90% of common machine design geometries. Values directly usable in KU exam data book.</div>` },
+
+  'ch1_11': { marks:4, source:'KU Lecture Notes Ch.3 §3.5, Dally & Riley (2005)',
+    content:`<h4>Photoelastic Stress Analysis — Principle, Law & Fringes</h4>
+<h4>Working Principle</h4>
+<p>When a <strong>transparent, isotropic material</strong> (epoxy resin, polycarbonate) is stressed, it becomes <strong>birefringent</strong> — light traveling through it splits into two rays with different velocities depending on the principal stress directions. When viewed through crossed polarizers (polariscope), this creates colored or dark/light fringe patterns that directly reveal the stress distribution.</p>
+<h4>Experimental Setup</h4>
+<div class="fml">Light Source → Polarizer → Stressed Specimen → Analyzer → Camera/Eye</div>
+<h4>Stress-Optic Law (governing formula)</h4>
+<div class="fml">σ₁ − σ₂ = (N × fσ) / t
+  N  = fringe order at the point (integer count)
+  fσ = material fringe constant (N/mm per fringe, from calibration)
+  t  = specimen thickness (mm)</div>
+<h4>Two Types of Fringes</h4>
+<div class="kp">✅ <strong>Isochromatic fringes</strong> — colored bands where (σ₁ − σ₂) = constant.<br>→ Dense fringes = high stress gradient = stress concentration<br>→ Give you the <em>magnitude</em> of principal stress difference</div>
+<div class="kp">✅ <strong>Isoclinic fringes</strong> — dark lines where a principal stress direction aligns with the polarizer axis.<br>→ Give you the <em>direction/orientation</em> of principal stresses<br>→ Eliminated in circular polariscope (used when only magnitude is needed)</div>
+<div class="wp">Exam tip: Photoelasticity gives σ₁−σ₂. TSA gives σ₁+σ₂. Together, they can determine σ₁ and σ₂ individually.</div>` },
+
+  'ch1_12': { marks:3, source:'KU Lecture Notes Ch.3, Dally & Riley (2005)',
+    content:`<h4>Comparison: 3 Experimental Stress Analysis Methods</h4>
+<div class="step" style="border-left:3px solid var(--accent);padding-left:12px;margin-bottom:14px;"><strong>① Photoelasticity</strong><br>
+<em>Principle:</em> Birefringence in transparent specimen → colored fringes under polarised light<br>
+✅ Full-field visualization, non-destructive, gives both magnitude AND direction<br>
+❌ Requires transparent material — cannot test real metal components directly</div>
+<div class="step" style="border-left:3px solid var(--green);padding-left:12px;margin-bottom:14px;"><strong>② Brittle Coating (Stresscoat)</strong><br>
+<em>Principle:</em> Lacquer cracks perpendicular to max tensile stress when strain threshold is exceeded<br>
+✅ Works on real components, inexpensive, full-surface coverage, fast visual feedback<br>
+❌ Qualitative only (no exact values without calibration), only detects tensile strain</div>
+<div class="step" style="border-left:3px solid var(--yellow);padding-left:12px;margin-bottom:14px;"><strong>③ Strain Gauge (Electrical Resistance)</strong><br>
+<em>Principle:</em> ΔR/R = GF × ε → Wheatstone bridge converts to voltage → stress via Hooke's Law<br>
+✅ Highly accurate (quantitative), point measurement, works for static AND dynamic loads<br>
+❌ Point measurement only — misses distribution; complex installation required</div>
+<div class="kp">Quick memory: Photoelasticity=Full-field+transparent. Brittle=Full-surface+qualitative. Strain Gauge=Point+quantitative+dynamic.</div>` },
+
+  'ch1_13': { marks:3, source:'KU Lecture Notes Ch.3 §3.8.3, Perry & Lissner (1962)',
+    content:`<h4>Strain Gauge for SCF Measurement & Wheatstone Bridge</h4>
+<h4>Why Extrapolation is Needed</h4>
+<p>A strain gauge measures <em>average</em> strain over its grid length, not the peak at a single point. At a sharp notch, stress peaks sharply RIGHT at the edge but drops off rapidly — even 0.5mm away the reading is significantly lower. A single gauge near (but not exactly at) the notch underestimates the true peak strain. Therefore:</p>
+<h4>Extrapolation Technique (Strain Gauge Chain)</h4>
+<div class="fml">① Place a chain of miniature gauges in a line starting near the notch edge
+② Measure strain at each gauge position (distance x from notch)
+③ Plot: x-axis = distance from notch, y-axis = measured strain
+④ Fit a curve through the data points
+⑤ Extrapolate curve BACK to x=0 → this is the true ε_max</div>
+<h4>Calculate Kt</h4>
+<div class="fml">Kt = σ_max / σ_nom = ε_max / ε_nom
+(ε_nom = strain measured far from notch in undisturbed section)</div>
+<h4>Wheatstone Bridge — Why It's Essential</h4>
+<p>The strain-induced resistance change is tiny (&lt;1%). A standard ohmmeter cannot detect it. The Wheatstone Bridge is a balanced circuit of 4 resistors — when the gauge (one resistor) changes, the bridge becomes unbalanced → produces a small voltage proportional to strain → amplified and recorded.</p>
+<div class="kp">Full bridge (4 active gauges) = most accurate + automatically compensates for temperature effects. Quarter bridge (1 gauge) = simplest but temperature-sensitive.</div>` },
+
+  'ch1_14': { marks:3, source:'KU Lecture Notes Ch.3 §3.7, Dally & Riley (2005)',
+    content:`<h4>Brittle Coating Method — Principle, Crack Patterns & Interpretation</h4>
+<h4>Working Principle</h4>
+<p>A brittle lacquer (Stresscoat) is sprayed onto the cleaned, prepared component surface and cured for ~24 hours. On loading, surface strain develops. When strain exceeds the coating's threshold strain, <strong>cracks form perpendicular to the direction of maximum principal tensile stress</strong>. These crack lines immediately show where stress concentration exists and the direction of the principal stresses.</p>
+<h4>The Three Principal Stress Crack Patterns</h4>
+<div class="step"><strong>Case ① σ₁ &gt; σ₂ &gt; 0 (both tensile):</strong><br>Two families of cracks — first ⊥ to larger σ₁, then as load increases, second family ⊥ to σ₂ appears. Example: pressurised cylinder (hoop stress &gt; axial stress).</div>
+<div class="step"><strong>Case ② σ₁ &gt; 0, σ₂ &lt; 0 (one tensile, one compressive):</strong><br>Only ONE crack family forms — ⊥ to tensile σ₁. Compressive direction never cracks the coating. Example: pure bending beam (tension face cracks, compression face does not).</div>
+<div class="step"><strong>Case ③ σ₁ = σ₂ (equal biaxial):</strong><br>Every direction is a principal direction → RANDOM craze pattern. Example: pressurised sphere (equal hoop stress in all directions).</div>
+<h4>Isoentatic Lines</h4>
+<p>Cracks from each load increment are marked with a number → isoentatic lines = loci of equal principal strain. Calibration bar (same lacquer, same cure) converts these to actual strain values.</p>
+<div class="wp">Key limitation: Only detects tensile strain — compressive stress zones are invisible. Cannot be reused once cracked.</div>` },
+
+  'ch1_15': { marks:4, source:'KU Lecture Notes Ch.3 §3.6',
+    content:`<h4>Thermoelastic Stress Analysis (TSA)</h4>
+<h4>What is the Thermoelastic Effect?</h4>
+<p>Under <strong>cyclic elastic loading</strong>, an adiabatic material experiences small surface temperature changes proportional to the change in the sum of principal stresses. These temperature changes are in the millikelvin range — invisible to touch — but detectable by high-sensitivity infrared cameras.</p>
+<h4>Governing Formula</h4>
+<div class="fml">ΔT = −(T·α)/(ρ·C) × (σ₁ + σ₂)
+where:
+  ΔT = surface temperature change (millikelvin)
+  T   = absolute temperature (K)
+  α   = coefficient of thermal expansion (1/K)
+  ρ   = material density (kg/m³)
+  C   = specific heat capacity (J/kg·K)
+  σ₁+σ₂ = sum of principal stresses (MPa)</div>
+<div class="kp">⚡ Key exam distinction: TSA measures (σ₁ + σ₂). Photoelasticity measures (σ₁ − σ₂). Both methods together can determine σ₁ and σ₂ individually.</div>
+<h4>Experimental Setup (4 Components)</h4>
+<div class="step"><strong>1. Specimen:</strong> Coated with high-emissivity black paint for uniform IR emission</div>
+<div class="step"><strong>2. Loading System:</strong> Servo-hydraulic machine applying cyclic load within elastic limits</div>
+<div class="step"><strong>3. IR Camera:</strong> Millikelvin sensitivity, high frame rate — captures surface ΔT as stress varies</div>
+<div class="step"><strong>4. Software:</strong> Phase-sensitive detection → extracts stress signal from thermal noise → generates full-field stress map</div>
+<h4>Three Industry Applications</h4>
+<ul><li><strong>Aerospace:</strong> Fatigue assessment of aircraft wings, fuselage panels, engine components under cyclic flight loads</li><li><strong>Automotive:</strong> Crankshafts, cylinder heads, suspension arms under dynamic engine/road loads</li><li><strong>Composites:</strong> Full-field stress in carbon fiber/glass fiber layups, early detection of delamination</li></ul>
+<div class="wp">Critical limitation: TSA ONLY works under cyclic dynamic loading within the elastic limit. It CANNOT measure static stresses — the thermoelastic effect requires stress CHANGE, not constant stress.</div>` },
   'ch5a_1': { marks:2, source:'Bhandari (2010), KU Lecture Notes', content:`<h4>Riveted Joints in Aircraft</h4><ul><li><strong>Material:</strong> Aircraft aluminium alloys (2024, 7075) lose strength in weld HAZ — riveting avoids this</li><li><strong>Inspection:</strong> Rivets individually visible and replaceable without dismantling; critical for airworthiness certification</li><li><strong>Fatigue:</strong> Cold-worked rivet holes develop compressive residual stresses → better fatigue performance in thin aluminium sheets</li><li><strong>Damage tolerance:</strong> Cracks grow slowly between rivet holes (detectable); weld cracks propagate rapidly (catastrophic)</li></ul><div class="kp">Boeing 747: over 3 million fasteners, primarily rivets. Modern composites use bolted joints, but aluminium sections remain riveted.</div>` },
   'ch5a_2': { marks:2, source:'Bhandari (2010)', content:`<h4>Riveted Joints and Vibration</h4><p>Riveted joints resist vibration better than welded joints due to their <strong>damping properties</strong>. The clamped joint interface dissipates vibration energy through micro-slip and friction at the contact surfaces (frictional damping). Unlike welded rigid joints, riveted connections allow very slight relative movement that absorbs vibration energy, preventing resonance fatigue crack initiation.</p>` },
   'ch5a_3': { marks:2, source:'Bhandari (2010)', content:`<h4>Gusset Plate in Eccentric Loading</h4><p>A gusset plate distributes the eccentric load over a larger area, reducing the moment arm (eccentricity e), stiffening the connection, and providing sufficient area to accommodate a rivet group pattern. Without it, the full eccentric load concentrates at a small area creating very uneven rivet loading.</p>` },
