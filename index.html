@@ -1302,23 +1302,25 @@ function renderConcepts(view) {
 
 function getMcqHtml(filter) {
   const filtered = filter === 'all' ? mcqData : mcqData.filter(m => m.chapter === filter);
-  return filtered.map((m, idx) => {
+  return filtered.map((m) => {
     const globalIdx = mcqData.indexOf(m);
-    const answered = mcqAnswers[globalIdx];
+    const userAnswer = mcqAnswers[globalIdx];  // renamed: no collision
+    const wasAnswered = userAnswer !== undefined;
+    const wasCorrect = wasAnswered && userAnswer === m.correct;
     return `
-      <div class="mcq-card ${answered !== undefined ? 'answered' : ''}" id="mcq-${globalIdx}">
+      <div class="mcq-card ${wasAnswered ? 'answered' : ''}" id="mcq-${globalIdx}">
         <span class="mcq-num">Q${globalIdx+1} · ${m.chapter}</span>
         <div class="mcq-question">${m.q}</div>
         <div class="mcq-options">
           ${m.options.map((opt, oi) => {
             let cls = '';
-            if(answered !== undefined) {
+            if(wasAnswered) {
               if(oi === m.correct) cls = 'show-correct';
-              if(oi === answered && answered !== m.correct) cls = 'selected-wrong';
-              if(oi === answered && answered === m.correct) cls = 'selected-correct';
+              if(oi === userAnswer && userAnswer !== m.correct) cls = 'selected-wrong';
+              if(oi === userAnswer && userAnswer === m.correct) cls = 'selected-correct';
             }
             return `
-              <div class="mcq-option ${cls} ${answered !== undefined ? 'disabled' : ''}"
+              <div class="mcq-option ${cls} ${wasAnswered ? 'disabled' : ''}"
                    onclick="answerMcq(${globalIdx}, ${oi})">
                 <span class="opt-letter">${String.fromCharCode(65+oi)}</span>
                 ${opt}
@@ -1326,8 +1328,8 @@ function getMcqHtml(filter) {
             `;
           }).join('')}
         </div>
-        <div class="mcq-explanation ${answered !== undefined ? 'show' : ''}" id="exp-${globalIdx}">
-          <strong>${answered === m.correct ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${m.explain}
+        <div class="mcq-explanation ${wasAnswered ? 'show' : ''}" id="exp-${globalIdx}">
+          <strong>${wasCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${m.explain}
         </div>
       </div>
     `;
@@ -1345,15 +1347,15 @@ function renderMcq(filter) {
       <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Click an option to reveal the answer and explanation. All questions from past MEEG 315 exams.</div>
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;">
-          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--accent2);">${answered}/${mcqData.length}</div>
+          <div id="score-attempted" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--accent2);">${answered}/${mcqData.length}</div>
           <div style="font-size:11px;color:var(--text3);">Attempted</div>
         </div>
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;">
-          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--green);">${correct}</div>
+          <div id="score-correct" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--green);">${correct}</div>
           <div style="font-size:11px;color:var(--text3);">Correct</div>
         </div>
         <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;">
-          <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:${pct>=70?'var(--green)':pct>=40?'var(--yellow)':'var(--red)'};">${pct}%</div>
+          <div id="score-pct" style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:${pct>=70?'var(--green)':pct>=40?'var(--yellow)':'var(--red)'};">${pct}%</div>
           <div style="font-size:11px;color:var(--text3);">Score</div>
         </div>
         <button onclick="resetMcq()" style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);color:var(--red);padding:10px 16px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;margin-left:auto;">Reset All</button>
@@ -1396,26 +1398,38 @@ function answerMcq(idx, chosen) {
   const card = document.getElementById(`mcq-${idx}`);
   const exp = document.getElementById(`exp-${idx}`);
   const options = card.querySelectorAll('.mcq-option');
+  const isCorrect = chosen === mcqData[idx].correct;
 
   options.forEach((opt, oi) => {
     opt.classList.add('disabled');
     if(oi === mcqData[idx].correct) opt.classList.add('show-correct');
-    if(oi === chosen && chosen !== mcqData[idx].correct) opt.classList.add('selected-wrong');
-    if(oi === chosen && chosen === mcqData[idx].correct) opt.classList.add('selected-correct');
+    if(oi === chosen && !isCorrect) opt.classList.add('selected-wrong');
+    if(oi === chosen && isCorrect) opt.classList.add('selected-correct');
   });
 
+  // Fix: set explanation text correctly based on isCorrect
+  exp.innerHTML = `<strong>${isCorrect ? '✅ Correct!' : '❌ Incorrect.'}</strong> ${mcqData[idx].explain}`;
   exp.classList.add('show');
   card.classList.add('answered');
 
-  // Update score
-  const answered = Object.keys(mcqAnswers).length;
-  const correct = Object.keys(mcqAnswers).filter(k => mcqAnswers[k] == mcqData[k].correct).length;
-  const pct = Math.round(correct/answered*100);
+  // Update all score boxes live
+  const totalAnswered = Object.keys(mcqAnswers).length;
+  const totalCorrect = Object.keys(mcqAnswers).filter(k => mcqAnswers[parseInt(k)] === mcqData[parseInt(k)].correct).length;
+  const pct = Math.round(totalCorrect / totalAnswered * 100);
+
+  // Update sidebar
   document.getElementById('mcq-score-sidebar').textContent = pct + '%';
 
-  // Re-render score section only
-  const scoreArea = document.querySelector('.mcq-card')?.closest('.content-area');
-  const scoreBoxes = document.querySelectorAll('.mcq-card ~ .mcq-card');
+  // Update score boxes inside MCQ page
+  const attemptedEl = document.getElementById('score-attempted');
+  const correctEl = document.getElementById('score-correct');
+  const pctEl = document.getElementById('score-pct');
+  if(attemptedEl) attemptedEl.textContent = `${totalAnswered}/${mcqData.length}`;
+  if(correctEl) correctEl.textContent = totalCorrect;
+  if(pctEl) {
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = pct >= 70 ? 'var(--green)' : pct >= 40 ? 'var(--yellow)' : 'var(--red)';
+  }
 }
 
 function resetMcq() {
