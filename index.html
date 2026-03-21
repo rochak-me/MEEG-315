@@ -777,7 +777,130 @@
     padding: 3px 10px;
     border-radius: 20px;
   }
-  /* FLASHCARD */
+  /* MATH EQUATIONS */
+  .math-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 2.4;
+    overflow-x: auto;
+  }
+
+  .eq-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .eq-row:last-child { border-bottom: none; }
+
+  .eq-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent2);
+    font-style: italic;
+    min-width: 100px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .eq-math {
+    color: var(--text);
+    font-size: 14.5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .eq-note {
+    font-size: 11px;
+    color: var(--text3);
+    font-style: italic;
+    margin-left: 4px;
+    padding: 2px 8px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+
+  /* Fraction — proper stacked display */
+  .frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 4px;
+    line-height: 1.1;
+    position: relative;
+    top: 2px;
+  }
+
+  .frac-top {
+    border-bottom: 1.5px solid var(--text2);
+    padding: 1px 5px 3px;
+    font-size: 12.5px;
+    text-align: center;
+    color: var(--text);
+    min-width: 22px;
+    white-space: nowrap;
+  }
+
+  .frac-bot {
+    padding: 3px 5px 1px;
+    font-size: 12.5px;
+    text-align: center;
+    color: var(--text);
+    min-width: 22px;
+    white-space: nowrap;
+  }
+
+  /* Square root with proper overbar */
+  .sqrt-wrap {
+    display: inline-flex;
+    align-items: stretch;
+    margin: 0 3px;
+    vertical-align: middle;
+  }
+
+  .sqrt-sym {
+    font-size: 22px;
+    color: var(--text2);
+    line-height: 1;
+    margin-right: 0;
+    font-weight: 300;
+    align-self: center;
+  }
+
+  .sqrt-inner {
+    border-top: 1.5px solid var(--text2);
+    padding: 1px 5px 0;
+    font-size: 13.5px;
+    color: var(--text);
+    align-self: center;
+  }
+
+  /* Procedure step number */
+  .proc-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: #0d0f14;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
   .fc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; }
   .fc-card { perspective:1000px; height:200px; cursor:pointer; }
   .fc-inner { position:relative; width:100%; height:100%; transition:transform 0.5s; transform-style:preserve-3d; }
@@ -811,11 +934,51 @@
   .prog-bar-fill { height:100%; border-radius:4px; transition:width 0.6s ease; }
   .prog-stat { font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text3); margin-top:4px; }
 
+  /* SEARCH */
+  .search-input-wrap { position:relative; margin-bottom:20px; }
+  .search-input {
+    width:100%; padding:14px 16px 14px 44px;
+    background:var(--surface); border:1px solid var(--border2);
+    border-radius:12px; color:var(--text); font-size:15px;
+    font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.2s;
+  }
+  .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 2px rgba(108,99,255,0.15); }
+  .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:18px; pointer-events:none; }
+  .search-result {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:10px; padding:14px 16px; margin-bottom:10px;
+    cursor:pointer; transition:all 0.15s;
+  }
+  .search-result:hover { border-color:var(--border2); transform:translateX(2px); background:var(--surface2); }
+  .search-result .sr-type { font-family:'JetBrains Mono',monospace; font-size:10px; padding:2px 7px; border-radius:4px; margin-right:6px; }
+  .search-result .sr-ch { font-size:11px; color:var(--text3); }
+  .search-result .sr-text { font-size:13.5px; color:var(--text); margin-top:6px; line-height:1.5; }
+  .search-result .sr-text mark { background:rgba(251,191,36,0.25); color:var(--yellow); border-radius:2px; padding:0 2px; }
+  .search-empty { text-align:center; padding:40px 20px; color:var(--text3); font-size:14px; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .sidebar { transform:translateX(-100%); transition:transform 0.25s; width:280px; }
+    .sidebar.open { transform:translateX(0); }
+    .main { margin-left:0; }
+    .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:99; }
+    .mob-overlay.show { display:block; }
+    .mob-menu-btn { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; font-size:16px; }
+    .content { padding:16px; }
+    .fc-grid { grid-template-columns:1fr; }
+    .concept-grid { grid-template-columns:1fr; }
+  }
+  @media (min-width: 769px) {
+    .mob-menu-btn { display:none; }
+    .mob-overlay { display:none !important; }
+  }
+
 </style>
 </head>
 <body>
 
 <div class="layout">
+<div class="mob-overlay" id="mob-overlay" onclick="toggleMobileMenu()"></div>
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
@@ -856,6 +1019,9 @@
     </div>
 
     <div class="sidebar-section-label">Practice</div>
+    <div class="sidebar-item" onclick="navigate('search', this)">
+      <div class="dot"></div> 🔍 Search
+    </div>
     <div class="sidebar-item" onclick="navigate('mcq', this)">
       <div class="dot"></div> MCQ Practice Quiz
     </div>
@@ -886,6 +1052,7 @@
   <main class="main">
     <div class="topbar">
       <div class="breadcrumb">
+        <button class="mob-menu-btn" onclick="toggleMobileMenu()" title="Menu">☰</button>
         <span id="bc-main">MEEG 315</span>
         <span>›</span>
         <span id="bc-sub" style="color:var(--text2)">Overview</span>
@@ -1220,6 +1387,9 @@ function renderView(view) {
     tabBar.innerHTML = `<button class="tab-btn active" onclick="filterMcq('all', this)">All (${mcqData.length})</button>` +
       chapters_mcq.map(c => `<button class="tab-btn" onclick="filterMcq('${c}', this)">${c.split('—')[0].trim()}</button>`).join('');
     area.innerHTML = renderMcq('all');
+  } else if(view === 'search') {
+    bc.textContent = 'Search';
+    area.innerHTML = renderSearch();
   } else if(view === 'flashcards') {
     bc.textContent = 'Flashcards';
     area.innerHTML = renderFlashcards();
@@ -1333,30 +1503,30 @@ function renderOverview() {
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
-      <div style="background:var(--surface);border:1px solid rgba(52,211,153,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('mcq', document.querySelectorAll('.sidebar-item')[11])">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+      <div style="background:var(--surface);border:1px solid rgba(52,211,153,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('mcq', document.querySelectorAll('.sidebar-item')[13])">
         <div style="font-size:20px;margin-bottom:8px;">📝</div>
         <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">MCQ Practice Quiz</div>
         <div style="font-size:12px;color:var(--text2);">40 questions with answers & explanations.</div>
         <div style="margin-top:10px;font-size:12px;color:var(--green);">→ Start Quiz</div>
       </div>
-      <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('flashcards', document.querySelectorAll('.sidebar-item')[12])">
+      <div style="background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('flashcards', document.querySelectorAll('.sidebar-item')[14])">
         <div style="font-size:20px;margin-bottom:8px;">🃏</div>
         <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Flashcards</div>
-        <div style="font-size:12px;color:var(--text2);">28 flip cards covering key formulas & concepts.</div>
+        <div style="font-size:12px;color:var(--text2);">27 flip cards covering key formulas & concepts.</div>
         <div style="margin-top:10px;font-size:12px;color:var(--yellow);">→ Study Cards</div>
       </div>
-      <div style="background:var(--surface);border:1px solid rgba(251,146,60,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('exam', document.querySelectorAll('.sidebar-item')[13])">
+      <div style="background:var(--surface);border:1px solid rgba(251,146,60,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('exam', document.querySelectorAll('.sidebar-item')[15])">
         <div style="font-size:20px;margin-bottom:8px;">⏱️</div>
         <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Exam Simulator</div>
         <div style="font-size:12px;color:var(--text2);">Timed exam with MCQ + theory. Score & review.</div>
         <div style="margin-top:10px;font-size:12px;color:var(--orange);">→ Start Exam</div>
       </div>
-      <div style="background:var(--surface);border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('formulas', document.querySelectorAll('.sidebar-item')[15])">
-        <div style="font-size:20px;margin-bottom:8px;">⚡</div>
-        <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Formula Quick Reference</div>
-        <div style="font-size:12px;color:var(--text2);">All critical formulas organized by chapter.</div>
-        <div style="margin-top:10px;font-size:12px;color:var(--accent3);">→ View Formulas</div>
+      <div style="background:var(--surface);border:1px solid rgba(56,189,248,0.2);border-radius:12px;padding:18px 20px;cursor:pointer;" onclick="navigate('search', document.querySelectorAll('.sidebar-item')[11])">
+        <div style="font-size:20px;margin-bottom:8px;">🔍</div>
+        <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">Search Everything</div>
+        <div style="font-size:12px;color:var(--text2);">Search across questions, MCQs, flashcards & formulas.</div>
+        <div style="margin-top:10px;font-size:12px;color:var(--accent3);">→ Search</div>
       </div>
     </div>
   `;
@@ -1526,29 +1696,300 @@ function renderMcq(filter) {
   `;
 }
 
-function renderFormulas() {
-  const sections = [
-    { title: "Stress Concentration & Fatigue", icon: "💥", formulas: `Kt = σ_max / σ_nom\nKf = 1 + q(Kt − 1)\nq  = (Kf − 1) / (Kt − 1)\n\nSe' ≈ 0.5 × Sut    [for steels, Sut ≤ 1400 MPa]\nSe  = ka × kb × kc × kd × ke × kf × Se'\n\nka = surface finish factor\nkb = size factor\nkc = loading type factor\nkd = temperature factor\nke = reliability factor\nkf = stress concentration factor` },
-    { title: "Riveted Joints", icon: "🔩", formulas: `Rivet dia (empirical): d ≈ 6√t (mm)\n\nTearing:   Pt = (p − d) × t × σt\nShearing:  Ps = n × (π/4 × d²) × τ  [×2 for double shear]\nCrushing:  Pc = n × d × t × σc\n\nJoint efficiency:  η = min(Pt, Ps, Pc) / (p × t × σt)\n\nEccentric loading:\n  Direct shear:    Fs = P / n\n  Torsional shear: Ft = P × e × r_max / Σr²\n  Resultant:       F = √(Fs² + Ft² + 2·Fs·Ft·cosθ)` },
-    { title: "Welded Joints", icon: "⚡", formulas: `Throat thickness: t = 0.707 × h  (h = leg size)\n\nParallel fillet weld (shear):\n  τ = P / (1.414 × h × l)\n\nTransverse fillet weld (tension):\n  σ = P / (1.414 × h × l)\n\n[Transverse is ~30% stronger than parallel]\n\nUnsymmetric section (angle):\n  l₁ × y₁ = l₂ × y₂  (moment balance at centroid)` },
-    { title: "Power Screws", icon: "🔧", formulas: `Torque to RAISE (square thread):\n  T = W × (dm/2) × (tanλ + μ) / (1 − μ·tanλ)\n\nTorque to LOWER:\n  T = W × (dm/2) × (μ − tanλ) / (1 + μ·tanλ)\n\nEfficiency:\n  η = tanλ / tan(λ + φ)   [φ = friction angle = arctan(μ)]\n\nSelf-locking condition:\n  tanλ ≤ μ   [or equivalently: L ≤ π × μ × dm]` },
-    { title: "Rolling Contact Bearings", icon: "⚙️", formulas: `Equivalent dynamic load:\n  P = X × Fr + Y × Fa\n  [X, Y from bearing tables based on Fa/Fr and Fa/C0]\n\nL10 life (ball bearings):\n  L10 = (C/P)³ × 10⁶ revolutions\n\nL10 life (roller bearings):\n  L10 = (C/P)^(10/3) × 10⁶ revolutions\n\nLife in hours:\n  Lh = L10 / (60 × n)\n\nRequired basic dynamic load rating:\n  C = P × (Lh × 60 × n / 10⁶)^(1/3)   [for ball bearings]` },
-    { title: "Springs (Helical)", icon: "🌀", formulas: `Spring index:  C = D / d\n\nWahl's stress factor:\n  Kw = (4C−1)/(4C−4) + 0.615/C\n\nShear stress in wire:\n  τ = Kw × 8FD / (π × d³)\n\nSpring stiffness:\n  k = G × d⁴ / (8 × D³ × n)\n\nDeflection:\n  δ = 8 × F × D³ × n / (G × d⁴)\n\nSpring combinations:\n  Series:   1/k_t = 1/k₁ + 1/k₂\n  Parallel: k_t = k₁ + k₂` },
-    { title: "Journal Bearings", icon: "🛢️", formulas: `Bearing pressure:\n  P = W / (L × D)\n\nSommerfeld number:\n  S = (μN/P) × (R/c)²\n  [μ=viscosity Pa·s, N=rev/s, R/c=clearance ratio]\n\nPetroff's frictional torque:\n  T = 2π² × μ × N × R³ × L / c\n\nFriction force:\n  F = μ × W   [μ from Sommerfeld chart]\n\nHeat generated:\n  Hg = F × V = μ × W × π × d × N / 60\n\nL/D ratio typically: 0.5 to 1.5` },
-  ];
+// ===== FORMULA HELPERS =====
+function eq(html) {
+  return `<div class="eq-box">${html}</div>`;
+}
+function eqRow(label, html, note='') {
+  return `<div class="eq-row"><span class="eq-label">${label}</span><span class="eq-math">${html}</span>${note?`<span class="eq-note">${note}</span>`:''}</div>`;
+}
+function fraction(top, bot) {
+  return `<span class="frac"><span class="frac-top">${top}</span><span class="frac-bot">${bot}</span></span>`;
+}
+function sqrt(inner) {
+  return `<span class="sqrt-wrap"><span class="sqrt-sym">√</span><span class="sqrt-inner">${inner}</span></span>`;
+}
+function sup(base, power) { return `${base}<sup>${power}</sup>`; }
+function sub(base, sub_) { return `${base}<sub>${sub_}</sub>`; }
 
+// ===== FORMULA DATA =====
+const formulaChapters = [
+  {
+    id:'f-stress', title:'Working Stresses & Fatigue', icon:'💥', color:'#6c63ff',
+    formulas: [
+      { name:'Stress Concentration Factor', eq: eqRow('K<sub>t</sub>',`${fraction('σ<sub>max</sub>','σ<sub>nom</sub>')}`) + eqRow('K<sub>f</sub>',`1 + q (K<sub>t</sub> − 1)`) + eqRow('q',`${fraction('K<sub>f</sub> − 1','K<sub>t</sub> − 1')}`,'q ranges 0→1'), note:'Kt from data book charts (Mahadevan & Reddy, Ch.II). q depends on material strength and notch radius.' },
+      { name:'Unmodified Endurance Limit', eq: eqRow("S<sub>e</sub>'", `0.5 × S<sub>ut</sub>`,'for steels, S<sub>ut</sub> ≤ 1400 MPa'), note:'For non-ferrous metals, no true endurance limit exists — use fatigue strength at 10⁷ cycles instead.' },
+      { name:'Modified Endurance Limit', eq: eqRow('S<sub>e</sub>', `k<sub>a</sub> · k<sub>b</sub> · k<sub>c</sub> · k<sub>d</sub> · k<sub>e</sub> · k<sub>f</sub> · S<sub>e</sub>'`) + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;font-size:11.5px;color:var(--text2)"><span>k<sub>a</sub> = surface finish</span><span>k<sub>b</sub> = size factor</span><span>k<sub>c</sub> = loading type</span><span>k<sub>d</sub> = temperature</span><span>k<sub>e</sub> = reliability</span><span>k<sub>f</sub> = 1/K<sub>f</sub> stress conc.</span></div>`, note:'All factors from Design Data Handbook (Mahadevan). For 99% reliability: ke = 0.814. At 400°C: kd ≈ 0.90.' },
+      { name:'Factor of Safety', eq: eqRow('FOS', `${fraction('S<sub>y</sub>','σ<sub>max</sub>')}`)+'&nbsp;(static)&nbsp;&nbsp;'+eqRow('or',`${fraction('S<sub>e</sub>','σ<sub>a</sub>')}`,'fatigue'), note:'FOS ≥ 2 for most machine elements. FOS < 1.5 is unsafe for dynamic loads.' },
+    ]
+  },
+  {
+    id:'f-rivet', title:'Riveted Joints', icon:'🔩', color:'#fbbf24',
+    formulas: [
+      { name:'Rivet Diameter (Unwin\'s Formula)', eq: eqRow('d', `6 ${sqrt('t')}`,'mm, for t ≥ 8 mm'), note:'For t < 8mm: equate shear resistance to crushing resistance to find d.' },
+      { name:'Strength Equations (per pitch)', eq: eqRow('P<sub>t</sub>', `(p − d) × t × σ<sub>t</sub>`,'tearing') + eqRow('P<sub>s</sub>', `n × ${fraction('π','4')} × d² × τ`,'shearing [×2 double shear]') + eqRow('P<sub>c</sub>', `n × d × t × σ<sub>c</sub>`,'crushing'), note:'n = number of rivets per pitch. Double shear (butt joint with 2 cover plates): multiply Ps by 2.' },
+      { name:'Joint Efficiency', eq: eqRow('η', `${fraction('min(P<sub>t</sub>, P<sub>s</sub>, P<sub>c</sub>)','p × t × σ<sub>t</sub>')} × 100%`), note:'Boiler longitudinal joint η ≥ 80% (triple riveted). Circumferential joint η ≥ 62%.' },
+      { name:'Boiler Shell Thickness', eq: eqRow('t', `${fraction('p<sub>i</sub> × D','2 × σ<sub>t</sub> × η')} + C.A.`), note:'p_i = internal pressure, D = inside diameter, η = joint efficiency, CA = corrosion allowance (1.5–2mm).' },
+      { name:'Eccentric Loading', eq: eqRow('P<sub>s</sub>', `${fraction('P','N')}`,'direct shear (equal on all rivets)') + eqRow('F<sub>i</sub>', `${fraction('P × e × r<sub>i</sub>','Σr²')}`,'torsional shear') + eqRow('R', `${sqrt('P<sub>s</sub>² + F<sub>i</sub>² + 2·P<sub>s</sub>·F<sub>i</sub>·cosθ')}`,'resultant'), note:'Find centroid of rivet group. Critical rivet = one with largest resultant R. Design rivet diameter from R and τ_allow.' },
+      { name:'Transverse & Diagonal Pitch', eq: eqRow('p<sub>t</sub>', `0.33p + 0.67d`,'outer-to-middle row') + eqRow('p<sub>t</sub>', `0.165p + 0.67d`,'middle-to-inner row') + eqRow('m', `1.5d`,'margin'), note:'From Eq. 5.15 (Mahadevan). Margin m = 1.5d prevents tearing at plate edge.' },
+    ]
+  },
+  {
+    id:'f-weld', title:'Welded Joints', icon:'🔥', color:'#f87171',
+    formulas: [
+      { name:'Fillet Weld Throat', eq: eqRow('t', `0.707 × s`,'s = leg size (= plate thickness for design)'), note:'The throat is the minimum cross-section of the weld. All strength calculations use this dimension.' },
+      { name:'Fillet Weld Strength', eq: eqRow('P<sub>parallel</sub>', `0.707s × l × τ`,'shear; weld ∥ to load') + eqRow('P<sub>transverse</sub>', `0.707s × l × σ`,'tension; weld ⊥ to load') + eqRow('Ratio', `${fraction('0.828','0.707')} = 1.17`,'transverse 17–30% stronger'), note:'For combination: P = 0.707s·l₁·σ + 1.414s·l₂·τ (l₁=transverse length, l₂=each parallel length).' },
+      { name:'Unsymmetric Section (Angle)', eq: eqRow('l<sub>1</sub>·y<sub>1</sub>', `l<sub>2</sub>·y<sub>2</sub>`,'moment balance about centroid') + eqRow('l<sub>total</sub>', `${fraction('P','0.707 × s × τ')}`), note:'y₁, y₂ = distance of each weld from centroid of angle section. Longer weld goes on flange closer to load resultant.' },
+      { name:'Circular Weld (Torsion)', eq: eqRow('τ', `${fraction('2.83T','π·s·d²')}`,'T=torque, d=rod diameter'), note:'J_weld = πtd³/4 (treating weld as line of unit throat). From Table 6.1, Mahadevan.' },
+      { name:'Eccentric Weld (Out-of-plane)', eq: eqRow('τ', `${fraction('P','0.707s × 2l')}`,'direct shear') + eqRow('σ', `${fraction('4.242·P·e','s·l²')}`,'bending') + eqRow('σ<sub>max</sub>', sqrt('σ² + 4τ²'),'von Mises'), note:'For in-plane eccentricity: find weld group centroid and polar moment of inertia J = Ixx + Iyy.' },
+    ]
+  },
+  {
+    id:'f-screw', title:'Power Screws', icon:'🔧', color:'#34d399',
+    formulas: [
+      { name:'Helix Angle', eq: eqRow('tan λ', `${fraction('L','π · d<sub>m</sub>')}`,'L=lead, d_m=mean diameter'), note:'For single-start: L = pitch p. For multi-start: L = n × p (n = number of starts).' },
+      { name:'Torque — Square Thread', eq: eqRow('T<sub>raise</sub>', `W · ${fraction('d<sub>m</sub>','2')} · ${fraction('tan λ + μ','1 − μ tan λ')}`) + eqRow('T<sub>lower</sub>', `W · ${fraction('d<sub>m</sub>','2')} · ${fraction('μ − tan λ','1 + μ tan λ')}`), note:'For ACME thread: replace μ with μ\' = μ/cos(half-angle). Half-angle = 14.5° for ACME (29° included).' },
+      { name:'Collar Torque', eq: eqRow('T<sub>c</sub>', `${fraction('W · f<sub>c</sub> · d<sub>c</sub>','2')}`,'d_c = mean collar diameter'), note:'Total torque T_total = T_thread + T_collar. Collar friction fc ≈ 0.10–0.15 from tables.' },
+      { name:'Efficiency', eq: eqRow('η', `${fraction('tan λ','tan(λ + φ)')}`,'φ = arctan(μ) = friction angle'), note:'Self-locking condition: tan λ ≤ μ. Best achieved by: ↓ helix angle AND ↑ friction coefficient.' },
+      { name:'Self-Locking Condition', eq: eqRow('Condition', `tan λ ≤ μ`) + eqRow('i.e.', `λ ≤ φ`,'helix angle ≤ friction angle'), note:'When self-locking: η < 50%. Screw jacks and vises must be self-locking to hold loads without applied torque.' },
+    ]
+  },
+  {
+    id:'f-spring', title:'Helical Springs', icon:'🌀', color:'#38bdf8',
+    formulas: [
+      { name:'Spring Index & Wahl Factor', eq: eqRow('C', `${fraction('D','d')}`,'D=mean coil dia, d=wire dia') + eqRow('K<sub>w</sub>', `${fraction('4C−1','4C−4')} + ${fraction('0.615','C')}`,'5 ≤ C ≤ 12 recommended'), note:'C < 5: severe forming difficulty, risk of wire cracking. C > 12: susceptible to buckling.' },
+      { name:'Shear Stress in Wire', eq: eqRow('τ', `K<sub>w</sub> · ${fraction('8FD','π d³')}`) + eqRow('or', `K<sub>w</sub> · ${fraction('8FC','π d²')}`), note:'Allowable shear stress: τ_allow = S_sy/FOS ≈ 0.577·S_y/1.5 ≈ 0.29·S_ut (for static loading).' },
+      { name:'Deflection & Stiffness', eq: eqRow('y', `${fraction('8FD³n','Gd⁴')}`,'n = active coils') + eqRow('k', `${fraction('Gd⁴','8D³n')}`,'spring rate N/mm'), note:'G = 80,000 MPa for steel. Solid length: Ls = n_t × d. Free length: Lf = Ls + total clearance + y.' },
+      { name:'Spring Combinations', eq: eqRow('Series', `${fraction('1','k<sub>t</sub>')} = ${fraction('1','k<sub>1</sub>')} + ${fraction('1','k<sub>2</sub>')}`) + eqRow('Parallel', `k<sub>t</sub> = k<sub>1</sub> + k<sub>2</sub>`), note:'Series: same force, deflections add. Parallel: deflections equal, forces add.' },
+      { name:'Solid Length & Free Length', eq: eqRow('L<sub>s</sub>', `n<sub>t</sub> × d`,'total coils × wire dia') + eqRow('L<sub>f</sub>', `L<sub>s</sub> + gap + y`,'gap = 0.5–2mm/coil') + eqRow('Pitch', `${fraction('L<sub>f</sub>','n<sub>t</sub> − 1')}`), note:'For squared & ground ends: inactive coils = 2, so n_t = n + 2. Plain ends: n_t = n.' },
+    ]
+  },
+  {
+    id:'f-rball', title:'Rolling Contact Bearings', icon:'⚙️', color:'#a78bfa',
+    formulas: [
+      { name:'Bearing Designation (e.g. 6205)', eq: `<div style="background:var(--surface3);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2"><span style="color:#6c63ff;font-size:18px;font-weight:700">6</span> <span style="color:#fbbf24;font-size:18px;font-weight:700">2</span> <span style="color:#34d399;font-size:18px;font-weight:700">05</span><br><span style="color:#6c63ff">↑ Type: 6=Deep groove ball</span><br><span style="color:#fbbf24">↑ Series: 2=Light(02), 3=Medium(03)</span><br><span style="color:#34d399">↑ Bore: 05×5 = 25mm</span></div>`, note:'Exception: bore codes 00=10mm, 01=12mm, 02=15mm, 03=17mm (not ×5 rule).' },
+      { name:'Equivalent Dynamic Load', eq: eqRow('P', `X · F<sub>r</sub> + Y · F<sub>a</sub>`,'X, Y from Table 16.1, Data Book') + eqRow('(radial only)', `P = F<sub>r</sub>`,'X=1, Y=0 when F_a/F_r ≤ e'), note:'V = rotation factor (1.0 inner ring rotating, 1.2 outer). Some editions: P = V·X·Fr + Y·Fa.' },
+      { name:'L₁₀ Bearing Life', eq: eqRow('L<sub>10</sub>', `(${fraction('C','P')})³ × 10⁶ rev`,'ball; exponent=10/3 for roller') + eqRow('L<sub>h</sub>', `${fraction('L<sub>10</sub>','60 · n')}`,'hours'), note:'L10 = life at 90% reliability (10% failure). C = basic dynamic load rating from catalogue.' },
+      { name:'Required Dynamic Load Rating', eq: eqRow('C<sub>req</sub>', `P · (${fraction('L<sub>h</sub> · 60 · n','10⁶')})^{1/3}`,'ball bearings'), note:'Select bearing with C_catalogue ≥ C_req. Check bore ≥ shaft diameter and series appropriate for load.' },
+    ]
+  },
+  {
+    id:'f-journal', title:'Journal Bearings', icon:'🛢️', color:'#fb923c',
+    formulas: [
+      { name:'Bearing Pressure', eq: eqRow('P', `${fraction('W','L · D')}`,'W=load, L=length, D=diameter'), note:'Target P = 1.4–3.4 MPa for general industrial machinery. L/D typically 0.5–1.5.' },
+      { name:'Sommerfeld Number', eq: eqRow('S', `${fraction('μ · N<sub>s</sub>','P')} · (${fraction('R','c')})²`,'μ in Pa·s, N_s in rev/s'), note:'S is the key design parameter. Higher S → better film → lower friction. Used with Raimondi-Boyd charts.' },
+      { name:'Petroff\'s Frictional Torque', eq: eqRow('T', `2π² · μ · N<sub>s</sub> · ${fraction('R³ · L','c')}`), note:'Depends on μ, Ns, R, L, c. NOT on bearing material (under full-film lubrication).' },
+      { name:'Minimum Film Thickness', eq: eqRow('h<sub>0,min</sub>', `0.00025 · D`,'for ground journal') + eqRow('h<sub>0</sub>', `${fraction('h<sub>0</sub>','c')} × c`,'from Chart 3 (Raimondi-Boyd)'), note:'If h₀_calculated < h₀_min → bearing inadequate. Increase D or use higher viscosity oil.' },
+      { name:'Heat Generated', eq: eqRow('H<sub>g</sub>', `f · W · V`) + eqRow('V', `${fraction('π · D · N','60')}`,'surface velocity m/s'), note:'At equilibrium: Hg = Hd (heat dissipated). If T_operating > 70°C, use oil cooler or higher viscosity.' },
+    ]
+  },
+];
+
+// ===== DESIGN PROCEDURE DATA =====
+const designProcedures = [
+  {
+    id:'dp-boiler', title:'Longitudinal Butt Joint for Boiler', icon:'🔩', color:'#fbbf24', ref:'KU Lecture Notes Ch.5, Bhandari (2010)',
+    intro:'Design procedure for a triple/double riveted longitudinal butt joint in a pressure vessel, from KU slides.',
+    steps: [
+      { n:1, title:'Determine Plate Thickness', formula:`t = ${fraction('p<sub>i</sub> · D','2 · σ<sub>t</sub> · η')} + CA`, note:'η = joint efficiency (given or assumed ≈ 80%). CA = corrosion allowance 1.5–2mm. Round up to nearest standard thickness.' },
+      { n:2, title:'Find Number of Rivets per Pitch', formula:`Refer Table 5.1 (Mahadevan, p.84): n = n<sub>1</sub> + n<sub>2</sub>`, note:'n₁ = rivets in outer row per pitch, n₂ = rivets in inner rows per pitch. For triple riveted: total n = 6.' },
+      { n:3, title:'Determine Rivet Diameter', formula:`d = 6${sqrt('t')}<br><small style="color:var(--text3)">(Unwin\'s formula for t ≥ 8mm)</small>`, note:'Round to nearest standard rivet diameter from data book (IS 1148). For t < 8mm: equate shear to crushing.' },
+      { n:4, title:'Find Pitch of Rivets', formula:`Optimum: p = ${fraction('n · (π/4) · d² · τ','t · σ<sub>t</sub>')} + d<br>Max: p = C<sub>1</sub>·t + C<sub>2</sub> (Table 5.4)<br>Min: p = 2d`, note:'Use smallest of the three. For outer row: pitch p. For middle/inner rows: pitch p/2 (zigzag). Eq. 5.12(a), 5.12(b), 5.24.' },
+      { n:5, title:'Find Transverse Pitch', formula:`p<sub>b1</sub> = 0.33p + 0.67d (outer→middle row)<br>p<sub>b2</sub> = 0.165p + 0.67d (middle→inner row)`, note:'From Eq. 5.15(a) and 5.15(b). Transverse pitch controls row spacing in zigzag pattern.' },
+      { n:6, title:'Find Margin', formula:`m = 1.5d`, note:'Margin m = perpendicular distance from rivet center to plate edge. Prevents tearing at plate edge (Eq. 5.16).' },
+      { n:7, title:'Find Strap Thickness', formula:`t<sub>o</sub> = 0.625t (outer strap)<br>t<sub>i</sub> = 0.75t (inner strap)`, note:'Eq. 5.4(a) and 5.8(b). Equal straps: both = 0.625t.' },
+      { n:8, title:'Check Joint Efficiency', formula:`η = ${fraction('min(P<sub>t</sub>, P<sub>s</sub>, P<sub>c</sub>)','p · t · σ<sub>t</sub>')} × 100% ≥ specified`, note:'P_t = (p−d)·t·σt, P_s = n·(π/4·d²)·τ (×2 for double shear), P_c = n·d·t·σc.' },
+      { n:9, title:'Prepare Sketch', formula:`Label all dimensions: d, p, p<sub>b</sub>, m, t, t<sub>o</sub>, t<sub>i</sub>`, note:'Neat sketch is worth marks! Show all rows of rivets, cover straps, and zigzag pattern clearly.' },
+    ]
+  },
+  {
+    id:'dp-eccrivet', title:'Eccentrically Loaded Riveted Joint', icon:'🔩', color:'#f87171', ref:'KU Lecture Notes Ch.5 (Eccentric Loading), Jan 29 2026',
+    intro:'From the KU slides on eccentric riveted joints — how to find rivet diameter when load P is applied at eccentricity e from rivet group centroid.',
+    steps: [
+      { n:1, title:'Find Centroid of Rivet Group', formula:`x̄ = ${fraction('Σx<sub>i</sub>','N')}, &nbsp; ȳ = ${fraction('Σy<sub>i</sub>','N')}`, note:'N = number of rivets. Since all rivets are identical (same area), centroid is simply the geometric centre.' },
+      { n:2, title:'Find Eccentricity', formula:`e = distance from load line to centroid`, note:'Measure perpendicular distance from the line of action of P to the centroid of the rivet group.' },
+      { n:3, title:'Calculate Direct (Primary) Shear', formula:`P<sub>s</sub> = ${fraction('P','N')}`,'note':'Acts equally on all rivets, in the direction of applied load P.' },
+      { n:4, title:'Calculate Torsional (Secondary) Shear', formula:`F<sub>i</sub> = ${fraction('P · e · r<sub>i</sub>','Σr²')}`, note:'r_i = distance from centroid to rivet i. F_i acts perpendicular to the line joining centroid to rivet i. Critical rivet has largest r_i.' },
+      { n:5, title:'Find Resultant Force on Critical Rivet', formula:`R = ${sqrt('P<sub>s</sub>² + F<sub>i</sub>² + 2·P<sub>s</sub>·F<sub>i</sub>·cosθ')}`, note:'θ = angle between P_s and F_i at the critical rivet. Critical rivet = one where angle between P_s and F_i is smallest (forces add most).' },
+      { n:6, title:'Find Rivet Diameter', formula:`τ<sub>allow</sub> = ${fraction('S<sub>sy</sub>','FOS')} ≈ ${fraction('0.577·S<sub>y</sub>','FOS')}<br><br>d = ${sqrt(fraction('4·R','π·τ<sub>allow</sub>'))}`, note:'S_y from data book for the specified material (e.g. SAE 1045 annealed: Sy = 310 MPa).' },
+    ]
+  },
+  {
+    id:'dp-weld', title:'Fillet Weld Joint Design', icon:'🔥', color:'#f87171', ref:'KU Lecture Notes Ch.5 (Welded Joints), Feb 2026',
+    intro:'Design procedure for parallel + transverse fillet weld combination, and unsymmetric section (angle) welds.',
+    steps: [
+      { n:1, title:'Determine Minimum Weld Size', formula:`s<sub>min</sub> from plate thickness (Data Book Table 10.4)`, note:'Minimum weld size depends on thicker plate being joined. For t=10mm: s_min≈5mm; t=20mm: s_min≈8mm.' },
+      { n:2, title:'Calculate Throat Thickness', formula:`t = 0.707 × s`, note:'This is the effective weld throat for a 45° fillet weld. All strength calculations use throat t, not leg s.' },
+      { n:3, title:'Strength of Weld Types', formula:`P<sub>t</sub> = 0.707s · l<sub>1</sub> · σ (transverse)<br>P<sub>p</sub> = 0.707s · l<sub>2</sub> · τ (parallel, each side)<br>P<sub>total</sub> = P<sub>t</sub> + 2P<sub>p</sub>`, note:'For varying/fatigue loads: use τ for BOTH transverse and parallel welds (do not use σ for transverse).' },
+      { n:4, title:'Unsymmetric Section — Find Centroid', formula:`From data book or calculate: y<sub>1</sub>, y<sub>2</sub> from each weld to centroid`, note:'For ISA sections: centroid distance from each flange is tabulated in IS handbook or data book.' },
+      { n:5, title:'Distribute Weld Lengths (Angle Section)', formula:`l<sub>1</sub> · y<sub>1</sub> = l<sub>2</sub> · y<sub>2</sub><br>l<sub>1</sub> + l<sub>2</sub> = ${fraction('P','0.707·s·τ')}`, note:'l₁ and l₂ are solved simultaneously. Result ensures load resultant passes through section centroid.' },
+      { n:6, title:'Eccentric Weld — Out-of-Plane', formula:`τ<sub>d</sub> = ${fraction('P','0.707s · 2l')}<br>σ<sub>b</sub> = ${fraction('4.242·P·e','s·l²')}<br>σ<sub>max</sub> = ${sqrt('σ<sub>b</sub>² + 4τ<sub>d</sub>²')}`, note:'For in-plane eccentricity: find Ip = Ixx + Iyy for weld group, then q_t = T·r/Ip.' },
+    ]
+  },
+  {
+    id:'dp-screw', title:'Power Screw Design', icon:'🔧', color:'#34d399', ref:'KU Lecture Notes Ch.6 (Power Screw), Jan 2026',
+    intro:'Step-by-step procedure for finding torque, efficiency, and checking self-locking for a power screw under axial load.',
+    steps: [
+      { n:1, title:'Determine Thread Parameters', formula:`Lead: L = p (single-start) = n·p (n-start)<br>Mean dia: d<sub>m</sub> = d<sub>major</sub> − 0.5p (square thread)`, note:'For ACME thread: d_m = d_major − 0.5p. Standard thread dimensions from IS data book.' },
+      { n:2, title:'Calculate Helix Angle', formula:`tan λ = ${fraction('L','π · d<sub>m</sub>')}`, note:'λ = arctan(L/(πd_m)). Typical λ = 2°–5° for self-locking screws.' },
+      { n:3, title:'Calculate Friction Angle', formula:`Square thread: φ = arctan(μ)<br>ACME thread: φ' = arctan(${fraction('μ','cos(α/2)')})<br>α = 29° (ACME), α/2 = 14.5°`, note:'μ_thread typically 0.10–0.20 depending on lubrication and materials.' },
+      { n:4, title:'Torque to Raise Load', formula:`T<sub>raise</sub> = W · ${fraction('d<sub>m</sub>','2')} · ${fraction('tan λ + μ (or μ\')','1 − μ (or μ\') · tan λ')}`, note:'Add collar torque if applicable: T_c = W·f_c·d_c/2. Total T = T_raise + T_c.' },
+      { n:5, title:'Torque to Lower Load', formula:`T<sub>lower</sub> = W · ${fraction('d<sub>m</sub>','2')} · ${fraction('μ − tan λ','1 + μ · tan λ')}`, note:'If T_lower < 0 → overhauling (not self-locking). If T_lower > 0 → self-locking.' },
+      { n:6, title:'Check Self-Locking', formula:`Self-locking condition: tan λ ≤ μ<br>(i.e., λ ≤ φ — helix angle ≤ friction angle)`, note:'Most jacks require self-locking. Achieved by decreasing λ (smaller lead) AND increasing μ.' },
+      { n:7, title:'Calculate Efficiency', formula:`η = ${fraction('tan λ','tan(λ + φ)')} × 100%`, note:'Efficiency always < 50% for self-locking screws. Typical: 18–36% for μ=0.10–0.15.' },
+    ]
+  },
+  {
+    id:'dp-spring', title:'Helical Compression Spring Design', icon:'🌀', color:'#38bdf8', ref:'KU Lecture Notes Ch.6 (Springs), Dec 2025 — 15-step procedure',
+    intro:'Complete 15-step design procedure from KU slides. Given: force F, deflection y (or spring rate k), material, FOS.',
+    steps: [
+      { n:1, title:'Estimate Maximum Spring Force & Deflection', formula:`Given: F (N), y (mm) or k = F/y (N/mm)`, note:'For safety valves: F₁ at closed pressure, F₂ at open pressure. Deflection = valve lift.' },
+      { n:2, title:'Select Material & Allowable Shear Stress', formula:`τ<sub>allow</sub> = ${fraction('S<sub>sy</sub>','1.5')} ≈ ${fraction('0.577·S<sub>y</sub>','1.5')} ≈ 0.29·S<sub>ut</sub>`, note:'S_ut for music wire: use data book (depends on wire diameter). FOS = 1.5 for static loading.' },
+      { n:3, title:'Assume Spring Index C', formula:`C = 8–10 (industrial springs)<br>C = 5 (valves & clutches)<br>C ≥ 3 always`, note:'C < 5: severe forming, risk of cracks. Typical range 5–12. Adjust in Step 5 if wire diameter becomes impractical.' },
+      { n:4, title:'Calculate Wahl Factor K', formula:`K<sub>w</sub> = ${fraction('4C − 1','4C − 4')} + ${fraction('0.615','C')}`, note:'K accounts for wire curvature + direct shear. Always K > 1. For C=6: K ≈ 1.25; C=8: K ≈ 1.18; C=10: K ≈ 1.14.' },
+      { n:5, title:'Determine Wire Diameter d', formula:`τ = K · ${fraction('8FC','π d²')} ≤ τ<sub>allow</sub><br><br>d = ${sqrt(fraction('8KFC','π · τ<sub>allow</sub>'))}`, note:'Round UP to nearest standard wire diameter (from data book wire gauge table).' },
+      { n:6, title:'Determine Mean Coil Diameter D', formula:`D = C · d`, note:'Check space constraints: D_o = D + d ≤ hole diameter (if fitting inside hole). D_i = D − d ≥ rod diameter.' },
+      { n:7, title:'Find Number of Active Coils n', formula:`y = ${fraction('8FD³n','Gd⁴')}<br><br>n = ${fraction('Gd⁴y','8FD³')}`, note:'G = 80,000 MPa for steel springs. Round to nearest integer.' },
+      { n:8, title:'Find Total Number of Coils n_t', formula:`Squared & ground ends: n<sub>t</sub> = n + 2<br>Squared only: n<sub>t</sub> = n + 2<br>Plain ends: n<sub>t</sub> = n`, note:'Squared and ground is standard for compression springs. The 2 inactive end coils provide a flat seating surface.' },
+      { n:9, title:'Find Solid Length L_s', formula:`L<sub>s</sub> = n<sub>t</sub> · d`, note:'The spring must not be compressed to solid length in service. Check: L_s + clearance ≤ operating length.' },
+      { n:10, title:'Verify Actual Deflection', formula:`y = ${fraction('8FD³n','Gd⁴')}`, note:'Should match the required deflection. Minor discrepancy is acceptable; adjust n if necessary.' },
+      { n:11, title:'Find Total Axial Gap (Clearance)', formula:`Total gap = (n<sub>t</sub> − 1) × gap per coil<br>Gap per coil: 0.5–2 mm (or 15% of max deflection)`, note:'Clearance prevents solid contact under maximum load. If no guidance given, use 15% of y_max.' },
+      { n:12, title:'Find Free Length L_f', formula:`L<sub>f</sub> = L<sub>s</sub> + Total gap + y`, note:'This is the length of the spring when unloaded. Verify L_f is reasonable for the application space.' },
+      { n:13, title:'Find Pitch p', formula:`p = ${fraction('L<sub>f</sub>','n<sub>t</sub> − 1')}`, note:'Pitch angle should be < 12°. If > 12°, undesirable compressive stresses develop — redesign.' },
+      { n:14, title:'Find Spring Rate k', formula:`k = ${fraction('F','y')} = ${fraction('Gd⁴','8D³n')}`, note:'Verify k matches the requirement. If not, adjust C (go back to Step 3).' },
+      { n:15, title:'Prepare Spring Specification List', formula:`d, D, D<sub>o</sub>, D<sub>i</sub>, n, n<sub>t</sub>, L<sub>s</sub>, L<sub>f</sub>, p, k, material, end type`, note:'Always list all dimensions and provide a neat sketch showing the spring with key dimensions labeled.' },
+    ]
+  },
+  {
+    id:'dp-bearing-roll', title:'Rolling Contact Bearing Selection', icon:'⚙️', color:'#a78bfa', ref:'KU Lecture Notes Ch.7, Bhandari (2010) — 8-step procedure',
+    intro:'Systematic 8-step procedure for selecting a rolling contact bearing given shaft diameter, loads, speed, and required life.',
+    steps: [
+      { n:1, title:'Determine Shaft Diameter', formula:`d<sub>shaft</sub> from shaft design (given or calculated)`, note:'Bearing bore must be ≥ shaft diameter. This determines the minimum bore size to search in catalogue.' },
+      { n:2, title:'Calculate Radial and Axial Forces', formula:`F<sub>r</sub> = radial load on bearing (N)<br>F<sub>a</sub> = axial/thrust load on bearing (N)`, note:'From free body diagram of shaft. For belt drives: F_r includes belt tension components. For gears: include gear tooth forces.' },
+      { n:3, title:'Select Bearing Type', formula:`Deep groove ball → radial + moderate axial<br>Tapered roller → heavy combined loads<br>Cylindrical roller → heavy radial only`, note:'Also consider: available space, noise requirements, speed, cost, misalignment tolerance.' },
+      { n:4, title:'Determine Rotation Factor V', formula:`V = 1.0 (inner ring rotating — most common)<br>V = 1.2 (outer ring rotating)`, note:'In most applications, the shaft (inner ring) rotates and the housing (outer ring) is stationary: V = 1.0.' },
+      { n:5, title:'Find X and Y Load Factors', formula:`Compute: ${fraction('F<sub>a</sub>','C<sub>0</sub>')} → find e value (Table 16.1)<br>If ${fraction('F<sub>a</sub>','F<sub>r</sub>')} > e: use X < 1, Y > 0<br>If ${fraction('F<sub>a</sub>','F<sub>r</sub>')} ≤ e: X = 1, Y = 0`, note:'C₀ = static load rating from initial trial bearing. May need iteration if assumed C₀ is far from actual.' },
+      { n:6, title:'Compute Equivalent Dynamic Load P', formula:`P = X · F<sub>r</sub> + Y · F<sub>a</sub>`, note:'This is the single hypothetical load equivalent to the actual combined loading for life calculation purposes.' },
+      { n:7, title:'Convert Required Life to Millions of Revolutions', formula:`L<sub>10</sub> = ${fraction('60 · N · L<sub>h</sub>','10⁶')}`, note:'L_h = required life in hours. N = speed in rpm.' },
+      { n:8, title:'Find Required Dynamic Load Rating C', formula:`C<sub>req</sub> = P · (L<sub>10</sub>)^{1/3}`+'&nbsp;&nbsp;(ball) &nbsp;'+`C<sub>req</sub> = P · (L<sub>10</sub>)^{3/10}`+'&nbsp;(roller)', note:'Select bearing from catalogue with C_catalogue ≥ C_req AND bore ≥ d_shaft. If no standard bearing fits, try next series.' },
+    ]
+  },
+  {
+    id:'dp-journal', title:'Hydrodynamic Journal Bearing Design', icon:'🛢️', color:'#fb923c', ref:'KU Lecture Notes Ch.8 (Mott), Dec 2025 — 15-step procedure',
+    intro:'Full hydrodynamic journal bearing design using the Raimondi-Boyd charts (Charts 1–4 from KU slides). Given: load W, speed N, minimum shaft diameter.',
+    steps: [
+      { n:1, title:'Specify Trial Journal Diameter D', formula:`D ≥ D<sub>min</sub> (from shaft analysis)`, note:'Try D equal to the minimum acceptable diameter first. This gives the smallest, lightest bearing.' },
+      { n:2, title:'Select L/D Ratio & Find Length L', formula:`L/D = 0.5 to 1.5 (typical range)<br>L = D × (L/D)`, note:'L/D = 1.0 for non-lubricated or oil-impregnated porous bearings. L/D = 1.5 for carbon-graphite bearings.' },
+      { n:3, title:'Compute Bearing Pressure P', formula:`P = ${fraction('W','L · D')}`+'&nbsp;&nbsp;(N/mm² or MPa)', note:'Target: P = 1.4–3.4 MPa for general machinery. Heavy machinery up to 13.4 MPa.' },
+      { n:4, title:'Specify Diametral Clearance C_d', formula:`C<sub>d</sub>/D = 0.001 to 0.002<br>C<sub>r</sub> = C<sub>d</sub>/2 (radial clearance)`, note:'From Chart 1 (KU slides): select based on D and N. R/c_r = R/C_r = D/(C_d) typical ratio 500–2000.' },
+      { n:5, title:'Calculate Minimum Film Thickness Required', formula:`h<sub>0,min</sub> = 0.00025 · D &nbsp; (for ground journal)`, note:'This is the design minimum. If calculated h₀ < h₀_min → redesign (larger D or different lubricant).' },
+      { n:6, title:'Compute Film Thickness Ratio', formula:`${fraction('h<sub>0</sub>','C<sub>r</sub>')}`+' — this is the target value from which to find S', note:'Use the required h₀/C_r to enter Chart 3 (KU slides) and read off the corresponding Sommerfeld number S.' },
+      { n:7, title:'Read Sommerfeld Number from Chart 3', formula:`S = f(${fraction('h<sub>0</sub>','C<sub>r</sub>')}, ${fraction('L','D')})`+' — from Raimondi-Boyd Chart 3', note:'Use the L/D line that matches your bearing. Interpolate between curves if needed.' },
+      { n:8, title:'Compute Required Viscosity μ', formula:`S = ${fraction('μ · N<sub>s</sub>','P')} · (${fraction('R','C<sub>r</sub>')})²<br><br>μ = ${fraction('S · P','N<sub>s</sub> · (R/C<sub>r</sub>)²')}`, note:'This is the minimum viscosity needed to achieve the target film thickness at operating conditions.' },
+      { n:9, title:'Select Lubricant from Chart 2', formula:`From Chart 2 (Viscosity vs Temperature for SAE oils):<br>Select oil with μ ≥ μ<sub>required</sub> at T<sub>max</sub> = 70°C`, note:'Most lubricating oils are limited to 70°C to retard oxidation. Higher temperature → lower viscosity.' },
+      { n:10, title:'Calculate Actual Sommerfeld Number', formula:`S<sub>actual</sub> = ${fraction('μ<sub>actual</sub> · N<sub>s</sub>','P')} · (${fraction('R','C<sub>r</sub>')})²`, note:'Use actual viscosity of selected oil at 70°C (from Chart 2).' },
+      { n:11, title:'Read Friction Variable from Chart 4', formula:`f · (${fraction('R','C<sub>r</sub>')}) = f(S<sub>actual</sub>, ${fraction('L','D')})`+' — from Chart 4', note:'Interpolate for your L/D ratio. This gives f(R/C_r), then f = result / (R/C_r).' },
+      { n:12, title:'Calculate Coefficient of Friction', formula:`f = ${fraction('f(R/C<sub>r</sub>)','R/C<sub>r</sub>')}`, note:'Full-film hydrodynamic bearings: f = 0.001–0.005. Compare to allowable friction for the application.' },
+      { n:13, title:'Calculate Friction Torque', formula:`T<sub>f</sub> = f · W · R`, note:'This represents the power consumed by the bearing due to viscous friction in the oil film.' },
+      { n:14, title:'Calculate Heat Generated', formula:`H<sub>g</sub> = T<sub>f</sub> · ω = f · W · ${fraction('π · D · N','60')}`+' Watts', note:'ω = 2πN/60 rad/s. This heat must be removed to maintain lubricant temperature below 70°C.' },
+      { n:15, title:'Verify Thermal Equilibrium', formula:`H<sub>g</sub> = H<sub>d</sub> → T<sub>op</sub> ≤ 70°C`, note:'If T_op > 70°C: add oil cooler, use higher viscosity oil, or increase bearing size. Complete design by specifying clearance, lubricant supply, and surface finish.' },
+    ]
+  },
+];
+
+function renderFormulas() {
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:20px;">
-      <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;">⚡ Formula Quick Reference</div>
-      <div style="font-size:13px;color:var(--text2);">All critical formulas for MEEG 315. Use during revision and verify with your Data Book.</div>
-    </div>
-    ${sections.map(s => `
-      <div class="formula-block">
-        <div class="f-title">${s.icon} ${s.title}</div>
-        <pre>${s.formulas}</pre>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;">⚡ Formula Reference & Design Procedures</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Book-quality equations with proper fraction and root notation, plus step-by-step design procedures from KU lecture slides.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="formula-tabs">
+        <button class="tab-btn active" onclick="switchFormulaView('formulas',this)">📐 Formulas</button>
+        <button class="tab-btn" onclick="switchFormulaView('procedures',this)">📋 Design Procedures</button>
       </div>
-    `).join('')}
+    </div>
+    <div id="formula-chapter-filter" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="tab-btn active" onclick="filterFormulas('all',this)" style="font-size:11px;">All Chapters</button>
+      ${formulaChapters.map(ch=>`<button class="tab-btn" onclick="filterFormulas('${ch.id}',this)" style="font-size:11px;border-left:2px solid ${ch.color}">${ch.icon} ${ch.title.split(' ')[0]}</button>`).join('')}
+    </div>
+    <div id="formula-content">${renderFormulaCards('all')}</div>
   `;
+}
+
+function switchFormulaView(view, el) {
+  document.querySelectorAll('#formula-tabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  const filterBar = document.getElementById('formula-chapter-filter');
+  if(view === 'formulas') {
+    filterBar.style.display = 'flex';
+    document.getElementById('formula-content').innerHTML = renderFormulaCards('all');
+    // Reset filter buttons
+    filterBar.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  } else {
+    filterBar.style.display = 'none';
+    document.getElementById('formula-content').innerHTML = renderProcedureCards();
+  }
+}
+
+function filterFormulas(filterId, el) {
+  document.querySelectorAll('#formula-chapter-filter .tab-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('formula-content').innerHTML = renderFormulaCards(filterId);
+}
+
+function renderFormulaCards(filterId) {
+  const chapters = filterId === 'all' ? formulaChapters : formulaChapters.filter(ch=>ch.id===filterId);
+  return chapters.map(ch => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:20px;overflow:hidden;" id="${ch.id}">
+      <div style="padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;background:linear-gradient(90deg,rgba(${hexToRgb(ch.color)},0.08),transparent);">
+        <span style="font-size:20px;">${ch.icon}</span>
+        <span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text);">${ch.title}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;margin-left:auto;">${ch.formulas.length} formulas</span>
+      </div>
+      <div style="padding:18px 20px;display:flex;flex-direction:column;gap:16px;">
+        ${ch.formulas.map(f => `
+          <div style="border-left:3px solid ${ch.color};padding-left:16px;">
+            <div style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:${ch.color};margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">${f.name}</div>
+            <div class="math-block">${f.eq}</div>
+            ${f.note ? `<div style="font-size:12px;color:var(--text3);margin-top:8px;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:6px;line-height:1.6;">📌 ${f.note}</div>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProcedureCards() {
+  return designProcedures.map(proc => `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:24px;overflow:hidden;">
+      <div style="padding:18px 20px 14px;border-bottom:1px solid var(--border);background:linear-gradient(90deg,rgba(${hexToRgb(proc.color)},0.08),transparent);">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <span style="font-size:22px;">${proc.icon}</span>
+          <span style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text);">${proc.title}</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;margin-left:auto;">${proc.steps.length} steps</span>
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.5;">${proc.intro}</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px;font-family:'JetBrains Mono',monospace;">📚 ${proc.ref}</div>
+      </div>
+      <div style="padding:18px 20px;">
+        ${proc.steps.map(s => `
+          <div style="display:flex;gap:14px;margin-bottom:16px;align-items:flex-start;">
+            <div style="min-width:30px;height:30px;border-radius:50%;background:${proc.color};display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#0d0f14;flex-shrink:0;margin-top:3px;">${s.n}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:8px;">${s.title}</div>
+              <div class="math-block" style="border-color:rgba(${hexToRgb(proc.color)},0.3);">${s.formula}</div>
+              ${s.note ? `<div style="font-size:12px;color:var(--text3);margin-top:7px;padding:8px 12px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-left:2px solid ${proc.color};border-radius:0 6px 6px 0;line-height:1.6;">📌 ${s.note}</div>` : ''}
+            </div>
+          </div>
+          ${s.n < proc.steps.length ? `<div style="height:1px;background:var(--border);margin:0 0 4px 44px;opacity:0.5;"></div>` : ''}
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
 }
 
 // ===== MCQ LOGIC =====
@@ -2128,7 +2569,25 @@ In hydrostatic: oil film maintained by EXTERNAL supply under pressure</div>
   'ch2_5': { marks:2, source:'Mott (2013)', content:`<h4>Higher Endurance Limit → Longer Fatigue Life</h4><p>Higher Se raises the stress level below which infinite life is theoretically achievable. For a given operating stress σ_a: if σ_a < Se → infinite life. The higher Se is, the more "safety margin" exists above operating stress.</p><div class="kp">Caveat: High-strength steels have higher Se but also higher notch sensitivity (q→1). This offsets the Se benefit in the presence of stress raisers. Surface finishing and generous fillets remain essential even for high-strength steels.</div>` },
   'ch2_7': { marks:5, source:'KU Numerical Practice 4.3', content:`<h4>Stepped Shaft — SAE 1045 Water Quenched</h4><p><strong>Given:</strong> d=42mm, D=63mm, r=6.5mm, F=14,000N, arm=48mm</p><h4>Step 1 — Bending Moment</h4><div class="fml">M = F × arm = 14,000 × 48 = 672,000 N·mm</div><h4>Step 2 — Nominal Stress at d=42mm</h4><div class="fml">I = πd⁴/64 = π×42⁴/64 = 152,745 mm⁴
 σ_nom = M×c/I = 672,000×21/152,745 = 92.3 MPa</div><h4>Step 3 — Kt from Data Book</h4><div class="fml">D/d=1.5, r/d=0.155 → From Fig 2.23 Mahadevan: Kt≈1.43</div><h4>Step 4 — Maximum Stress</h4><div class="fml">σ_max = Kt×σ_nom = 1.43×92.3 = 132 MPa</div><h4>Step 5 — FOS</h4><div class="fml">SAE 1045 WQ: Sy=635MPa → FOS = 635/132 = 4.8</div>` },
-  'ch2_8': { marks:4, source:'KU Numerical Practice 4.4', content:`<h4>Does Enlarging Make it Stronger? — NO</h4><p><strong>Given:</strong> d1=20mm straight vs d2=25mm enlarged (Kt=1.74), σ_allow=80MPa</p><h4>Straight Bar (no Kt)</h4><div class="fml">P1 = 80 × π/4×20² = 80×314.2 = 25,130 N</div><h4>Enlarged Bar (Kt at fillet governs)</h4><div class="fml">P2 = 80×314.2/1.74 = 14,440 N</div><div class="kp"><strong>NO — enlarging REDUCES strength from 25.1kN to 14.4kN (43% reduction)!</strong> The fillet stress concentration governs. This demonstrates why stress raisers must always be considered — increasing diameter while ignoring fillet geometry weakens the component.</div>` },
+  'ch2_8': { marks:4, source:'KU Jun/Jul 2024, KU Numerical Practice 4.2, Mott (2013)', content:`<h4>Flat Plate with Central Hole — Gray Cast Iron, FOS=3.0</h4><p><strong>Given:</strong> F=5kN, Gray Cast Iron (High Grade), FOS=3.0, plate width=50mm, central hole dia=5R (approx R=hole radius from figure)</p><h4>Step 1 — Material Properties</h4><div class="fml">Gray Cast Iron, High Grade: S_ut ≈ 290 MPa (from data book)
+Design stress: σ_allow = S_ut / FOS = 290/3 = 96.7 MPa</div><h4>Step 2 — Stress Concentration Factor</h4><div class="fml">For plate with central hole:
+d/w = hole dia / plate width
+From Design Data Handbook (Mahadevan, Fig 2.12): Kt = f(d/w)
+For d/w = 0.2: Kt ≈ 2.5 (typical value; read from chart)</div><h4>Step 3 — Nominal Stress and Thickness</h4><div class="fml">σ_nom = σ_allow / Kt = 96.7 / 2.5 = 38.7 MPa
+
+σ_nom = F / A_net = F / [(w - d) × t]
+38.7 = 5000 / [(50 - d) × t]
+t = 5000 / [38.7 × (50 - d)]</div><div class="kp">The exact hole diameter 'd' must be read from the exam figure. Substitute the given hole size to find t. Note: Gray Cast Iron is brittle — Kt MUST be applied even for static loading (unlike ductile materials).</div><div class="wp">For brittle materials like Cast Iron: always apply Kt in static loading. For ductile materials (steel): Kt is typically ignored in static loading (stress redistribution occurs at yield).</div>` },
+
+  'ch8_10': { marks:4, source:'KU Past Exam Jun/Jul 2024, Mott (2013) §16', content:`<h4>Journal Bearing — Friction Coefficient from Charts</h4><p><strong>Given:</strong> D=35mm, L=30mm, W=1500N, N=1800rpm, R/c=700, μ=0.03Pa·s</p><h4>Step 1 — Bearing Pressure</h4><div class="fml">P = W/(L×D) = 1500/(30×35) = 1.429 N/mm² = 1,429,000 Pa</div><h4>Step 2 — Speed in rev/s</h4><div class="fml">N_s = 1800/60 = 30 rev/s</div><h4>Step 3 — Sommerfeld Number</h4><div class="fml">S = (μ×N_s/P) × (R/c)²
+S = (0.03 × 30 / 1,429,000) × 700²
+S = (6.30×10⁻⁷) × 490,000
+S = 0.309 ≈ 0.31</div><h4>Step 4 — Read Friction Variable from Chart 4</h4><div class="fml">L/D = 30/35 = 0.857 ≈ 1.0 (use L/D=1 curve as closest)
+From Chart 4 (Raimondi-Boyd, KU Slides Fig Chart 4):
+For S = 0.31, L/D ≈ 1.0 → f(R/c) ≈ 4.5 (read from chart)
+f = f(R/c) / (R/c) = 4.5 / 700 = 0.00643</div><h4>Step 5 — Verify and Calculate Power Loss</h4><div class="fml">Friction force = f × W = 0.00643 × 1500 = 9.65 N
+Surface velocity V = π×D×N/60 = π×0.035×30 = 3.30 m/s
+Power loss = F×V = 9.65 × 3.30 = 31.8 W</div><div class="kp">The exact f(R/c) value must be read from Chart 4 in the exam appendix or KU data book. The value 4.5 is approximate — interpolate between L/D curves for your exact L/D ratio. Always check h₀ adequacy: h₀_min = 0.00025×35 = 8.75μm.</div>` },
   'ch5a_1': { marks:2, source:'Bhandari (2010), KU Lecture Notes', content:`<h4>Riveted Joints in Aircraft</h4><ul><li><strong>Material:</strong> Aircraft aluminium alloys (2024, 7075) lose strength in weld HAZ — riveting avoids this</li><li><strong>Inspection:</strong> Rivets individually visible and replaceable without dismantling; critical for airworthiness certification</li><li><strong>Fatigue:</strong> Cold-worked rivet holes develop compressive residual stresses → better fatigue performance in thin aluminium sheets</li><li><strong>Damage tolerance:</strong> Cracks grow slowly between rivet holes (detectable); weld cracks propagate rapidly (catastrophic)</li></ul><div class="kp">Boeing 747: over 3 million fasteners, primarily rivets. Modern composites use bolted joints, but aluminium sections remain riveted.</div>` },
   'ch5a_2': { marks:2, source:'Bhandari (2010)', content:`<h4>Riveted Joints and Vibration</h4><p>Riveted joints resist vibration better than welded joints due to their <strong>damping properties</strong>. The clamped joint interface dissipates vibration energy through micro-slip and friction at the contact surfaces (frictional damping). Unlike welded rigid joints, riveted connections allow very slight relative movement that absorbs vibration energy, preventing resonance fatigue crack initiation.</p>` },
   'ch5a_3': { marks:2, source:'Bhandari (2010)', content:`<h4>Gusset Plate in Eccentric Loading</h4><p>A gusset plate distributes the eccentric load over a larger area, reducing the moment arm (eccentricity e), stiffening the connection, and providing sufficient area to accommodate a rivet group pattern. Without it, the full eccentric load concentrates at a small area creating very uneven rivet loading.</p>` },
@@ -2151,12 +2610,6 @@ Ft = T×rA/Σr² = 15,000,000×90/18,000 = 75,000 N (horizontal)</div><h4>Result
 τ_allow = 240/1.5 = 160 MPa
 d = √(4×79057/(π×160)) = 25.1mm → use 26mm</div>` },
   'ch5a_13': { marks:3, source:'KU Past Exam Jul/Aug 2024', content:`<h4>Effect of 30° Angled Load</h4><p>When load acts at 30° CCW from horizontal, the effective eccentricity moment changes. The horizontal component P·cos30° and vertical component P·sin30° create modified direct shear in each direction. The torsional moment T = P×e_perp where e_perp = perpendicular distance from load line to centroid.</p><p>For 30° load with same geometry: the resultant on the critical rivet will be different (generally reduced compared to purely vertical load due to changed vector addition), resulting in a slightly smaller required rivet diameter.</p>` },
-  'ch5a_14': { marks:3, source:'KU Past Exam Jun/Jul 2024', content:`<h4>4-Rivet Eccentric Joint — 5kN, SAE 1045, FOS=3</h4><div class="fml">SAE 1045 annealed: Sy=310MPa, τ_allow=0.577×310/3=59.6MPa
-Fs = 5000/4 = 1250 N per rivet
-T = P×e (e from exam figure)
-Ft = T×r_max/Σr² (critical rivet)
-F_max = √(Fs²+Ft²)
-d = √(4×F_max/(π×59.6))</div>` },
   'ch5a_15': { marks:4, source:'KU Past Exam Jul/Aug 2024', content:`<h4>Boiler Circumferential Joints — p=2.5N/mm², D=1.6m</h4><div class="fml">t = p×D/(2×σt×η_long) ≈ 2.5×1600/(2×75×0.80) = 33.3mm → 36mm
 d = 6√36 = 36mm
 N = p×(π/4×D²)/(π/4×d²×τ) = 2.5×(π/4×1600²)/(π/4×36²×60)
@@ -2174,13 +2627,6 @@ M = P×e = 10,000×30 = 300,000 N·mm
 q_torsional = T×r/Ip (Ip=polar moment of weld group)
 q_max = √(q_d²+q_t²+2q_d×q_t×cosθ)
 s = q_max/(0.707×τ_allow)</div>` },
-  'ch5b_5': { marks:4, source:'KU Past Exam Jan/Feb 2024', content:`<h4>Single Transverse + Double Parallel — 150kN</h4><p>From KU lecture notes formula for combination welds:</p><div class="fml">P = 0.707×s×l₁×σ_t + 1.414×s×l₂×τ
-where l₁ = width (transverse), l₂ = each parallel weld length
-
-Given allowable shear = 300N/mm (= 0.707×s×τ per mm):
-P_transverse = 300×w (where w = plate width from figure)
-P_parallel_total = P - P_transverse = 150,000 - 300w
-L (each parallel) = P_parallel_total/(2×300)</div>` },
   'ch5b_6': { marks:4, source:'KU Past Exam Apr/May 2023', content:`<h4>ISA Angle Weld — 200×150×20mm, 15kN</h4><div class="fml">For ISA 200×150×20: centroid at y₁≈56mm (from 150mm leg), y₂=150-56=94mm
 l_total = P/(0.707×s×τ) = 15,000/(0.707×20×70) = 15.15mm (for s=20mm min)
 
@@ -2308,6 +2754,23 @@ L/D=30/35≈1.0; From Chart 4: f(R/c)≈4.5
 f=4.5/700=0.00643
 Friction force=0.00643×1500=9.65N
 V=π×0.035×30=3.30m/s → Power loss=9.65×3.30=31.8W</div><div class="kp">Read f(R/c) from Chart 4 in the data book/appendix — the value depends on both S and L/D ratio from the chart.</div>` },
+
+  // ---- MISSING CH2_9 ----
+  'ch2_9': { marks:4, source:'KU Numerical Practice 4.4, Mott (2013)',
+    content:`<h4>Does Enlarging a Bar Make it Stronger? — Round Bar Comparison</h4>
+<p><strong>Given:</strong> Straight bar d₁=20mm vs. enlarged bar d₂=25mm (same d₁=20mm at fillet). Fillet r=2.5mm, Kt=1.74, σ_allow=80MPa.</p>
+<h4>Case 1 — Straight Bar (no stress concentration)</h4>
+<div class="fml">A₁ = π/4 × 20² = 314.2 mm²
+P₁ = σ_allow × A₁ = 80 × 314.2 = 25,130 N = 25.1 kN</div>
+<h4>Case 2 — Enlarged Bar (Kt at fillet governs, same small section d₁=20mm)</h4>
+<div class="fml">σ_max = Kt × σ_nom = 1.74 × (P₂/314.2) ≤ σ_allow = 80 MPa
+P₂ = 80 × 314.2 / 1.74 = 14,440 N = 14.4 kN</div>
+<h4>Conclusion</h4>
+<div class="kp"><strong>NO — enlarging does NOT make it stronger!</strong><br>
+P₁ = 25.1 kN vs P₂ = 14.4 kN — enlarging REDUCES the permissible load by 43%!<br>
+The fillet stress concentration (Kt=1.74) at the diameter change governs. The larger section beyond the fillet is irrelevant because failure occurs at the stress raiser.</div>
+<div class="wp">This counterintuitive result is why stress concentration must ALWAYS be considered at diameter changes. Increasing diameter while using a small fillet radius weakens the component. Solution: use a generous fillet radius to reduce Kt.</div>`
+  },
 };
 
 // ===== ANSWER FUNCTIONS =====
@@ -2814,7 +3277,181 @@ function clearProgress() {
   }
 }
 
+// ===== SEARCH =====
+function renderSearch() {
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+      <div style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);margin-bottom:4px;">🔍 Search</div>
+      <div style="font-size:13px;color:var(--text2);">Search across all questions, answers, concepts, formulas and MCQs.</div>
+    </div>
+    <div class="search-input-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search-box" type="text" placeholder="Type to search — e.g. 'eccentric', 'Sommerfeld', 'endurance limit'..." oninput="doSearch(this.value)" autofocus>
+    </div>
+    <div id="search-results"><div class="search-empty">Start typing to search across 83 questions, 40 MCQs, 27 flashcards, and all formulas.</div></div>
+  `;
+}
+
+function doSearch(query) {
+  const out = document.getElementById('search-results');
+  if(!query || query.length < 2) {
+    out.innerHTML = '<div class="search-empty">Type at least 2 characters to search.</div>';
+    return;
+  }
+  const q = query.toLowerCase();
+  const results = [];
+
+  // Search theory questions
+  Object.entries(chapters).forEach(([chKey, ch]) => {
+    ch.theory.forEach((item, idx) => {
+      const text = item.q.replace(/<[^>]+>/g,'').replace(/\n/g,' ');
+      if(text.toLowerCase().includes(q)) {
+        results.push({
+          type:'question', typeLabel:'Question', typeColor:'rgba(108,99,255,0.15)', typeTextColor:'var(--accent2)',
+          ch: ch.tag, text: text, score: text.toLowerCase().indexOf(q),
+          action: `navigate('${chKey}', document.querySelector('.sidebar-item[onclick*="${chKey}"]')); setTimeout(()=>{ switchTab('theory',document.querySelector('#tab-theory'),\'${chKey}\'); }, 100);`,
+          marks: item.marks, years: item.years
+        });
+      }
+    });
+    // Search concepts
+    ch.concepts.forEach(c => {
+      const text = c.title + ' ' + c.body;
+      if(text.toLowerCase().includes(q)) {
+        results.push({
+          type:'concept', typeLabel:'Concept', typeColor:'rgba(52,211,153,0.15)', typeTextColor:'var(--green)',
+          ch: ch.tag, text: c.title + ' — ' + c.body.replace(/<[^>]+>/g,''), score: 0,
+          action: `navigate('${chKey}', document.querySelector('.sidebar-item[onclick*="${chKey}"]')); setTimeout(()=>{ switchTab('concepts',document.querySelector('#tab-concepts' + Date.now()),\'${chKey}\'); }, 100);`
+        });
+      }
+    });
+  });
+
+  // Search MCQs
+  mcqData.forEach((m, idx) => {
+    const text = m.q + ' ' + m.options.join(' ');
+    if(text.toLowerCase().includes(q)) {
+      results.push({
+        type:'mcq', typeLabel:'MCQ', typeColor:'rgba(56,189,248,0.15)', typeTextColor:'var(--accent3)',
+        ch: m.chapter, text: m.q, score: 0,
+        action: `navigate('mcq', document.querySelectorAll('.sidebar-item')[12]);`
+      });
+    }
+  });
+
+  // Search flashcards
+  flashcards.forEach((fc, idx) => {
+    const text = fc.q + ' ' + fc.a;
+    if(text.toLowerCase().includes(q)) {
+      results.push({
+        type:'flashcard', typeLabel:'Flashcard', typeColor:'rgba(251,191,36,0.15)', typeTextColor:'var(--yellow)',
+        ch: fc.ch, text: fc.q, score: 0,
+        action: `navigate('flashcards', document.querySelectorAll('.sidebar-item')[13]);`
+      });
+    }
+  });
+
+  // Search formulas
+  formulaChapters.forEach(ch => {
+    ch.formulas.forEach(f => {
+      const text = f.name + ' ' + (f.note||'');
+      if(text.toLowerCase().includes(q)) {
+        results.push({
+          type:'formula', typeLabel:'Formula', typeColor:'rgba(251,146,60,0.15)', typeTextColor:'var(--orange)',
+          ch: ch.title, text: f.name + (f.note ? ' — ' + f.note : ''), score: 0,
+          action: `navigate('formulas', document.querySelectorAll('.sidebar-item')[17]);`
+        });
+      }
+    });
+  });
+
+  // Search design procedures
+  designProcedures.forEach(proc => {
+    proc.steps.forEach(s => {
+      const text = s.title + ' ' + (s.note||'');
+      if(text.toLowerCase().includes(q)) {
+        results.push({
+          type:'procedure', typeLabel:'Procedure', typeColor:'rgba(167,139,250,0.15)', typeTextColor:'var(--accent2)',
+          ch: proc.title, text: s.title + (s.note ? ' — ' + s.note : ''), score: 0,
+          action: `navigate('formulas', document.querySelectorAll('.sidebar-item')[17]); setTimeout(()=>document.getElementById('formula-tabs')?.children[1]?.click(), 300);`
+        });
+      }
+    });
+  });
+
+  if(results.length === 0) {
+    out.innerHTML = `<div class="search-empty">No results found for "<strong style="color:var(--text)">${escHtml(query)}"</strong>.<br>Try different keywords like chapter topics, formula names, or concept terms.</div>`;
+    return;
+  }
+
+  // Highlight matches
+  function highlight(text, q) {
+    const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
+    return escHtml(text.slice(0, 200)).replace(re, '<mark>$1</mark>');
+  }
+
+  out.innerHTML = `
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px;font-family:'JetBrains Mono',monospace;">${results.length} result${results.length!==1?'s':''} for "${escHtml(query)}"</div>
+    ${results.slice(0,30).map(r => `
+      <div class="search-result" onclick="${r.action}">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="sr-type" style="background:${r.typeColor};color:${r.typeTextColor};border:1px solid ${r.typeColor.replace('0.15','0.4')}">${r.typeLabel}</span>
+          <span class="sr-ch">${r.ch}</span>
+          ${r.marks ? `<span style="font-size:10px;color:var(--yellow);font-family:'JetBrains Mono',monospace;">[${r.marks}m]</span>` : ''}
+          ${r.years ? r.years.map(y=>`<span class="year-tag ${y==='Apr/May 2023'?'y2023':y==='Jan/Feb 2024'?'y2024a':'y2024b'}">${y}</span>`).join('') : ''}
+        </div>
+        <div class="sr-text">${highlight(r.text, query)}</div>
+      </div>
+    `).join('')}
+    ${results.length>30?`<div style="text-align:center;padding:12px;color:var(--text3);font-size:12px;">Showing 30 of ${results.length} results. Refine your search for more specific results.</div>`:''}
+  `;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+}
+
+// Close mobile menu when navigating
+const _origNavigate = navigate;
+window.navigate = function(view, el) {
+  _origNavigate(view, el);
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('mob-overlay');
+  if(sidebar.classList.contains('open')) {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+};
+
+// ===== LIVE SIDEBAR PROGRESS =====
+function updateSidebarStats() {
+  const p = loadProgress();
+  const viewed = Object.keys(p.viewed || {}).length;
+  const total = Object.values(chapters).reduce((s,c) => s+c.theory.length, 0);
+  const pct = Math.round(viewed/total*100);
+  const statsEl = document.querySelector('.stat-grid');
+  if(statsEl) {
+    statsEl.innerHTML = `
+      <div class="stat-box"><div class="num">${Object.values(chapters).reduce((s,c)=>s+c.theory.length,0)}</div><div class="label">Questions</div></div>
+      <div class="stat-box"><div class="num">${mcqData.length}</div><div class="label">MCQs</div></div>
+      <div class="stat-box"><div class="num">${pct}%</div><div class="label">Progress</div></div>
+      <div class="stat-box"><div class="num" id="mcq-score-sidebar">${(()=>{const c=Object.keys(mcqAnswers).filter(k=>mcqAnswers[k]===mcqData[k].correct).length,a=Object.keys(mcqAnswers).length;return a>0?Math.round(c/a*100)+'%':'0%';})()}</div><div class="label">MCQ Score</div></div>
+    `;
+  }
+}
+
+// Update stats on load
+setTimeout(updateSidebarStats, 300);
+
 // Close on Escape key
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeAnsBtn(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeAnsBtn(); } });
 </script>
 </body>
