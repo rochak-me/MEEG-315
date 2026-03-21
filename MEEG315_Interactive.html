@@ -1,37 +1,40 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>MEEG 315 Interactive</title>
-    <!-- Other head elements -->
+    <title>MEEG 315 Interactive Quiz</title>
+    <script>
+        function validateForm() {
+            const answers = document.querySelectorAll('input[type=radio]:checked');
+            let correctAnswers = 0;
+            const totalQuestions = 3; // Update this if more questions are added
+
+            answers.forEach(answer => {
+                if (answer.value === 'correct') {
+                    correctAnswers++;
+                }
+            });
+
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = `You got ${correctAnswers} out of ${totalQuestions} correct!`;
+        }
+    </script>
 </head>
 <body>
-    <div class="mcq">
-        <h2>Multiple Choice Questions</h2>
-        <form>
-            <div class="question" data-answer="B">
-                <p>What is the capital of France?</p>
-                <input type="radio" name="q1" value="A"> A) London<br>
-                <input type="radio" name="q1" value="B"> B) Paris<br>
-                <input type="radio" name="q1" value="C"> C) Berlin<br>
-            </div>
-            <div class="question" data-answer="A">
-                <p>What is 2 + 2?</p>
-                <input type="radio" name="q2" value="A"> A) 4<br>
-                <input type="radio" name="q2" value="B"> B) 3<br>
-                <input type="radio" name="q2" value="C"> C) 5<br>
-            </div>
-            <div class="question" data-answer="C">
-                <p>Which planet is known as the Red Planet?</p>
-                <input type="radio" name="q3" value="A"> A) Venus<br>
-                <input type="radio" name="q3" value="B"> B) Jupiter<br>
-                <input type="radio" name="q3" value="C"> C) Mars<br>
-            </div>
-            <!-- Add more questions as needed -->
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-    <script>
-        // JavaScript for handling the quiz logic
-    </script>
+    <h1>MEEG 315 Interactive Quiz</h1>
+    <form onsubmit="validateForm(); return false;">
+        <h2>Question 1:</h2>
+        <input type="radio" name="q1" value="correct"> Correct Answer<br>
+        <input type="radio" name="q1" value="wrong"> Wrong Answer<br>
+
+        <h2>Question 2:</h2>
+        <input type="radio" name="q2" value="wrong"> Wrong Answer<br>
+        <input type="radio" name="q2" value="correct"> Correct Answer<br>
+
+        <h2>Question 3:</h2>
+        <input type="radio" name="q3" value="correct"> Correct Answer<br>
+        <input type="radio" name="q3" value="wrong"> Wrong Answer<br>
+
+        <button type="submit">Submit</button>
+    </form>
+    <div id="feedback"></div>
 </body>
 </html>
