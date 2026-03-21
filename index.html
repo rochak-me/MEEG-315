@@ -1254,27 +1254,41 @@ const chapters = {
   ch6b: {
     title: "Design of Springs",
     tag: "Chapter 6B",
-    desc: "Helical compression/extension springs, spring index, Wahl's factor, stiffness, disc springs, composite springs, concentric springs.",
-    pills: ["Spring Index C", "Wahl's Factor", "Disc Springs", "Composite Springs", "Spring Rate"],
+    desc: "Helical compression springs, spring index, Wahl factor, stiffness, disc springs, composite springs, safety valve springs, spring balance, leaf springs, variable pitch.",
+    pills: ["Spring Index", "Wahl Factor", "Disc Springs", "Composite Springs", "Safety Valve", "Stiffness"],
     theory: [
-      { q: `Explain the application of disc springs (Belleville springs). Discuss the effects of stacking in series, parallel, and parallel-series arrangements.<br><br><svg viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:400px;background:#1a1e2a;border-radius:8px;padding:8px;display:block;margin-top:8px"><rect x="0" y="0" width="400" height="130" fill="#1a1e2a" rx="8"/><text x="55" y="15" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="monospace">Series</text><path d="M20,30 Q55,20 90,30" fill="none" stroke="#6c63ff" stroke-width="2.5"/><path d="M20,45 Q55,55 90,45" fill="none" stroke="#6c63ff" stroke-width="2.5"/><path d="M20,60 Q55,50 90,60" fill="none" stroke="#6c63ff" stroke-width="2.5"/><path d="M20,75 Q55,85 90,75" fill="none" stroke="#6c63ff" stroke-width="2.5"/><text x="55" y="100" fill="#6c63ff" font-size="9" text-anchor="middle" font-family="monospace">↕ more deflection</text><text x="55" y="112" fill="#64748b" font-size="8" text-anchor="middle" font-family="monospace">same load</text><text x="200" y="15" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="monospace">Parallel</text><path d="M155,50 Q200,35 245,50" fill="none" stroke="#fbbf24" stroke-width="2.5"/><path d="M155,50 Q200,65 245,50" fill="none" stroke="#fbbf24" stroke-width="2.5"/><path d="M155,70 Q200,55 245,70" fill="none" stroke="#fbbf24" stroke-width="2.5"/><path d="M155,70 Q200,85 245,70" fill="none" stroke="#fbbf24" stroke-width="2.5"/><text x="200" y="100" fill="#fbbf24" font-size="9" text-anchor="middle" font-family="monospace">↑ more load capacity</text><text x="200" y="112" fill="#64748b" font-size="8" text-anchor="middle" font-family="monospace">same deflection</text><text x="340" y="15" fill="#94a3b8" font-size="10" text-anchor="middle" font-family="monospace">Par-Series</text><path d="M295,40 Q320,30 345,40" fill="none" stroke="#34d399" stroke-width="2.5"/><path d="M295,40 Q320,50 345,40" fill="none" stroke="#34d399" stroke-width="2.5"/><path d="M345,60 Q368,50 391,60" fill="none" stroke="#34d399" stroke-width="2.5"/><path d="M345,60 Q368,70 391,60" fill="none" stroke="#34d399" stroke-width="2.5"/><text x="343" y="100" fill="#34d399" font-size="9" text-anchor="middle" font-family="monospace">Both load +</text><text x="343" y="112" fill="#64748b" font-size="8" text-anchor="middle" font-family="monospace">deflection</text></svg>`, marks: "3" },
-      { q: `Helical compression spring: load=500N at solid height=50mm. Min clearance=10mm. Max free length=100mm. Wire dia=10mm, G=80GPa. Find: active coils, spring rate, wire stress. Sketch.<br><br><svg viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:260px;background:#1a1e2a;border-radius:8px;padding:8px;display:block;margin-top:8px"><rect x="0" y="0" width="260" height="200" fill="#1a1e2a" rx="8"/><line x1="60" y1="10" x2="200" y2="10" stroke="#38bdf8" stroke-width="2"/><line x1="60" y1="170" x2="200" y2="170" stroke="#38bdf8" stroke-width="2"/><path d="M130,10 Q150,25 130,40 Q110,55 130,70 Q150,85 130,100 Q110,115 130,130 Q150,145 130,160 Q115,168 130,170" fill="none" stroke="#6c63ff" stroke-width="3"/><line x1="130" y1="10" x2="130" y2="170" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2"/><line x1="200" y1="10" x2="220" y2="10" stroke="#34d399" stroke-width="1"/><line x1="200" y1="170" x2="220" y2="170" stroke="#34d399" stroke-width="1"/><line x1="210" y1="10" x2="210" y2="170" stroke="#34d399" stroke-width="1"/><text x="225" y="95" fill="#34d399" font-size="9" font-family="monospace">Lf</text><text x="225" y="105" fill="#34d399" font-size="9" font-family="monospace">=100</text><line x1="40" y1="0" x2="40" y2="180" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2,2"/><text x="10" y="95" fill="#fbbf24" font-size="9" font-family="monospace">d=10</text><text x="70" y="95" fill="#94a3b8" font-size="9" font-family="monospace">D=?</text><text x="130" y="190" fill="#64748b" font-size="9" text-anchor="middle" font-family="monospace">Find n, k, τ using G=80GPa</text></svg>`, marks: "5" },
-      { q: "Composite spring (two in series): load=10kN, compressed 10mm each. Both: outer dia=50mm, wire dia=5mm, stiffness=15N/mm. Find maximum shear stress in both springs.", marks: "4", years: ["Apr/May 2023"] },
-      { q: "Design a helical spring for a safety valve: valve dia=65mm, max pressure=0.73MPa, lifts 3.2mm when pressure goes from 0.7 to 0.73MPa. Spring index=6, music wire (0.85%C), FOS=3.0.", marks: "6", years: ["Jun/Jul 2024"] },
+      { q: "Explain the application of disc springs (Belleville springs). Discuss the effects of stacking them in series, parallel, and parallel-series configurations.", marks: "3", years: ["Apr/May 2023", "Jul/Aug 2024"] },
+      { q: "In a new design for a battery casing remote controller, a conical spring was replaced with a helical compression spring of the same stiffness and material. Evaluate this design change.", marks: "2", years: ["Jun/Jul 2024"] },
+      { q: "What is a variable pitch spring? What is its primary advantage over a constant pitch spring? Give an application.", marks: "2", years: ["Apr/May 2023"] },
+      { q: "What is the main advantage of a multi-leaf spring compared to a single-leaf spring? Why is it preferred in heavy vehicle suspensions?", marks: "2", years: ["Apr/May 2023"] },
+      { q: "Concentric helical springs should be wound in opposite helix hands. Why? What happens if both are wound in the same direction?", marks: "2", years: ["Jul/Aug 2024"] },
+      { q: "For Spring 1 (D=50mm, d=5mm) and Spring 2 (D=20mm, d=4mm) — calculate the Wahl factor Kw for each and explain the effect of changing spring index on design stress.", marks: "3", years: ["Apr/May 2023"] },
+      { q: "A helical compression spring supports 500N at solid height=50mm. Min clearance=10mm, max free length=100mm. Wire dia d=10mm, G=80GPa (oil-tempered). Find: (i) active coils, (ii) spring rate, (iii) stress in wire. Sketch with dimensions.", marks: "5", years: ["Apr/May 2023"] },
+      { q: "A helical compression spring supports 500N with max deflection=50mm. G=80GPa, spring index C=8. Find: (i) wire diameter d, (ii) mean coil diameter D, (iii) number of active coils n.", marks: "4", years: ["Jun/Jul 2024"] },
+      { q: "Design a helical spring for a spring balance: max weight=1500N, scale length≈100mm, spring index C=6, Music Wire, FOS=1.5. Find: wire diameter, mean coil diameter, active coils, required spring rate, actual spring rate.", marks: "5", years: ["Jan/Feb 2024"] },
+      { q: "Design a valve spring for an automobile engine: force at closed=45N, force at open=55N, must fit over valve bush OD=20mm, inside space=35mm, valve lift=6mm, spring index C=12, chrome vanadium steel, FOS=2.", marks: "6", years: ["Dec 2024"] },
+      { q: "Design a helical spring for a spring-loaded safety valve: valve dia=65mm, max pressure=0.73MPa, valve lifts 3.2mm when pressure goes from 0.7 to 0.73MPa, C=6, Music Wire (0.85%C), FOS=3.", marks: "6", years: ["Jun/Jul 2024"] },
+      { q: "Composite spring (two springs in series): load=10kN, compressed 10mm each. Both: outer dia=50mm, wire dia=5mm, stiffness=15N/mm. Find maximum shear stress in each spring.", marks: "4", years: ["Apr/May 2023"] },
+      { q: "Composite spring system — Spring A: k=150N/m, Spring B: k=250N/m, in series, load=100N. Find: (i) equivalent stiffness, (ii) total deflection, (iii) individual deflections of A and B.", marks: "5", years: ["Jun/Jul 2024"] },
     ],
     important: [
-      { q: "Helical spring design — find number of coils, spring rate, wire stress, free length. Sketch required.", priority: "high" },
-      { q: "Disc spring stacking — series vs. parallel vs. combined — effects on load and deflection.", priority: "high" },
-      { q: "Spring index C and Wahl's factor — how changing C affects stress.", priority: "med" },
-      { q: "Safety valve spring design — full design problem.", priority: "med" },
+      { q: "Safety valve spring design — full procedure: forces from pressure, spring rate k, wire diameter, coil number. Appears in EVERY exam.", priority: "high" },
+      { q: "Helical spring design from scratch — given load + deflection + C + material → find d, D, n.", priority: "high" },
+      { q: "Composite springs series/parallel — equivalent stiffness, deflection distribution, stress.", priority: "high" },
+      { q: "Disc spring stacking — series vs parallel vs combined: effect on load and deflection.", priority: "med" },
+      { q: "Wahl factor Kw — formula and how changing C affects stress.", priority: "med" },
+      { q: "Conical vs helical spring comparison — what changes and why?", priority: "med" },
     ],
     concepts: [
-      { label: "Spring Index", title: "C = D/d and Wahl Factor", body: "Kw = (4C−1)/(4C−4) + 0.615/C. Higher C = larger, more flexible spring. Shear stress: τ = Kw·8FD/(πd³). Stiffness: k = Gd⁴/(8D³n)." },
-      { label: "Spring Stacking", title: "Series vs. Parallel", body: "Series: 1/k_total = 1/k₁ + 1/k₂ → less stiff, more deflection. Parallel: k_total = k₁ + k₂ → stiffer, less deflection. Same applies to disc springs." },
-      { label: "Disc Springs", title: "Belleville Spring Applications", body: "Used where high load in small axial space is required (valve springs, bolted flanges). Parallel stack: increases load capacity. Series stack: increases deflection. Opposite hands: prevents nesting." },
-      { label: "Concentric", title: "Opposite Helix Hands Rule", body: "Concentric helical springs must be wound in OPPOSITE helix hands (one LH, one RH). This prevents intermeshing during compression and reduces tangling at high deflections." },
+      { label: "Spring Index & Kw", title: "Spring Index C and Wahl Factor", body: "C = D/d  (mean coil dia / wire dia). Recommended: 5 ≤ C ≤ 12\nKw = (4C−1)/(4C−4) + 0.615/C\nLower C → higher Kw → more stress for same load. C < 5 avoided." },
+      { label: "Stress & Deflection", title: "Core Spring Formulas", body: "Shear stress: τ = Kw × 8FD/(πd³)\nDeflection: y = 8FD³n/(Gd⁴)\nStiffness: k = Gd⁴/(8D³n)\nAllowable τ ≈ 0.577×Sy/FOS ≈ 0.29×Sut (static loading)" },
+      { label: "Disc Springs", title: "Belleville Spring Stacking Rules", body: "Series (same direction): load same, deflection multiplies (×n)\nParallel (alternating): deflection same, load multiplies (×n)\nParallel-Series: both load and deflection increase\nHigh stiffness in minimal axial space" },
+      { label: "Composite", title: "Series vs Parallel Springs", body: "Series: 1/k_t = 1/k₁ + 1/k₂  (softer — same F on each)\nParallel: k_t = k₁ + k₂  (stiffer — same δ for each)\nSeries: F₁=F₂=F, y=y₁+y₂\nParallel: y₁=y₂=y, F=F₁+F₂" },
+      { label: "Safety Valve", title: "Safety Valve Spring — 7 Steps", body: "1. Valve area A = πD²/4\n2. F₁=p₁A (closed), F₂=p₂A (open)\n3. k = (F₂−F₁)/lift\n4. Kw for given C\n5. τ_allow = 0.6×Sut/FOS (from data book)\n6. Find d: τ = Kw×8F₂D/(πd³), D=Cd\n7. n = Gd⁴/(8D³k)" },
+      { label: "Lengths", title: "Solid Length, Free Length, Pitch", body: "Solid length: Ls = nt × d\nFree length: Lf = Ls + total gap + y_max\nPitch: p = Lf/(nt−1)\nSquared & ground ends: nt = n + 2 (2 inactive coils)\nGap per coil: 0.5–2mm" },
     ]
   },
+
   ch7: {
     title: "Selection of Rolling Contact Bearings",
     tag: "Chapter 7",
@@ -2973,7 +2987,204 @@ The fillet stress concentration (Kt=1.74) at the diameter change governs. The la
 <div class="wp">This counterintuitive result is why stress concentration must ALWAYS be considered at diameter changes. Increasing diameter while using a small fillet radius weakens the component. Solution: use a generous fillet radius to reduce Kt.</div>`
   },
 
-  // ===== MISSING ANSWERS — COMPLETE FILL =====
+  // ---- CH6B SPRINGS (new questions 4-12) ----
+  'ch6b_4': { marks:2, source:'KU Lecture Notes, Bhandari (2010)',
+    content:`<h4>Concentric Springs — Why Opposite Helix Hands?</h4>
+<p>Concentric helical springs (one inside the other) must always be wound in <strong>opposite helix directions</strong> — one left-hand (LH), one right-hand (RH).</p>
+<h4>Reasons</h4>
+<ul><li><strong>Prevent intermeshing:</strong> If both wound in the same direction, the coils of the outer spring can lock into the gaps of the inner spring during compression — causing jamming, unpredictable load-deflection behaviour, and damage</li><li><strong>Prevent tangling:</strong> Same-direction springs tend to nest together under vibration or torsional motion, making separation impossible without disassembly</li><li><strong>Balanced torque:</strong> Opposite hands means the torque reactions cancel each other — prevents torsional twist of the central loading plate/collar</li></ul>
+<div class="kp">Rule: In any concentric spring assembly — outer spring RH → inner spring LH (or vice versa). This is a standard design requirement in IS 7906 and other spring standards. Violation causes field failures that are very difficult to diagnose.</div>` },
+
+  'ch6b_5': { marks:3, source:'KU Lecture Notes, Bhandari (2010)',
+    content:`<h4>Wahl Factor Comparison — Effect of Spring Index on Stress</h4>
+<p><strong>Given:</strong> Spring 1: D=50mm, d=5mm → C₁ = D/d = 50/5 = 10<br>Spring 2: D=20mm, d=4mm → C₂ = D/d = 20/4 = 5</p>
+<h4>Wahl Factor Calculation</h4>
+<div class="fml">Kw = (4C−1)/(4C−4) + 0.615/C
+
+Spring 1 (C=10):
+Kw₁ = (40−1)/(40−4) + 0.615/10
+    = 39/36 + 0.0615
+    = 1.083 + 0.0615 = 1.145
+
+Spring 2 (C=5):
+Kw₂ = (20−1)/(20−4) + 0.615/5
+    = 19/16 + 0.123
+    = 1.188 + 0.123 = 1.311</div>
+<h4>Effect of Changing Spring Index</h4>
+<ul><li>Spring 2 (C=5) has Kw=1.311 vs Spring 1 (C=10) Kw=1.145</li><li>For the same force F and same mean diameter D: stress increases by (1.311/1.145 − 1) × 100% = <strong>14.5%</strong></li><li>Lower C (tighter coils) → higher Kw → more stress for same load → requires larger wire diameter or reduced load</li></ul>
+<div class="kp">Design rule: C &lt; 5 is avoided — very high Kw, difficult to manufacture (tight bending radius may crack wire). C &gt; 12 → prone to buckling. Target C = 6–10 for most applications.</div>` },
+
+  'ch6b_6': { marks:5, source:'KU Past Exam Apr/May 2023, Bhandari (2010)',
+    content:`<h4>Helical Spring: 500N, solid height=50mm, clearance≥10mm, free length≤100mm, d=10mm, G=80GPa</h4>
+<h4>Step 1 — Given Data</h4>
+<div class="fml">F = 500N, L_s = 50mm, d = 10mm, G = 80,000 MPa
+Min clearance = 10mm when compressed to solid</div>
+<h4>Step 2 — Number of Active Coils</h4>
+<div class="fml">For squared & ground ends: nt = Ls/d = 50/10 = 5 total coils
+Active coils: n = nt − 2 = 5 − 2 = 3</div>
+<h4>Step 3 — Spring Rate</h4>
+<div class="fml">From deflection formula: k = Gd⁴/(8D³n)
+Need D first: Assume C=6 → D = C×d = 6×10 = 60mm
+k = 80,000×10⁴/(8×60³×3)
+k = 800,000,000/(8×216,000×3) = 800,000,000/5,184,000
+k = 154.3 N/mm</div>
+<h4>Step 4 — Deflection and Free Length</h4>
+<div class="fml">Deflection to solid: y_s = F/k = 500/154.3 = 3.24mm
+Total gap = 10mm (minimum clearance requirement)
+Free length: Lf = Ls + y_s + total_gap = 50 + 3.24 + 10 = 63.2mm ≤ 100mm ✓</div>
+<h4>Step 5 — Stress in Wire</h4>
+<div class="fml">Kw = (4×6−1)/(4×6−4) + 0.615/6 = 23/20 + 0.1025 = 1.253
+τ = Kw × 8FD/(πd³) = 1.253 × 8×500×60/(π×1000)
+τ = 1.253 × 240,000/3,141.6 = 1.253 × 76.39 = 95.7 MPa</div>
+<div class="kp">Sketch must show: d=10mm, D=60mm, Do=70mm, Di=50mm, Ls=50mm, Lf=63.2mm, n=3 active coils, squared & ground ends. Compare τ with allowable from data book for oil-tempered wire.</div>` },
+
+  'ch6b_7': { marks:4, source:'KU Past Exam Jun/Jul 2024, Bhandari (2010)',
+    content:`<h4>Helical Spring: 500N, max deflection=50mm, G=80GPa, C=8</h4>
+<h4>Step 1 — Wahl Factor</h4>
+<div class="fml">C = 8
+Kw = (4×8−1)/(4×8−4) + 0.615/8 = 31/28 + 0.0769 = 1.107 + 0.0769 = 1.184</div>
+<h4>Step 2 — Wire Diameter</h4>
+<div class="fml">τ_allow for spring steel ≈ 420–560 MPa (use τ=420MPa if not given)
+From: τ = Kw × 8FC/(πd²)  (substituting D = Cd)
+420 = 1.184 × 8×500×8/(π×d²)
+420 = 1.184 × 32,000/(πd²)
+πd² = 1.184 × 32,000/420 = 90.16
+d² = 90.16/π = 28.7
+d = 5.36mm → round to d = 6mm (standard)</div>
+<h4>Step 3 — Mean Coil Diameter</h4>
+<div class="fml">D = C × d = 8 × 6 = 48mm</div>
+<h4>Step 4 — Number of Active Coils</h4>
+<div class="fml">From deflection: y = 8FD³n/(Gd⁴)
+50 = 8×500×48³×n/(80,000×6⁴)
+50 = 8×500×110,592×n/(80,000×1296)
+50 = 442,368,000×n/103,680,000
+50 = 4.267×n
+n = 50/4.267 = 11.7 → use n = 12 active coils</div>
+<div class="kp">Always round d UP to next standard size for safety. Then recalculate n with the actual d to get consistent design. Check: actual k = Gd⁴/(8D³n) and actual deflection with F=500N.</div>` },
+
+  'ch6b_8': { marks:5, source:'KU Past Exam Jan/Feb 2024, Bhandari (2010)',
+    content:`<h4>Spring Balance Design: W=1500N, scale=100mm, C=6, Music Wire, FOS=1.5</h4>
+<h4>Step 1 — Spring Rate Required</h4>
+<div class="fml">Scale length = deflection range = 100mm
+F = 1500N, y = 100mm
+k_req = F/y = 1500/100 = 15 N/mm</div>
+<h4>Step 2 — Material Properties</h4>
+<div class="fml">Music Wire (0.85%C): for estimated d≈5mm
+Sut ≈ 1750 MPa (from data book, Fig 22.3 Bhandari)
+τ_allow = 0.577×Sut/FOS × 0.5 ≈ 0.29×Sut/FOS
+τ_allow = 0.29×1750/1.5 = 338 MPa</div>
+<h4>Step 3 — Wahl Factor (C=6)</h4>
+<div class="fml">Kw = (4×6−1)/(4×6−4) + 0.615/6 = 23/20 + 0.1025 = 1.253</div>
+<h4>Step 4 — Wire Diameter</h4>
+<div class="fml">τ = Kw × 8FC/(πd²) ≤ τ_allow
+338 = 1.253 × 8×1500×6/(πd²)
+πd² = 1.253 × 72,000/338 = 267.1
+d² = 85.0 → d = 9.22mm → use d = 10mm</div>
+<h4>Step 5 — Mean Coil Diameter</h4>
+<div class="fml">D = C×d = 6×10 = 60mm</div>
+<h4>Step 6 — Active Coils</h4>
+<div class="fml">k = Gd⁴/(8D³n) → n = Gd⁴/(8D³k)
+n = 80,000×10⁴/(8×60³×15)
+n = 800,000,000/43,200,000 = 18.5 → n = 19 coils</div>
+<h4>Step 7 — Actual Spring Rate</h4>
+<div class="fml">k_actual = 80,000×10⁴/(8×60³×19) = 800,000,000/54,720,000 = 14.6 N/mm</div>
+<div class="kp">k_actual ≈ k_req ✓. Verify: τ_actual with d=10mm and check τ ≤ τ_allow. The slight difference between k_req and k_actual is acceptable (within 5%).</div>` },
+
+  'ch6b_9': { marks:6, source:'KU Past Exam Dec 2024, Bhandari (2010)',
+    content:`<h4>Automobile Valve Spring: F_closed=45N, F_open=55N, C=12, Chrome Vanadium, FOS=2</h4>
+<h4>Step 1 — Spring Geometry Constraints</h4>
+<div class="fml">Must fit OVER valve bush: D_i > 20mm → D − d > 20mm
+Must fit INSIDE space: D_o < 35mm → D + d < 35mm
+Valve lift (deflection when opening): δ = 6mm</div>
+<h4>Step 2 — Spring Rate</h4>
+<div class="fml">k = (F_open − F_closed)/lift = (55−45)/6 = 10/6 = 1.667 N/mm</div>
+<h4>Step 3 — Material Properties</h4>
+<div class="fml">Chrome vanadium steel: Sut ≈ 1900 MPa (for estimated d≈3mm, data book)
+Ssy = 0.577×Sy ≈ 0.577×0.75×Sut ≈ 0.433×1900 = 823 MPa
+τ_allow = Ssy/FOS = 823/2 = 411 MPa</div>
+<h4>Step 4 — Wahl Factor (C=12)</h4>
+<div class="fml">Kw = (4×12−1)/(4×12−4) + 0.615/12 = 47/44 + 0.051 = 1.068 + 0.051 = 1.119</div>
+<h4>Step 5 — Wire Diameter (design for F_open=55N)</h4>
+<div class="fml">τ = Kw × 8FC/(πd²) ≤ τ_allow
+411 = 1.119 × 8×55×12/(πd²)
+πd² = 1.119 × 5280/411 = 14.36
+d² = 4.57 → d = 2.14mm → use d = 2.5mm (standard)</div>
+<h4>Step 6 — Mean Coil Diameter and Check Space</h4>
+<div class="fml">D = C×d = 12×2.5 = 30mm
+Di = D−d = 30−2.5 = 27.5mm > 20mm ✓ (clears valve bush)
+Do = D+d = 30+2.5 = 32.5mm < 35mm ✓ (fits inside space)</div>
+<h4>Step 7 — Active Coils</h4>
+<div class="fml">n = Gd⁴/(8D³k) = 80,000×2.5⁴/(8×30³×1.667)
+= 80,000×39.06/(8×27,000×1.667)
+= 3,125,000/360,072 = 8.68 → n = 9 active coils</div>` },
+
+  'ch6b_10': { marks:6, source:'KU Past Exam Jun/Jul 2024, Bhandari (2010)',
+    content:`<h4>Safety Valve Spring: D_valve=65mm, p₁=0.7MPa, p₂=0.73MPa, lift=3.2mm, C=6, Music Wire, FOS=3</h4>
+<h4>Step 1 — Valve Forces</h4>
+<div class="fml">A_valve = π/4 × 65² = π/4 × 4225 = 3,318 mm²
+F₁ = p₁ × A = 0.7 × 3318 = 2,323 N  (spring force at valve closed)
+F₂ = p₂ × A = 0.73 × 3318 = 2,422 N  (spring force at valve just open)</div>
+<h4>Step 2 — Spring Rate</h4>
+<div class="fml">k = (F₂ − F₁)/lift = (2422 − 2323)/3.2 = 99/3.2 = 30.9 N/mm</div>
+<h4>Step 3 — Material & Allowable Stress</h4>
+<div class="fml">Music Wire 0.85%C: estimate d≈5mm → Sut ≈ 1750 MPa (data book)
+τ_ult = 0.6 × Sut = 0.6 × 1750 = 1050 MPa
+τ_allow = τ_ult / FOS = 1050/3 = 350 MPa</div>
+<h4>Step 4 — Wahl Factor (C=6)</h4>
+<div class="fml">Kw = (4×6−1)/(4×6−4) + 0.615/6 = 23/20 + 0.1025 = 1.253</div>
+<h4>Step 5 — Wire Diameter (design for maximum force F₂)</h4>
+<div class="fml">τ = Kw × 8F₂C/(πd²) ≤ τ_allow
+350 = 1.253 × 8×2422×6/(πd²)
+πd² = 1.253 × 116,256/350 = 416.3
+d² = 132.5 → d = 11.5mm → use d = 12mm</div>
+<h4>Step 6 — Mean Coil Diameter</h4>
+<div class="fml">D = C × d = 6 × 12 = 72mm</div>
+<h4>Step 7 — Number of Active Coils</h4>
+<div class="fml">n = Gd⁴/(8D³k) = 80,000×12⁴/(8×72³×30.9)
+= 80,000×20,736/(8×373,248×30.9)
+= 1,658,880,000/92,230,848 = 17.99 → n ≈ 18 active coils</div>
+<div class="kp">Verify: k_actual = 80,000×12⁴/(8×72³×18) = 30.9 N/mm ✓. Total coils nt = n+2 = 20 (squared & ground). Solid length Ls = nt×d = 240mm. Free length Lf = Ls + y + gap.</div>` },
+
+  'ch6b_11': { marks:4, source:'KU Past Exam Apr/May 2023, Bhandari (2010)',
+    content:`<h4>Composite Spring (Series): 10kN, both outer dia=50mm, wire dia=5mm, k=15N/mm</h4>
+<h4>Given Data</h4>
+<div class="fml">D_o = 50mm, d = 5mm → D = D_o − d = 50 − 5 = 45mm
+C = D/d = 45/5 = 9
+Both springs: k₁ = k₂ = 15 N/mm</div>
+<h4>Step 1 — Wahl Factor</h4>
+<div class="fml">Kw = (4×9−1)/(4×9−4) + 0.615/9
+   = 35/32 + 0.0683
+   = 1.094 + 0.0683 = 1.162</div>
+<h4>Step 2 — Force on Each Spring (Series Configuration)</h4>
+<div class="fml">In SERIES: each spring carries the SAME force as the applied load
+F₁ = F₂ = F = 10,000 N</div>
+<h4>Step 3 — Maximum Shear Stress in Each Spring</h4>
+<div class="fml">τ = Kw × 8FD/(πd³)
+τ = 1.162 × 8 × 10,000 × 45/(π × 5³)
+τ = 1.162 × 3,600,000/(π × 125)
+τ = 1.162 × 3,600,000/392.7
+τ = 1.162 × 9,167 = 10,652 MPa</div>
+<div class="wp">This stress is extremely high — indicating the spring stiffness of 15 N/mm² (note: likely N/mm) with a 10kN load means the spring compresses 667mm, which is unrealistic. Check if the problem means 15 N/mm (stiffness) and 10 kN (load) or if k=15 N/mm² is a different unit. In exam, use exact given values and compare τ to allowable shear stress from data book for spring material.</div>` },
+
+  'ch6b_12': { marks:5, source:'KU Past Exam Jun/Jul 2024, Bhandari (2010)',
+    content:`<h4>Composite Spring System (Series): k_A=150N/m, k_B=250N/m, Load=100N</h4>
+<h4>Step 1 — Equivalent Stiffness (Series)</h4>
+<div class="fml">1/k_eq = 1/k_A + 1/k_B = 1/150 + 1/250
+1/k_eq = 5/750 + 3/750 = 8/750
+k_eq = 750/8 = 93.75 N/m</div>
+<h4>Step 2 — Total Deflection</h4>
+<div class="fml">y_total = F/k_eq = 100/93.75 = 1.067 m = 1067 mm</div>
+<h4>Step 3 — Individual Deflections</h4>
+<div class="fml">In series: same force F=100N acts on each spring individually
+y_A = F/k_A = 100/150 = 0.667 m = 667 mm
+y_B = F/k_B = 100/250 = 0.400 m = 400 mm
+
+Check: y_A + y_B = 667 + 400 = 1067 mm = y_total ✓</div>
+<h4>Key Principles Explained</h4>
+<ul><li><strong>Series springs:</strong> Same force on each spring. Total deflection = sum of individual deflections.</li><li><strong>Equivalent stiffness:</strong> Always less than the softest individual spring (adding series springs always makes system SOFTER)</li><li><strong>Spring A</strong> (lower k=150 N/m) deflects MORE (667mm) than Spring B (400mm) — softer spring deflects more under same load</li></ul>
+<div class="kp">If in PARALLEL instead: k_eq = k_A + k_B = 400 N/m, y = F/k_eq = 100/400 = 0.25m, both springs deflect equally. Parallel springs are STIFFER.</div>` },
+
+
 
   // CH1
   'ch1_0': { marks:3, source:'KU Lecture Notes Ch.1, Collins et al. (2009)',
