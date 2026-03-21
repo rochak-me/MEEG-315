@@ -160,13 +160,6 @@
 
   .stat-box .label { font-size: 10px; color: var(--text3); margin-top: 1px; }
 
-  /* MAIN */
-  .main {
-    margin-left: 260px;
-    flex: 1;
-    padding: 0;
-  }
-
   /* TOPBAR */
   .topbar {
     background: var(--surface);
@@ -217,9 +210,21 @@
   }
 
   /* CONTENT AREA */
-  .content { padding: 32px; max-width: 900px; }
+  .content {
+    padding: 32px 40px;
+    max-width: 1100px;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
-  /* HERO */
+  /* MAIN fills all space after sidebar */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
   .chapter-hero {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -961,12 +966,19 @@
     .sidebar { transform:translateX(-100%); transition:transform 0.25s; width:280px; }
     .sidebar.open { transform:translateX(0); }
     .main { margin-left:0; }
+    .content { padding:16px; max-width:100%; }
     .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:99; }
     .mob-overlay.show { display:block; }
     .mob-menu-btn { display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:8px; background:var(--surface2); border:1px solid var(--border); cursor:pointer; font-size:16px; }
-    .content { padding:16px; }
     .fc-grid { grid-template-columns:1fr; }
     .concept-grid { grid-template-columns:1fr; }
+    .chapter-hero { padding:20px; }
+  }
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .content { padding:24px 28px; max-width:100%; }
+  }
+  @media (min-width: 1201px) {
+    .content { padding:32px 48px; max-width:1200px; }
   }
   @media (min-width: 769px) {
     .mob-menu-btn { display:none; }
@@ -1040,9 +1052,9 @@
 
     <div class="sidebar-stats">
       <div class="stat-grid">
-        <div class="stat-box"><div class="num">83</div><div class="label">Questions</div></div>
+        <div class="stat-box"><div class="num" id="sb-questions">83</div><div class="label">Questions</div></div>
         <div class="stat-box"><div class="num" id="sidebar-mcq-count">105</div><div class="label">MCQs</div></div>
-        <div class="stat-box"><div class="num">8</div><div class="label">Chapters</div></div>
+        <div class="stat-box"><div class="num" id="sb-progress">0%</div><div class="label">Progress</div></div>
         <div class="stat-box"><div class="num" id="mcq-score-sidebar">0%</div><div class="label">MCQ Score</div></div>
       </div>
     </div>
@@ -3640,17 +3652,20 @@ function updateSidebarStats() {
   const viewed = Object.keys(p.viewed || {}).length;
   const total = Object.values(chapters).reduce((s,c) => s+c.theory.length, 0);
   const pct = Math.round(viewed/total*100);
-  // Update sidebar MCQ count
-  const mcqEl = document.getElementById('sidebar-mcq-count');
-  if(mcqEl) mcqEl.textContent = mcqData.length;
-  const statsEl = document.querySelector('.stat-grid');
-  if(statsEl) {
-    statsEl.innerHTML = `
-      <div class="stat-box"><div class="num">${Object.values(chapters).reduce((s,c)=>s+c.theory.length,0)}</div><div class="label">Questions</div></div>
-      <div class="stat-box"><div class="num">${mcqData.length}</div><div class="label">MCQs</div></div>
-      <div class="stat-box"><div class="num">${pct}%</div><div class="label">Progress</div></div>
-      <div class="stat-box"><div class="num" id="mcq-score-sidebar">${(()=>{const c=Object.keys(mcqAnswers).filter(k=>mcqAnswers[k]===mcqData[k].correct).length,a=Object.keys(mcqAnswers).length;return a>0?Math.round(c/a*100)+'%':'0%';})()}</div><div class="label">MCQ Score</div></div>
-    `;
+
+  // Update each sidebar stat box by ID
+  const sbQ = document.getElementById('sb-questions');
+  const sbMcq = document.getElementById('sidebar-mcq-count');
+  const sbProg = document.getElementById('sb-progress');
+  const sbScore = document.getElementById('mcq-score-sidebar');
+
+  if(sbQ) sbQ.textContent = total;
+  if(sbMcq) sbMcq.textContent = mcqData.length;
+  if(sbProg) sbProg.textContent = pct + '%';
+  if(sbScore) {
+    const attempted = Object.keys(mcqAnswers).length;
+    const correct = Object.keys(mcqAnswers).filter(k => mcqAnswers[parseInt(k)] === mcqData[parseInt(k)].correct).length;
+    sbScore.textContent = attempted > 0 ? Math.round(correct/attempted*100)+'%' : '0%';
   }
 }
 
