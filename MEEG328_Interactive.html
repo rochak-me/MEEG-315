@@ -1546,6 +1546,78 @@ body::before {
   .content { padding: 24px 28px; }
   .qa-grid { grid-template-columns: repeat(4, 1fr); }
 }
+
+/* ══ SVG CHART ANIMATIONS ══ */
+@keyframes svgFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.vis-box svg { animation: svgFadeIn 0.35s ease both; }
+
+.vis-box svg polyline,
+.vis-box svg polygon:not([fill*="url"]) {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawLine 1.2s cubic-bezier(0.4,0,0.2,1) 0.1s both;
+}
+
+/* Progress bars animate width */
+.prog-bar { animation: progGrow 0.6s cubic-bezier(0.4,0,0.2,1) both; }
+@keyframes progGrow {
+  from { width: 0 !important; }
+}
+
+/* Answer modal animate in */
+.ans-overlay.open .ans-modal {
+  animation: modalSlideUp 0.28s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 768px) {
+  .ans-overlay.open .ans-modal {
+    animation: sheetSlideUp 0.3s cubic-bezier(0.34,1.12,0.64,1) both;
+  }
+  @keyframes sheetSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+}
+
+/* Sidebar item hover glow */
+.sidebar-item:hover .dot {
+  box-shadow: 0 0 6px var(--accent);
+}
+
+/* Tab btn active glow */
+.tab-btn.active {
+  box-shadow: 0 0 12px rgba(34,211,160,0.12);
+}
+
+/* Question card open animation */
+.q-card {
+  animation: fadeUp 0.18s ease both;
+}
+
+/* Stagger q-cards */
+.q-card:nth-child(1)  { animation-delay: 0.02s; }
+.q-card:nth-child(2)  { animation-delay: 0.04s; }
+.q-card:nth-child(3)  { animation-delay: 0.06s; }
+.q-card:nth-child(4)  { animation-delay: 0.08s; }
+.q-card:nth-child(5)  { animation-delay: 0.10s; }
+.q-card:nth-child(6)  { animation-delay: 0.12s; }
+.q-card:nth-child(7)  { animation-delay: 0.14s; }
+.q-card:nth-child(8)  { animation-delay: 0.16s; }
+.q-card:nth-child(9)  { animation-delay: 0.18s; }
+.q-card:nth-child(10) { animation-delay: 0.20s; }
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -2433,108 +2505,6 @@ function renderReferences(){
   </div>
   `;
 
-  // ── IV Curve — solar cell at 25°C and 60°C ──
-  const ivCtx = document.getElementById('ch-ivcurve');
-  if(ivCtx && !ivCtx._chartjs){
-    // Generate IV curve points using diode equation
-    const genIV = (Isc, Voc, n=1.3) => {
-      const pts = [];
-      for(let v=0; v<=Voc; v+=Voc/60){
-        const i = Math.max(0, Isc*(1 - Math.exp((v-Voc)/(n*0.026))+Math.exp(-Voc/(n*0.026))));
-        pts.push({x: +v.toFixed(3), y: +i.toFixed(3)});
-      }
-      return pts;
-    };
-    const iv25 = genIV(8.5, 37.2);   // STC 25°C
-    const iv60 = genIV(8.7, 33.5);   // 60°C — Voc drops ~3.7V (35×2.3mV×46 cells ÷ 1000 × 46)
-
-    // Find Pmax point for 25°C
-    let pmaxIdx = 0, pmaxVal = 0;
-    iv25.forEach((p,i) => { const pw = p.x*p.y; if(pw>pmaxVal){pmaxVal=pw; pmaxIdx=i;} });
-    const pmax25 = iv25[pmaxIdx];
-
-    // Create horizontal/vertical reference lines as extra datasets
-    const iscLine = iv25.slice(0,2).map((p,i) => ({x: i===0?0:37.2, y: 8.5}));
-    const vocLine = [{x:37.2,y:0},{x:37.2,y:0.1}];
-
-    new Chart(ivCtx, {
-      type: 'line',
-      data: {
-        datasets: [
-          {
-            label: '25°C (STC)',
-            data: iv25,
-            borderColor: '#22d3a0',
-            backgroundColor: 'rgba(34,211,160,0.08)',
-            fill: true, tension: 0, pointRadius: 0, borderWidth: 2.5,
-          },
-          {
-            label: '60°C (Hot Day)',
-            data: iv60,
-            borderColor: '#f87171',
-            backgroundColor: 'transparent',
-            fill: false, tension: 0, pointRadius: 0, borderWidth: 2, borderDash: [6,3],
-          },
-          {
-            label: 'Pmax (25°C) = ' + pmaxVal.toFixed(1) + 'W',
-            data: [pmax25],
-            borderColor: '#fbbf24',
-            backgroundColor: '#fbbf24',
-            pointRadius: 9, pointStyle: 'star', showLine: false, pointHoverRadius: 11,
-          },
-          {
-            label: 'Isc line',
-            data: [{x:0,y:8.5},{x:pmax25.x,y:8.5}],
-            borderColor: 'rgba(34,211,160,0.3)',
-            borderDash: [3,3], pointRadius: 0, showLine: true, borderWidth: 1,
-            fill: false, legend: {display: false},
-          },
-          {
-            label: 'Voc line',
-            data: [{x:37.2,y:0},{x:37.2,y:0.3}],
-            borderColor: 'rgba(34,211,160,0.3)',
-            borderDash: [3,3], pointRadius: 0, showLine: true, borderWidth: 1,
-            fill: false,
-          },
-        ]
-      },
-      options: {
-        responsive: true, parsing: false,
-        plugins: {
-          legend: {
-            position: 'top',
-            labels: {
-              boxWidth: 12, padding: 14,
-              filter: (item) => !item.text.includes('line'),
-            }
-          },
-          tooltip: {
-            callbacks: {
-              label: ctx => {
-                if(ctx.dataset.label.includes('Pmax')) return ' Pmax = ' + (ctx.parsed.x*ctx.parsed.y).toFixed(1) + ' W at V=' + ctx.parsed.x.toFixed(1) + 'V';
-                if(ctx.dataset.label.includes('line')) return null;
-                return ' I = ' + ctx.parsed.y.toFixed(2) + ' A  at  V = ' + ctx.parsed.x.toFixed(2) + ' V';
-              }
-            }
-          }
-        },
-        scales: {
-          x: {
-            type: 'linear', min: 0, max: 40,
-            title: { display: true, text: 'Voltage (V)', color: '#4a5470' },
-            grid: { color: '#1a2530' },
-            ticks: { callback: v => v + 'V' }
-          },
-          y: {
-            min: 0, max: 10,
-            title: { display: true, text: 'Current (A)', color: '#4a5470' },
-            grid: { color: '#1a2530' },
-            ticks: { callback: v => v + 'A' }
-          }
-        }
-      }
-    });
-  }
 
 }
 
@@ -2682,6 +2652,110 @@ function initAnswerCharts(){
       }
     });
   }
+
+  // ── IV Curve — solar cell at 25°C and 60°C ──
+  const ivCtx = document.getElementById('ch-ivcurve');
+  if(ivCtx && !ivCtx._chartjs){
+    // Generate IV curve points using diode equation
+    const genIV = (Isc, Voc, n=1.3) => {
+      const pts = [];
+      for(let v=0; v<=Voc; v+=Voc/60){
+        const i = Math.max(0, Isc*(1 - Math.exp((v-Voc)/(n*0.026))+Math.exp(-Voc/(n*0.026))));
+        pts.push({x: +v.toFixed(3), y: +i.toFixed(3)});
+      }
+      return pts;
+    };
+    const iv25 = genIV(8.5, 37.2);   // STC 25°C
+    const iv60 = genIV(8.7, 33.5);   // 60°C — Voc drops ~3.7V (35×2.3mV×46 cells ÷ 1000 × 46)
+
+    // Find Pmax point for 25°C
+    let pmaxIdx = 0, pmaxVal = 0;
+    iv25.forEach((p,i) => { const pw = p.x*p.y; if(pw>pmaxVal){pmaxVal=pw; pmaxIdx=i;} });
+    const pmax25 = iv25[pmaxIdx];
+
+    // Create horizontal/vertical reference lines as extra datasets
+    const iscLine = iv25.slice(0,2).map((p,i) => ({x: i===0?0:37.2, y: 8.5}));
+    const vocLine = [{x:37.2,y:0},{x:37.2,y:0.1}];
+
+    new Chart(ivCtx, {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            label: '25°C (STC)',
+            data: iv25,
+            borderColor: '#22d3a0',
+            backgroundColor: 'rgba(34,211,160,0.08)',
+            fill: true, tension: 0, pointRadius: 0, borderWidth: 2.5,
+          },
+          {
+            label: '60°C (Hot Day)',
+            data: iv60,
+            borderColor: '#f87171',
+            backgroundColor: 'transparent',
+            fill: false, tension: 0, pointRadius: 0, borderWidth: 2, borderDash: [6,3],
+          },
+          {
+            label: 'Pmax (25°C) = ' + pmaxVal.toFixed(1) + 'W',
+            data: [pmax25],
+            borderColor: '#fbbf24',
+            backgroundColor: '#fbbf24',
+            pointRadius: 9, pointStyle: 'star', showLine: false, pointHoverRadius: 11,
+          },
+          {
+            label: 'Isc line',
+            data: [{x:0,y:8.5},{x:pmax25.x,y:8.5}],
+            borderColor: 'rgba(34,211,160,0.3)',
+            borderDash: [3,3], pointRadius: 0, showLine: true, borderWidth: 1,
+            fill: false, legend: {display: false},
+          },
+          {
+            label: 'Voc line',
+            data: [{x:37.2,y:0},{x:37.2,y:0.3}],
+            borderColor: 'rgba(34,211,160,0.3)',
+            borderDash: [3,3], pointRadius: 0, showLine: true, borderWidth: 1,
+            fill: false,
+          },
+        ]
+      },
+      options: {
+        responsive: true, parsing: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              boxWidth: 12, padding: 14,
+              filter: (item) => !item.text.includes('line'),
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                if(ctx.dataset.label.includes('Pmax')) return ' Pmax = ' + (ctx.parsed.x*ctx.parsed.y).toFixed(1) + ' W at V=' + ctx.parsed.x.toFixed(1) + 'V';
+                if(ctx.dataset.label.includes('line')) return null;
+                return ' I = ' + ctx.parsed.y.toFixed(2) + ' A  at  V = ' + ctx.parsed.x.toFixed(2) + ' V';
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'linear', min: 0, max: 40,
+            title: { display: true, text: 'Voltage (V)', color: '#4a5470' },
+            grid: { color: '#1a2530' },
+            ticks: { callback: v => v + 'V' }
+          },
+          y: {
+            min: 0, max: 10,
+            title: { display: true, text: 'Current (A)', color: '#4a5470' },
+            grid: { color: '#1a2530' },
+            ticks: { callback: v => v + 'A' }
+          }
+        }
+      }
+    });
+  }
+
 }
 
 // ═══════════════════════════════════════════════════════
@@ -2892,6 +2966,7 @@ const chapterSummaries = {
     keyFormulas: ['P_hydro = ρgQHη', 'P/A_tidal = ½ρ_water×v³', 'E_OTEC → needs ΔT >10°C'],
     mindmapColor: '#60a5fa',
   },
+
 };
 
 function renderSummary(view){
@@ -3841,10 +3916,46 @@ function buildRefs(keys){
 <p>Biological decomposition of organic matter by microorganisms in the <strong>complete absence of oxygen</strong>, producing biogas and nutrient-rich digestate.</p>
 
 <h4>4 Biochemical Stages</h4>
-<div class="vis-box">
-  <div class="vis-title">Biochemical Pathway of Anaerobic Digestion</div>
-  <canvas id="ch-biochem" height="80"></canvas>
-</div>
+<div class="vis-box" style="padding:0;overflow:hidden;border-radius:10px;">
+<svg viewBox="0 0 560 175" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d1318;">
+  <defs><marker id="arrAD" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3a5568"/></marker></defs>
+  <text x="280" y="22" fill="#3a5568" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="0.1em">BIOCHEMICAL PATHWAY — ANAEROBIC DIGESTION</text>
+  <!-- Boxes -->
+  <rect x="10" y="35" width="118" height="72" rx="8" fill="#0a1a14" stroke="#22d3a0" stroke-width="1.5"/>
+  <rect x="150" y="35" width="118" height="72" rx="8" fill="#0a1420" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="290" y="35" width="118" height="72" rx="8" fill="#1a140a" stroke="#fbbf24" stroke-width="1.5"/>
+  <rect x="430" y="35" width="118" height="72" rx="8" fill="#150a1a" stroke="#a78bfa" stroke-width="1.5"/>
+  <!-- Titles -->
+  <text x="69" y="52" fill="#22d3a0" font-size="11" font-family="Syne,sans-serif" text-anchor="middle" font-weight="700">Hydrolysis</text>
+  <text x="209" y="52" fill="#38bdf8" font-size="11" font-family="Syne,sans-serif" text-anchor="middle" font-weight="700">Acidogenesis</text>
+  <text x="349" y="52" fill="#fbbf24" font-size="11" font-family="Syne,sans-serif" text-anchor="middle" font-weight="700">Acetogenesis</text>
+  <text x="489" y="52" fill="#a78bfa" font-size="11" font-family="Syne,sans-serif" text-anchor="middle" font-weight="700">Methanogenesis</text>
+  <!-- Stage numbers -->
+  <text x="69" y="64" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="middle">Stage 1</text>
+  <text x="209" y="64" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="middle">Stage 2</text>
+  <text x="349" y="64" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="middle">Stage 3</text>
+  <text x="489" y="64" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="middle">Stage 4</text>
+  <!-- Descriptions -->
+  <text x="69" y="79" fill="#7a9ab0" font-size="8.5" font-family="DM Sans,sans-serif" text-anchor="middle">Polymers → Monomers</text>
+  <text x="69" y="92" fill="#4a6070" font-size="7.5" font-family="DM Sans,sans-serif" text-anchor="middle">(sugars, amino acids,</text>
+  <text x="69" y="102" fill="#4a6070" font-size="7.5" font-family="DM Sans,sans-serif" text-anchor="middle">fatty acids)</text>
+  <text x="209" y="79" fill="#7a9ab0" font-size="8.5" font-family="DM Sans,sans-serif" text-anchor="middle">Monomers → VFAs</text>
+  <text x="209" y="92" fill="#4a6070" font-size="7.5" font-family="DM Sans,sans-serif" text-anchor="middle">+ CO₂ + H₂</text>
+  <text x="349" y="79" fill="#7a9ab0" font-size="8.5" font-family="DM Sans,sans-serif" text-anchor="middle">VFAs → Acetic Acid</text>
+  <text x="349" y="92" fill="#4a6070" font-size="7.5" font-family="DM Sans,sans-serif" text-anchor="middle">+ H₂ + CO₂</text>
+  <text x="489" y="77" fill="#7a9ab0" font-size="8.5" font-family="DM Sans,sans-serif" text-anchor="middle">CH₄ + CO₂</text>
+  <text x="489" y="89" fill="#a78bfa" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="middle">⭢ RATE LIMITING</text>
+  <text x="489" y="101" fill="#4a6070" font-size="7.5" font-family="DM Sans,sans-serif" text-anchor="middle">pH 6.8–7.2</text>
+  <!-- Arrows -->
+  <line x1="130" y1="71" x2="146" y2="71" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrAD)"/>
+  <line x1="270" y1="71" x2="286" y2="71" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrAD)"/>
+  <line x1="410" y1="71" x2="426" y2="71" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrAD)"/>
+  <!-- Output pill -->
+  <rect x="380" y="118" width="168" height="22" rx="5" fill="rgba(167,139,250,0.1)" stroke="rgba(167,139,250,0.3)" stroke-width="1"/>
+  <text x="464" y="133" fill="#a78bfa" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Biogas: 55–70% CH₄ + CO₂</text>
+  <!-- Footer -->
+  <text x="280" y="162" fill="#2a3a48" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle">Optimum temp: 35°C mesophilic  |  HRT: 30–60 days  |  C:N ratio: 20–30:1</text>
+</svg></div>
 <p style="font-size:12px;color:var(--text2);">Pathways: (a) Acetotrophic: $4CH_3COOH \\rightarrow 4CO_2 + 4CH_4$  &nbsp;&nbsp; (b) Hydrogenotrophic: $CO_2 + 4H_2 \\rightarrow CH_4 + 2H_2O$</p>
 
 <h4>Biogas Plant Design — 500 kg Cattle Dung/day (Janakpur)</h4>
@@ -3885,10 +3996,32 @@ function buildRefs(keys){
   'ch4_1': { marks:5, refs:['ku-slides', 'ku-exam-2024', 'duffie'], content:`<h4>Solar Collector Area Calculation — Commercial Building 1200 L/day</h4>
 <p><em>Given: T<sub>i</sub> = 10°C, T<sub>o</sub> = 55°C, G = 4 kWh/m²/day, demand = 1200 L/day, η<sub>sys</sub> = 80%, η<sub>coll</sub> = 60%</em></p>
 
-<div class="vis-box">
-  <div class="vis-title">Solar Collector Energy Balance</div>
-  <canvas id="ch-collector" height="90"></canvas>
-</div>
+<div class="vis-box" style="padding:0;overflow:hidden;border-radius:10px;">
+<svg viewBox="0 0 560 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d1318;">
+  <text x="280" y="18" fill="#3a5568" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="0.1em">SOLAR COLLECTOR — ENERGY BALANCE (1200 L/day EXAMPLE)</text>
+  <!-- Bar background tracks -->
+  <rect x="140" y="35" width="360" height="28" rx="4" fill="#111820"/>
+  <rect x="140" y="73" width="360" height="28" rx="4" fill="#111820"/>
+  <rect x="140" y="111" width="360" height="28" rx="4" fill="#111820"/>
+  <rect x="140" y="149" width="360" height="28" rx="4" fill="#111820"/>
+  <!-- Bars — scaled: 96kWh=full=360px, so 1kWh=3.75px -->
+  <rect x="140" y="35" width="360" height="28" rx="4" fill="rgba(251,191,36,0.25)" stroke="#fbbf24" stroke-width="1.5"/>
+  <rect x="140" y="73" width="216" height="28" rx="4" fill="rgba(34,211,160,0.25)" stroke="#22d3a0" stroke-width="1.5"/>
+  <rect x="140" y="111" width="43" height="28" rx="4" fill="rgba(248,113,113,0.25)" stroke="#f87171" stroke-width="1.5"/>
+  <rect x="140" y="149" width="173" height="28" rx="4" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="1.5"/>
+  <!-- Labels left -->
+  <text x="130" y="54" fill="#7a9ab0" font-size="9.5" font-family="DM Sans,sans-serif" text-anchor="end">Incident Solar</text>
+  <text x="130" y="92" fill="#7a9ab0" font-size="9.5" font-family="DM Sans,sans-serif" text-anchor="end">Collector Output</text>
+  <text x="130" y="130" fill="#7a9ab0" font-size="9.5" font-family="DM Sans,sans-serif" text-anchor="end">System Losses</text>
+  <text x="130" y="168" fill="#7a9ab0" font-size="9.5" font-family="DM Sans,sans-serif" text-anchor="end">Useful Heat</text>
+  <!-- Values right -->
+  <text x="508" y="54" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace">96 kWh/day</text>
+  <text x="364" y="92" fill="#22d3a0" font-size="9" font-family="JetBrains Mono,monospace">57.7 kWh (η=60%)</text>
+  <text x="191" y="130" fill="#f87171" font-size="9" font-family="JetBrains Mono,monospace">11.5 kWh (20%)</text>
+  <text x="321" y="168" fill="#38bdf8" font-size="9" font-family="JetBrains Mono,monospace">46.2 kWh</text>
+  <!-- Subtitle -->
+  <text x="280" y="183" fill="#2a3a48" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle">G=4 kWh/m²/day  |  η_coll=60%  |  η_sys=80%  |  Ac = collector area</text>
+</svg></div>
 
 <div class="derivation">
   <span class="step-num">Step 1 — Daily Heat Demand</span>
@@ -3911,10 +4044,74 @@ function buildRefs(keys){
 <p>The photovoltaic effect: photons strike the p-n junction → electron-hole pairs generated → separated by built-in electric field → DC current flows.</p>
 
 <h4>Ideal IV Characteristics & Temperature Effect</h4>
-<div class="vis-box">
-  <div class="vis-title">IV Characteristics — Solar Cell (25°C STC vs 60°C Hot Day)</div>
-  <canvas id="ch-ivcurve" height="140"></canvas>
-</div>
+<div class="vis-box" style="padding:0;overflow:hidden;border-radius:10px;">
+<svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d1318;">
+  <defs>
+    <linearGradient id="iv25fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22d3a0" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#22d3a0" stop-opacity="0.02"/>
+    </linearGradient>
+    <marker id="arrowX" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#3a5568" stroke-width="1"/>
+    </marker>
+    <marker id="arrowY" markerWidth="6" markerHeight="6" refX="3" refY="0" orient="auto">
+      <path d="M0,6 L3,0 L6,6" fill="none" stroke="#3a5568" stroke-width="1"/>
+    </marker>
+  </defs>
+  <!-- Grid lines -->
+  <line x1="70" y1="20" x2="70" y2="195" stroke="#1a2530" stroke-width="1"/>
+  <line x1="70" y1="195" x2="520" y2="195" stroke="#1a2530" stroke-width="1"/>
+  <line x1="70" y1="155" x2="520" y2="155" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="70" y1="115" x2="520" y2="115" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="70" y1="75" x2="520" y2="75" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="195" y1="20" x2="195" y2="195" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="320" y1="20" x2="320" y2="195" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="445" y1="20" x2="445" y2="195" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <!-- Axes with arrows -->
+  <line x1="70" y1="195" x2="525" y2="195" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrowX)"/>
+  <line x1="70" y1="195" x2="70" y2="15" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrowY)"/>
+  <!-- Axis labels -->
+  <text x="525" y="210" fill="#4a5470" font-size="11" font-family="JetBrains Mono,monospace" text-anchor="middle">V (V)</text>
+  <text x="20" y="108" fill="#4a5470" font-size="11" font-family="JetBrains Mono,monospace" text-anchor="middle" transform="rotate(-90,20,108)">I (A)</text>
+  <!-- Tick marks and values -->
+  <text x="70" y="210" fill="#3a5568" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">0</text>
+  <text x="195" y="210" fill="#3a5568" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">10</text>
+  <text x="320" y="210" fill="#3a5568" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">20</text>
+  <text x="445" y="210" fill="#3a5568" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">30</text>
+  <text x="502" y="210" fill="#3a5568" font-size="9" text-anchor="middle" font-family="JetBrains Mono,monospace">37.2</text>
+  <text x="65" y="198" fill="#3a5568" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace">0</text>
+  <text x="65" y="158" fill="#3a5568" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace">2</text>
+  <text x="65" y="118" fill="#3a5568" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace">4</text>
+  <text x="65" y="78" fill="#3a5568" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace">6</text>
+  <text x="65" y="38" fill="#22d3a0" font-size="9" text-anchor="end" font-family="JetBrains Mono,monospace" font-weight="600">8.5→Isc</text>
+  <!-- 25°C IV fill -->
+  <polygon points="70,28 100,28 140,28 175,29 210,29 240,30 265,31 287,33 305,36 320,41 332,47 342,55 350,65 357,78 362,93 366,110 369,130 371,155 372,168 373,178 374,186 374.5,192 375,195 70,195" fill="url(#iv25fill)"/>
+  <!-- 25°C IV curve -->
+  <polyline points="70,28 100,28 140,28 175,29 210,29 240,30 265,31 287,33 305,36 320,41 332,47 342,55 350,65 357,78 362,93 366,110 369,130 371,155 372,168 373,178 374,186 374.5,192 375,195" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- 60°C IV curve (Voc drops ~3.7V → Voc=33.5V, Isc slightly up to 8.7A) -->
+  <polyline points="70,25 100,25 140,25 175,26 210,26 240,27 262,28 282,30 300,33 315,38 325,44 334,52 341,62 347,74 351,88 354,103 357,120 359,140 361,160 362,175 363,185 363.5,191 364,195" fill="none" stroke="#f87171" stroke-width="2" stroke-dasharray="7,4" stroke-linejoin="round"/>
+  <!-- Isc reference line 25°C -->
+  <line x1="70" y1="28" x2="355" y2="28" stroke="rgba(34,211,160,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Voc reference line 25°C -->
+  <line x1="375" y1="20" x2="375" y2="195" stroke="rgba(34,211,160,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Voc reference line 60°C -->
+  <line x1="364" y1="20" x2="364" y2="195" stroke="rgba(248,113,113,0.3)" stroke-width="1" stroke-dasharray="3,3"/>
+  <!-- Pmax star at ~V=30, I=7.2 for 25°C -->
+  <polygon points="358,56 360,62 366,62 361,66 363,72 358,68 353,72 355,66 350,62 356,62" fill="#fbbf24" stroke="none"/>
+  <!-- Pmax label -->
+  <text x="370" y="60" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace" font-weight="600">Pmax≈216W</text>
+  <!-- Voc labels -->
+  <text x="375" y="17" fill="#22d3a0" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Voc=37.2V</text>
+  <text x="364" y="17" fill="#f87171" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle">33.5V</text>
+  <!-- Legend -->
+  <rect x="80" y="165" width="110" height="26" rx="4" fill="#0d1318" stroke="#1a2530" stroke-width="1"/>
+  <line x1="88" y1="173" x2="104" y2="173" stroke="#22d3a0" stroke-width="2.5"/>
+  <text x="108" y="176" fill="#22d3a0" font-size="9" font-family="DM Sans,sans-serif">25°C (STC)</text>
+  <line x1="88" y1="184" x2="104" y2="184" stroke="#f87171" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="108" y="187" fill="#f87171" font-size="9" font-family="DM Sans,sans-serif">60°C (Hot Day)</text>
+  <!-- Title -->
+  <text x="295" y="14" fill="#4a5470" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="0.08em">IV CHARACTERISTICS — SOLAR CELL (25°C STC VS 60°C HOT DAY)</text>
+</svg></div>
 
 <div class="math-eq small">$$\\text{Temperature effect: } \\frac{dV_{oc}}{dT} \\approx -2.3 \\text{ mV/°C per cell} \\quad \\Rightarrow \\quad \\frac{d\\eta}{dT} \\approx -0.45\\%/°C$$</div>
 
@@ -3962,10 +4159,59 @@ function buildRefs(keys){
 <h4>Power Extraction from Wind</h4>
 <div class="math-eq">$$P = \\frac{1}{2} \\rho A v^3 \\qquad \\text{and} \\qquad P_{max} = \\frac{16}{27} \\cdot \\frac{1}{2}\\rho A v^3 \\approx 0.593 \\cdot P_{wind} \\quad \\text{(Betz limit)}$$</div>
 
-<div class="vis-box">
-  <div class="vis-title">Wind Speed vs Height — Power Law (α = 0.20)</div>
-  <canvas id="ch-windprofile" height="120"></canvas>
-</div>
+<div class="vis-box" style="padding:0;overflow:hidden;border-radius:10px;">
+<svg viewBox="0 0 560 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d1318;">
+  <defs>
+    <marker id="arrW" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3a5568"/></marker>
+    <linearGradient id="windGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#22d3a0" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#22d3a0" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <text x="280" y="18" fill="#3a5568" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="0.1em">WIND SPEED PROFILE — POWER LAW  v₂ = v₁(h₂/h₁)^α  |  α=0.20 (crops/hedges)</text>
+  <!-- Axes -->
+  <line x1="80" y1="30" x2="80" y2="175" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrW)"/>
+  <line x1="80" y1="175" x2="520" y2="175" stroke="#3a5568" stroke-width="1.5" marker-end="url(#arrW)"/>
+  <!-- Grid -->
+  <line x1="80" y1="155" x2="515" y2="155" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="130" x2="515" y2="130" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="105" x2="515" y2="105" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="80" x2="515" y2="80" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="55" x2="515" y2="55" stroke="#1a2530" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <!-- Height axis labels (y axis = height, x axis = speed) -->
+  <text x="70" y="178" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">0</text>
+  <text x="70" y="158" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">10m</text>
+  <text x="70" y="133" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">30m</text>
+  <text x="70" y="108" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">50m</text>
+  <text x="70" y="83" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end">80m</text>
+  <text x="70" y="58" fill="#22d3a0" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="end" font-weight="600">100m</text>
+  <!-- Speed axis labels -->
+  <text x="80" y="190" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">0</text>
+  <text x="190" y="190" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">2</text>
+  <text x="300" y="190" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">4</text>
+  <text x="410" y="190" fill="#3a5568" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">6</text>
+  <text x="500" y="190" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">m/s</text>
+  <!-- v=5*(h/10)^0.2: h=10→5, h=20→5.38, h=30→5.66, h=50→6.09, h=80→6.57, h=100→6.90 -->
+  <!-- x scale: 0→80px, 8m/s→80+8*55=520px. So x = 80 + v*55 -->
+  <!-- h=10→y=155, h=20→y=143, h=30→y=130, h=50→y=108, h=80→y=80, h=100→y=58 -->
+  <!-- fill polygon -->
+  <polygon points="80,175 80,155 355,155 375,143 391,130 415,108 441,80 460,58 80,58" fill="url(#windGrad)"/>
+  <!-- Wind profile curve -->
+  <polyline points="80,155 355,155 375,143 391,130 415,108 441,80 460,58" fill="none" stroke="#22d3a0" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Data points with labels -->
+  <circle cx="355" cy="155" r="4" fill="#22d3a0"/>
+  <text x="360" y="152" fill="#22d3a0" font-size="9" font-family="JetBrains Mono,monospace">5.0 m/s</text>
+  <circle cx="415" cy="108" r="4" fill="#38bdf8"/>
+  <text x="420" y="105" fill="#38bdf8" font-size="9" font-family="JetBrains Mono,monospace">6.1 m/s</text>
+  <circle cx="460" cy="58" r="5" fill="#fbbf24"/>
+  <text x="465" y="55" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace" font-weight="600">6.9 m/s</text>
+  <!-- Power density note for 100m -->
+  <rect x="300" y="32" width="180" height="18" rx="4" fill="rgba(251,191,36,0.08)" stroke="rgba(251,191,36,0.2)" stroke-width="1"/>
+  <text x="390" y="44" fill="#fbbf24" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">P_density@100m ≈ 201 W/m²</text>
+  <!-- Axis titles -->
+  <text x="300" y="205" fill="#4a5470" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle">Wind Speed (m/s)</text>
+  <text x="18" y="110" fill="#4a5470" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" transform="rotate(-90,18,110)">Height (m)</text>
+</svg></div>
 
 <h4>Calculation: Wind Speed at 100 m</h4>
 <p><em>Given: v₁ = 5 m/s at h₁ = 10 m, α = 0.20 (crops/hedges/shrubs), T = 15°C, P = 1 atm</em></p>
@@ -4124,7 +4370,45 @@ Applications: IC engines, generators — directly usable without extensive clean
 <h4>What is Pyrolysis?</h4>
 <p>Pyrolysis is the thermal decomposition of biomass in the complete ABSENCE of oxygen at temperatures between 300-700°C. Unlike combustion (which burns) or gasification (partial oxidation), pyrolysis breaks down the molecular structure using only heat.</p>
 <h4>Products of Pyrolysis</h4>
-<div class="vis-box"><div class="vis-title">Pyrolysis Product Distribution by Mode (Chart)</div><canvas id="ch-pyrolysis" height="110"></canvas></div>
+<div class="vis-box" style="padding:0;overflow:hidden;border-radius:10px;">
+<svg viewBox="0 0 560 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#0d1318;">
+  <text x="280" y="18" fill="#3a5568" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" letter-spacing="0.1em">PYROLYSIS — PRODUCT DISTRIBUTION BY OPERATING MODE (%)</text>
+  <!-- Stacked bar rows. Each row = one mode. Width 420px total for 100% -->
+  <!-- Slow Pyrolysis: bio-oil=30%, char=35%, gas=35% -->
+  <text x="10" y="52" fill="#7a9ab0" font-size="9" font-family="DM Sans,sans-serif" text-anchor="start">Slow Pyrolysis</text>
+  <text x="10" y="62" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="start">300–400°C</text>
+  <rect x="130" y="40" width="126" height="22" rx="3" fill="rgba(56,189,248,0.6)" stroke="#38bdf8" stroke-width="1"/>
+  <rect x="256" y="40" width="147" height="22" rx="3" fill="rgba(251,191,36,0.6)" stroke="#fbbf24" stroke-width="1"/>
+  <rect x="403" y="40" width="147" height="22" rx="3" fill="rgba(34,211,160,0.6)" stroke="#22d3a0" stroke-width="1"/>
+  <text x="193" y="55" fill="#e2eff5" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">30%</text>
+  <text x="329" y="55" fill="#e2eff5" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">35%</text>
+  <text x="476" y="55" fill="#e2eff5" font-size="8.5" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="600">35%</text>
+  <!-- Fast Pyrolysis: bio-oil=75%, char=12%, gas=13% -->
+  <text x="10" y="92" fill="#7a9ab0" font-size="9" font-family="DM Sans,sans-serif" text-anchor="start">Fast Pyrolysis</text>
+  <text x="10" y="102" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="start">500°C, &lt;2s</text>
+  <rect x="130" y="80" width="315" height="22" rx="3" fill="rgba(56,189,248,0.8)" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="445" y="80" width="50" height="22" rx="3" fill="rgba(251,191,36,0.6)" stroke="#fbbf24" stroke-width="1"/>
+  <rect x="495" y="80" width="55" height="22" rx="3" fill="rgba(34,211,160,0.5)" stroke="#22d3a0" stroke-width="1"/>
+  <text x="287" y="95" fill="#e2eff5" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">75% Bio-oil ⭐</text>
+  <text x="470" y="95" fill="#e2eff5" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle">12%</text>
+  <text x="522" y="95" fill="#e2eff5" font-size="8" font-family="JetBrains Mono,monospace" text-anchor="middle">13%</text>
+  <!-- Gasification: bio-oil=5%, char=10%, gas=85% -->
+  <text x="10" y="132" fill="#7a9ab0" font-size="9" font-family="DM Sans,sans-serif" text-anchor="start">Gasification</text>
+  <text x="10" y="142" fill="#4a6070" font-size="7.5" font-family="JetBrains Mono,monospace" text-anchor="start">limited O₂</text>
+  <rect x="130" y="120" width="21" height="22" rx="3" fill="rgba(56,189,248,0.4)" stroke="#38bdf8" stroke-width="1"/>
+  <rect x="151" y="120" width="42" height="22" rx="3" fill="rgba(251,191,36,0.4)" stroke="#fbbf24" stroke-width="1"/>
+  <rect x="193" y="120" width="357" height="22" rx="3" fill="rgba(34,211,160,0.8)" stroke="#22d3a0" stroke-width="1.5"/>
+  <text x="371" y="135" fill="#e2eff5" font-size="9" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="700">85% Gas (Syngas) ⭐</text>
+  <!-- Legend -->
+  <rect x="80" y="162" width="380" height="24" rx="5" fill="#0a1318" stroke="#1a2530" stroke-width="1"/>
+  <rect x="92" y="170" width="14" height="9" rx="2" fill="rgba(56,189,248,0.7)"/>
+  <text x="110" y="179" fill="#38bdf8" font-size="8.5" font-family="DM Sans,sans-serif">Bio-oil</text>
+  <rect x="152" y="170" width="14" height="9" rx="2" fill="rgba(251,191,36,0.7)"/>
+  <text x="170" y="179" fill="#fbbf24" font-size="8.5" font-family="DM Sans,sans-serif">Biochar</text>
+  <rect x="218" y="170" width="14" height="9" rx="2" fill="rgba(34,211,160,0.7)"/>
+  <text x="236" y="179" fill="#22d3a0" font-size="8.5" font-family="DM Sans,sans-serif">Gas</text>
+  <text x="330" y="179" fill="#4a5470" font-size="8" font-family="JetBrains Mono,monospace">420px = 100%  |  ⭐ = commercially preferred mode</text>
+</svg></div>
 <h4>Three Operating Modes</h4>
 <div class="step"><strong>Slow Pyrolysis:</strong> Low temp (300-400°C), slow heating rate, long residence time. Maximises BIOCHAR production (~35%). Traditional charcoal making is slow pyrolysis.</div>
 <div class="step"><strong>Fast Pyrolysis:</strong> Moderate temp (400-600°C), rapid heating (1000°C/s), short residence time (<2s). Maximises BIO-OIL production (~75%). Most commercially promising.</div>
