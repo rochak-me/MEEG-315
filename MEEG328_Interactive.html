@@ -4722,7 +4722,7 @@ Evacuated tube: High-temperature applications, cold climate installations (perfo
 <h4>Disadvantages</h4>
 <ul><li>Higher tar content than downdraft</li><li>Complex design, higher capital cost</li><li>Requires feedstock size control (too large or small causes problems)</li></ul>` },
 
-  'ch2_3': { marks:3, refs:['ku-slides', 'basu', 'bridgwater'], content:`<h4>Updraft vs Downdraft Gasifiers — Comparison</h4>
+  'ch2_5': { marks:3, refs:['ku-slides', 'basu', 'bridgwater'], content:`<h4>Updraft vs Downdraft Gasifiers — Comparison</h4>
 <div class="step"><strong>Updraft Gasifier</strong><br>
 Configuration: Biomass fed from top, air enters from bottom, gas exits from top.<br>
 Temperature: ~1000-1400°C in combustion zone.<br>
@@ -4741,7 +4741,7 @@ Applications: IC engines, generators — directly usable without extensive clean
 ❌ Cannot handle high moisture (>20%) or very small particles</div>
 <div class="kp">Rule of thumb: Updraft = direct heat applications. Downdraft = engine/electricity applications. This is why most biomass gasifier systems for rural electrification use downdraft design.</div>` },
 
-  'ch2_4': { marks:5, refs:['ku-slides', 'bridgwater'], content:`<h4>Pyrolysis Process and Practical Applications</h4>
+  'ch2_6': { marks:5, refs:['ku-slides', 'bridgwater'], content:`<h4>Pyrolysis Process and Practical Applications</h4>
 <h4>What is Pyrolysis?</h4>
 <p>Pyrolysis is the thermal decomposition of biomass in the complete ABSENCE of oxygen at temperatures between 300-700°C. Unlike combustion (which burns) or gasification (partial oxidation), pyrolysis breaks down the molecular structure using only heat.</p>
 <h4>Products of Pyrolysis</h4>
@@ -4792,7 +4792,7 @@ Applications: IC engines, generators — directly usable without extensive clean
 <ul><li><strong>Bio-oil:</strong> Can replace heavy fuel oil in boilers and furnaces. Can be upgraded to transport fuels (bio-diesel precursor). Used in power generation.</li><li><strong>Biochar:</strong> Soil amendment (increases water retention, carbon sequestration). Used as solid fuel (charcoal replacement). Reduces agricultural methane emissions.</li><li><strong>Syngas:</strong> Combusted for heat and power generation.</li></ul>
 <div class="kp">Key advantage over combustion: Pyrolysis can convert low-grade wet biomass to high-energy-density liquid (bio-oil) that is easier to transport and store than solid biomass.</div>` },
 
-  'ch2_5': { marks:3, refs:['ku-slides', 'ku-exam-2022'], content:`<h4>LHV Calculation — RDF Pellet</h4>
+  'ch2_4': { marks:3, refs:['ku-slides', 'ku-exam-2022'], content:`<h4>LHV Calculation — RDF Pellet</h4>
 <p><strong>Given:</strong> HHV=1000 kJ/kg, moisture M=50%=0.5, hydrogen H=10%=0.1, latent heat of vaporization=500 kJ/kg</p>
 <h4>Formula</h4>
 <div class="math-eq">$$LHV = HHV - h_{vap} \\times (9H + M)$$</div><p style="font-size:12px;color:var(--text2);margin:6px 0;">$H$ = hydrogen mass fraction = 0.10 | $M$ = moisture mass fraction = 0.50 | $h_{vap}$ = 500 kJ/kg (given) | $9H$ = water from hydrogen combustion</p>
@@ -4801,7 +4801,7 @@ Applications: IC engines, generators — directly usable without extensive clean
 <div class="kp">LHV = 300 kJ/kg ✓ (this matches the Dec 2022 MCQ answer)</div>
 <div class="wp">This very low LHV (300 kJ/kg) compared to the HHV (1000 kJ/kg) demonstrates why high moisture content is so damaging to biomass fuel quality — 70% of the HHV is lost just to evaporate the moisture and water from hydrogen combustion. Dry wood has HHV≈18,000 kJ/kg and LHV≈16,000 kJ/kg (only ~11% difference).</div>` },
 
-  'ch2_6': { marks:4, refs:['ku-slides', 'aepc-2023', 'ku-exam-2024'], content:`<h4>Short Note: Improved Cook Stove (ICS)</h4>
+  'ch2_3': { marks:4, refs:['ku-slides', 'aepc-2023', 'ku-exam-2024'], content:`<h4>Short Note: Improved Cook Stove (ICS)</h4>
 <h4>Background and Problem</h4>
 <p>Nepal's traditional three-stone cooking fire and basic metal stoves have thermal efficiency of only 10-15%. Over 50% of Nepal's households still use firewood for cooking, causing: deforestation, indoor air pollution (IAP), health issues (1,600+ deaths/year from respiratory diseases), and wasted biomass energy.</p>
 <h4>What is an ICS?</h4>
@@ -4836,16 +4836,20 @@ Applications: IC engines, generators — directly usable without extensive clean
 ② Installation: Bag digester can be installed in 1-2 days by local people with minimal skills. Floating dome requires skilled masonry + metalwork for the steel drum.</div>
 <div class="kp">Most common in Nepal: Fixed Dome (GGC 2047 model) — 450,000+ installed. Preferred for Nepal's terrain and climate.</div>` },
 
-  'ch3_3': { marks:"1+4+6", refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Biogas Plant Design — Cattle Dung 500 kg/day (Janakpur Farm)</h4>
-<h4>What is Anaerobic Digestion?</h4>
-<p>Biological decomposition of organic matter by microorganisms in the absence of oxygen, producing biogas (55-70% CH₄, 30-45% CO₂) and nutrient-rich digestate.</p>
-<h4>4 Biochemical Stages</h4>
-<ul><li><strong>Hydrolysis:</strong> Complex polymers (proteins, fats, carbohydrates) → simple monomers (amino acids, fatty acids, sugars)</li><li><strong>Acidogenesis:</strong> Monomers → volatile fatty acids (VFAs) + CO₂ + H₂</li><li><strong>Acetogenesis:</strong> VFAs → acetic acid + H₂ + CO₂</li><li><strong>Methanogenesis:</strong> Acetic acid + H₂ → CH₄ + CO₂ (rate-limiting step)</li></ul>
-<h4>Design Calculations (500 kg/day, 20%TS, 80%VS)</h4>
-<div class="derivation"><span class="step-num">Step 1 — Daily Slurry</span>$$V_{slurry} = 500 + 500 = 1000 \\text{ L/day} = 1 \\text{ m}^3\\text{/day}$$</div><div class="derivation"><span class="step-num">Step 2 — Digester Volume</span>$$V = 1 \\times 40 = \\boxed{40 \\text{ m}^3}$$</div><div class="derivation"><span class="step-num">Step 3 — Biogas & LPG</span>$$Q = 500 \\times 30 = 15 \\text{ m}^3\\text{/day} \\quad m_{LPG} = 15 \\times 0.45 = \\boxed{6.75 \\text{ kg/day}}$$</div>
-<div class="kp">Plant size: 40 m³ | Water needed: 500 L/day | Biogas: 15 m³/day | LPG saved: ~6.75 kg/day</div>` },
+  'ch3_5': { marks:"4", refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Four Stages of Anaerobic Digestion</h4>
+<h4>Overview</h4>
+<p>Anaerobic digestion (AD) proceeds through 4 sequential biochemical stages, each performed by different groups of microorganisms. The process converts complex organic matter into biogas (CH₄ + CO₂).</p>
+<h4>Stage 1 — Hydrolysis</h4>
+<div class="step"><strong>Process:</strong> Complex polymers (proteins, fats, carbohydrates) are broken down into simple soluble monomers (amino acids, fatty acids, sugars) by hydrolytic bacteria producing extracellular enzymes.<br><strong>Rate:</strong> Often the rate-limiting step for solid waste substrates. Slower for lignin-rich materials.</div>
+<h4>Stage 2 — Acidogenesis</h4>
+<div class="step"><strong>Process:</strong> Monomers are fermented by acidogenic bacteria into volatile fatty acids (VFAs — acetic, propionic, butyric acid), plus CO₂ and H₂.<br><strong>pH effect:</strong> This stage produces acids → pH can drop if acidogenesis is too fast relative to methanogenesis.</div>
+<h4>Stage 3 — Acetogenesis</h4>
+<div class="step"><strong>Process:</strong> Acetogenic bacteria convert VFAs into acetic acid (CH₃COOH), plus H₂ and CO₂. Acetate is the primary substrate for methanogenesis.<br><strong>Condition:</strong> Requires low H₂ partial pressure — syntrophic relationship with methanogens.</div>
+<h4>Stage 4 — Methanogenesis</h4>
+<div class="step"><strong>Process:</strong> Methanogenic archaea convert acetate and H₂/CO₂ into methane (CH₄) + CO₂.<br>• Acetoclastic: CH₃COOH → CH₄ + CO₂ (70% of CH₄)<br>• Hydrogenotrophic: 4H₂ + CO₂ → CH₄ + 2H₂O (30%)<br><strong>This is the RATE-LIMITING STEP for most digesters. pH must be 6.8–7.2 — methanogens are the most sensitive to pH changes.</strong></div>
+<div class="kp">Optimum conditions: pH 6.8–7.2 | Temperature 35°C (mesophilic) or 55°C (thermophilic) | C:N ratio 20–30:1 | HRT 30–60 days for cattle dung</div>` },
 
-  'ch3_4': { marks:3, refs:['ku-slides', 'wecs-2024'], content:`<h4>Biogas vs LPG — Comparison as Cooking Fuel</h4>
+  'ch3_6': { marks:3, refs:['ku-slides', 'wecs-2024'], content:`<h4>Biogas vs LPG — Comparison as Cooking Fuel</h4>
 <div class="step"><strong>Composition:</strong><br>
 Biogas: 55-70% CH₄, 30-45% CO₂, trace H₂S.<br>
 LPG: ~60% butane (C₄H₁₀) + 40% propane (C₃H₈). No CO₂ — pure fuel gas.</div>
@@ -4861,7 +4865,7 @@ Biogas: ✅ FREE fuel if dung is available. ✅ Digestate = valuable fertilizer.
 LPG: ✅ Portable, available everywhere. ✅ Higher energy density = less gas needed. ❌ Imported, expensive, price-volatile. ❌ Not accessible in remote areas.</div>
 <div class="kp">For Nepal: Biogas ideal for Terai and mid-hills (cattle-owning households). LPG better for urban areas and cattle-less households. National target: biogas to replace LPG in Terai households by 2030.</div>` },
 
-  'ch3_5': { marks:2, refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Optimum pH for Anaerobic Digestion and Importance of pH Control</h4>
+  'ch3_7': { marks:2, refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Optimum pH for Anaerobic Digestion and Importance of pH Control</h4>
 <h4>Optimum pH Range</h4>
 <div class="math-eq">$$\\text{Optimum pH} = 6.8 - 7.2$$</div>
 <h4>Why pH Control Matters</h4>
@@ -4871,7 +4875,7 @@ LPG: ✅ Portable, available everywhere. ✅ Higher energy density = less gas ne
 <ul><li>Volatile fatty acids (VFAs) accumulate faster than methanogens can consume them → acid buildup</li><li>Methanogens are inhibited → biogas production drops dramatically</li><li>The digester "sours" — pH keeps dropping → methanogens die → complete failure</li><li>Recovery requires removing some slurry, adding buffer (lime/NaHCO₃), and restarting slowly</li></ul>
 <div class="kp">Causes of acidification in Nepal biogas plants: overloading (too much dung), addition of chemical fertilizers, antibiotics in cattle feed (kills microorganisms), or sudden temperature drop in winter.</div>` },
 
-  'ch3_6': { marks:4, refs:['ku-slides', 'aepc-2023'], content:`<h4>Fixed Dome Biogas Plant — Working Principle and Diagram</h4>
+  'ch3_8': { marks:4, refs:['ku-slides', 'aepc-2023'], content:`<h4>Fixed Dome Biogas Plant — Working Principle and Diagram</h4>
 <h4>Working Principle</h4>
 <p>The fixed dome plant (GGC 2047 model in Nepal) is a completely underground, airtight structure. It consists of a cylindrical digester with a hemispherical dome.</p>
 <h4>Operation</h4>
@@ -4883,12 +4887,12 @@ LPG: ✅ Portable, available everywhere. ✅ Higher energy density = less gas ne
 <h4>Why Most Common in Nepal</h4>
 <ul><li>No moving parts → zero maintenance for 20+ years</li><li>Underground → thermally insulated → works in Nepal's cold winters</li><li>Local materials (bricks, cement) → can be built by trained local masons</li><li>GGC (Gobar Gas Company) model standardized and proven since 1975</li></ul>` },
 
-  'ch3_7': { marks:6, refs:['ku-slides'], content:`<h4>Household Biogas Design — 30 kg/day Dung, HRT=40 days</h4>
+  'ch3_4': { marks:6, refs:['ku-slides'], content:`<h4>Household Biogas Design — 30 kg/day Dung, HRT=40 days</h4>
 <p><strong>Given:</strong> W=30 kg/day, HRT=40 days, dung:water=1:1, biogas yield=30 L/kg cattle dung</p>
 <div class="derivation"><span class="step-num">Volume & Biogas</span>$$V = 0.06 \\text{ m}^3\\text{/day} \\times 40 = \\boxed{2.4 \\text{ m}^3} \\quad Q = 30 \\times 30 = \\boxed{0.9 \\text{ m}^3\\text{/day}}$$</div><div class="derivation"><span class="step-num">LPG Equivalent</span>$$m_{LPG} = 0.9 \\times 0.45 = \\boxed{0.405 \\text{ kg/day}} \\rightarrow 148 \\text{ kg/year saved}$$</div>
 <div class="kp">A 2.5 m³ fixed dome biogas plant serves a family of 5-6 persons with 30 kg/day cattle dung (3-4 cattle). Provides ~0.9 m³/day biogas — sufficient for 2 hours of cooking. Saves ~148 kg LPG/year ≈ Rs 20,000-25,000/year at current prices.</div>` },
 
-  'ch3_8': { marks:2, refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Biogas Plant Sizing — 50 kg Cattle Manure, HRT=50 days</h4>
+  'ch3_3': { marks:2, refs:['ku-slides', 'ku-exam-2024'], content:`<h4>Biogas Plant Sizing — 50 kg Cattle Manure, HRT=50 days</h4>
 <p><strong>Given:</strong> W=50 kg/day, HRT=50 days, biogas yield=30 L/kg, dung:water=1:1</p>
 <div class="math-eq">$$V = 0.1 \\text{ m}^3\\text{/day} \\times 50 \\text{ days} = \\boxed{5 \\text{ m}^3}$$</div><div class="math-eq small">$$Q_{biogas} = 50 \\times 30 = 1500 \\text{ L/day} = 1.5 \\text{ m}^3\\text{/day}$$</div>
 <div class="kp">Required plant size: 5 m³. This is a medium-sized household plant — suitable for a farm with 5-7 cattle.</div>` },
@@ -5000,7 +5004,7 @@ Importance: High turbulence → increased fatigue loads on blades and tower → 
 <h4>Inter-Row Spacing Key Formula</h4>
 <div class="math-eq">$$\\alpha_{min} = 90° - L - 23.45° \\quad \\Rightarrow \\quad D_{spacing} = \\frac{h_{module}}{\\tan(\\alpha_{min})}$$</div>` },
 
-  'ch5_4': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Three Generations of Solar PV Technology</h4>
+  'ch5_5': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Three Generations of Solar PV Technology</h4>
 <div class="step"><strong>1st Generation — Crystalline Silicon (c-Si)</strong><br>
 Materials: Monocrystalline (mono-Si) and Polycrystalline (poly-Si)<br>
 Efficiency: Mono = 18-24%, Poly = 15-20%<br>
@@ -5019,7 +5023,7 @@ Characteristics: Exceed Shockley-Queisser limit using multiple junctions or nove
 Applications: Space satellites (multi-junction), research, building-integrated (organic).</div>
 <div class="kp">Nepal market: Almost exclusively 1st gen crystalline silicon — robust, proven, widely available from Indian and Chinese manufacturers.</div>` },
 
-  'ch5_5': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Fill Factor of a Solar Cell</h4>
+  'ch5_6': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Fill Factor of a Solar Cell</h4>
 <h4>Definition</h4>
 <div class="math-eq">$$FF = \\frac{P_{max}}{I_{sc} \\times V_{oc}} = \\frac{I_{mp} \\times V_{mp}}{I_{sc} \\times V_{oc}}$$</div><p style="font-size:12px;color:var(--text2);margin:6px 0;">Good cell: FF = 0.70–0.85 | Ideal: FF → 1.0 | Poor/degraded: FF &lt; 0.60</p>
 <h4>Physical Meaning</h4>
@@ -5028,13 +5032,13 @@ Applications: Space satellites (multi-junction), research, building-integrated (
 <ul><li><strong>High series resistance (R_s):</strong> Due to poor contact resistance, thin metal fingers, or bulk resistance of semiconductor. Causes the IV curve to tilt — reduces V_mp significantly.</li><li><strong>Low shunt resistance (R_sh):</strong> Due to manufacturing defects, cracks, partial shading. Creates leakage current path — reduces I_mp.</li><li><strong>Recombination losses:</strong> Defects in semiconductor bulk or surface cause charge carriers to recombine before reaching contacts → reduces both I_mp and V_mp.</li></ul>
 <div class="kp">Low FF indicates poor cell manufacturing quality, degradation, or damage. A new quality commercial cell should have FF ≥ 0.75. If a cell's FF drops significantly from its rated value, it indicates degradation or potential damage (cracks, delamination).</div>` },
 
-  'ch5_6': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Battery Sizing for Standalone PV — 3 Days Autonomy, 2kWh/day</h4>
+  'ch5_7': { marks:3, refs:['ku-slides', 'masters'], content:`<h4>Battery Sizing for Standalone PV — 3 Days Autonomy, 2kWh/day</h4>
 <p><strong>Given:</strong> Daily load E=2 kWh/day, autonomy=3 days, V_system=12V, DOD=80%=0.8</p>
 <div class="derivation"><span class="step-num">Battery Sizing Formula</span>$$Ah = \\frac{E_{daily} \\times N_{auto}}{V_{sys} \\times DOD \\times \\eta_{bat}} = \\frac{2000 \\times 3}{12 \\times 0.80 \\times 0.90} = \\boxed{694 \\text{ Ah}}$$</div><div class="note-box">Simplified (no $\\eta_{bat}$): $Ah = \\frac{2000 \\times 3}{12 \\times 0.80} = 625$ Ah. In KU exams, simplified form is usually accepted unless stated otherwise.</div>
 <div class="kp">Answer: ~625–694 Ah at 12V (depending on battery efficiency assumed). This would require, for example, 5× 130Ah batteries in parallel for a 12V system, or 3× 250Ah batteries in parallel.</div>
 <div class="wp">Exam tip: Always state your assumptions — the exact answer depends on whether η_battery is included. In KU exams, simplified formula (without η_bat) is usually expected unless stated.</div>` },
 
-  'ch5_7': { marks:2, refs:['ku-slides', 'masters'], content:`<h4>Effect of Shading on PV Array and Role of Bypass Diodes</h4>
+  'ch5_8': { marks:2, refs:['ku-slides', 'masters'], content:`<h4>Effect of Shading on PV Array and Role of Bypass Diodes</h4>
 <h4>Effect of Shading</h4>
 <p>In a series-connected PV string, ALL cells carry the same current. A shaded cell generates less current but is forced to carry the string current — it acts as a resistor (or even a reverse-biased load), dissipating power as heat. This is called the "hot spot" effect.</p>
 <ul><li>Even 1 shaded cell in a string of 60 cells can reduce string power by 30-50%</li><li>Without protection, shaded cells can be permanently damaged by overheating</li><li>Partial shading on a module can make it appear as if the module is completely offline</li></ul>
@@ -5042,7 +5046,7 @@ Applications: Space satellites (multi-junction), research, building-integrated (
 <p>Bypass diodes are connected in anti-parallel across groups of cells (typically across every 20 cells, i.e., 3 bypass diodes per 60-cell module). When a cell group is shaded and its voltage reverses, the bypass diode conducts — providing an alternative current path that bypasses the shaded group.</p>
 <div class="kp">Result: Instead of losing the entire string power, only the shaded sub-string is bypassed → module continues to generate power from unshaded cells. The IV curve shows characteristic "steps" due to bypass diode activation. Power loss is limited to the shaded fraction only.</div>` },
 
-  'ch5_8': { marks:2, refs:['ku-slides', 'masters'], content:`<h4>Maximum Power Point Tracking (MPPT)</h4>
+  'ch5_9': { marks:2, refs:['ku-slides', 'masters'], content:`<h4>Maximum Power Point Tracking (MPPT)</h4>
 <h4>What is MPPT?</h4>
 <p>The Maximum Power Point (MPP) is the operating point on a PV module's IV curve where it generates maximum power (P = I × V is maximum). This point changes continuously with solar irradiance and temperature.</p>
 <h4>Why MPPT is Important</h4>
@@ -5052,35 +5056,41 @@ Applications: Space satellites (multi-junction), research, building-integrated (
 <div class="note-box">⚡ MPPT operating ranges: Input voltage 25–45V | MPP at STC: ~30-35V (60-cell module) | Battery charge: 13.5–14.5V | Energy gain vs PWM: <strong>10–30%</strong> more energy harvested</div>
 <div class="kp">In Nepal's varying irradiance (monsoon clouds) and temperature conditions (Himalayan cold), MPPT is especially valuable — morning, cloudy days, and winter all shift the MPP significantly. MPPT ensures maximum harvest under all conditions.</div>` },
 
-  'ch5_9': { marks:4, refs:['ku-slides', 'masters'], content:`<h4>Annual Energy Output and Capacity Factor of PV System</h4>
-<p><strong>Given:</strong> 10 modules × 300 Wp each, Pokhara insolation G=5.2 kWh/m²/day</p>
-<div class="derivation"><span class="step-num">Daily & Annual Energy</span>$$E_{daily} = 3 \\times 5.2 \\times 0.80 = \\boxed{12.48 \\text{ kWh/day}} \\quad E_{annual} = 12.48 \\times 365 = 4{,}555 \\text{ kWh}$$</div><div class="derivation"><span class="step-num">Capacity Factor</span>$$CF = \\frac{4555}{3 \\times 8760} = \\boxed{17.3\\%}$$</div>
-<div class="kp">Capacity factor 17.3% is typical for Nepal (15-20% range). The sun only shines for ~5.2 effective hours per day out of 24 hours, and losses reduce this further. This is why solar needs storage or grid backup for 24/7 supply.</div>` },
+  'ch5_4': { marks:"4", refs:['ku-slides', 'masters'], content:`<h4>PV System Energy Output — 10 Modules × 300 Wp at Pokhara</h4>
+<h4>Given</h4>
+<ul><li>10 PV modules, each rated <strong>300 Wp</strong> at STC (Standard Test Conditions: 1000 W/m², 25°C, AM1.5)</li><li>Location: <strong>Pokhara</strong>, average daily insolation G = 5.2 kWh/m²/day</li><li>System performance ratio PR ≈ 0.80 (typical for Nepal, accounting for temperature, wiring, inverter losses)</li></ul>
+<h4>Step 1 — Total Installed Capacity</h4>
+<div class="derivation"><span class="step-num">System Capacity</span>$$P_{PV} = 10 \times 300 = \boxed{3000 \text{ Wp} = 3 \text{ kWp}}$$</div>
+<h4>Step 2 — Daily Energy Output</h4>
+<div class="derivation"><span class="step-num">Daily Energy</span>$$E_{day} = P_{PV} \times G \times PR = 3 \text{ kWp} \times 5.2 \text{ kWh/m}^2\text{/day} \times 0.80 = \boxed{12.48 \text{ kWh/day}}$$</div>
+<h4>Step 3 — Monthly Energy</h4>
+<div class="derivation"><span class="step-num">Monthly Energy</span>$$E_{month} = 12.48 \times 30 = \boxed{374.4 \text{ kWh/month}}$$</div>
+<h4>Step 4 — Annual Capacity Factor</h4>
+<div class="derivation"><span class="step-num">Capacity Factor</span>$$CF = \frac{E_{annual}}{P_{rated} \times 8760} = \frac{12.48 \times 365}{3 \times 8760} = \frac{4555.2}{26280} = \boxed{0.173 = 17.3\%}$$</div>
+<div class="kp">Capacity factor of 17.3% is typical for fixed-tilt solar PV in Nepal. Global average ≈ 15-20%. Key insight: PV generates at rated power only when G=1000W/m² — actual daily hours at STC is 5.2h (= PSH), so CF = PSH/24 × PR = 5.2/24 × 0.8 = 17.3%.</div>` },
 
   // ─── CH6 MISSING ANSWERS ───
   'ch6_2': { marks:3, refs:['ku-slides', 'ku-exam-2022', 'twidell'], content:`<h4>3 Parameters in Wind Resource Assessment</h4>
 <p>See Ch4 Q3 answer — this is the same question. The three key parameters are: (1) Wind Speed, (2) Wind Direction, and (3) Turbulence Intensity. Full answer provided there.</p>
 <div class="note-box">📡 <strong>3 Key WRA Parameters:</strong><br>① Wind Speed ($P\\propto v^3$, most critical) at 10–100m heights<br>② Wind Direction (rose diagram, turbine layout optimisation)<br>③ Turbulence Intensity $TI = \\sigma_v/\\bar{v}$ (IEC class, fatigue)<br>Min measurement period: <strong>12 months</strong></div>` },
 
-  'ch6_3': { marks:3, refs:['ku-slides', 'ku-exam-2022'], content:`<h4>3 Wind Power Controlling and Shading Mechanisms in Drastic Wind Conditions</h4>
-<div class="step"><strong>1. Pitch Control (Active Blade Pitch)</strong><br>
-The turbine blades are rotated about their long axis to change the angle of attack with the wind. In high winds, blades are pitched (feathered) to reduce lift force → power output is controlled and kept constant above rated wind speed. At extreme winds (>25 m/s cut-out speed), blades are fully feathered (90° to wind) → turbine stops safely.<br>
-✅ Precise power control, smooth operation above rated speed<br>
-❌ Complex hydraulic/electrical pitch mechanism required</div>
-<div class="step"><strong>2. Stall Control (Passive)</strong><br>
-Blade aerodynamics are designed so that at high wind speeds, airflow separates (stalls) on the blade surface naturally → lift reduces → power self-limits without any active mechanism. No moving parts needed.<br>
-✅ Simple, robust, no pitch mechanism<br>
-❌ Less precise power control, higher structural loads</div>
-<div class="step"><strong>3. Active Stall Control</strong><br>
-Combines pitch and stall: blades are pitched slightly INTO the wind at high speeds (opposite direction to normal pitch) to induce controlled stall. More precise than passive stall.<br>
-Used in: Vestas and some large offshore turbines.</div>
-<div class="kp">Additional protection mechanisms: mechanical brakes (disc/drum), electromagnetic brakes, yaw misalignment (turn rotor away from wind), tower shadow shielding for wake effects in wind farms.</div>` },
+  'ch6_5': { marks:"4", refs:['ku-slides', 'masters'], content:`<h4>Wind Turbine Power Calculation — 80m Rotor Diameter, 8 m/s</h4>
+<h4>Given</h4>
+<ul><li>Rotor diameter: D = 80 m → radius r = 40 m</li><li>Average wind speed: v = 8 m/s</li><li>Air density: ρ = 1.225 kg/m³</li></ul>
+<h4>Step 1 — Swept Area</h4>
+<div class="derivation"><span class="step-num">Swept Area</span>$$A = \pi r^2 = \pi \times 40^2 = \pi \times 1600 = \boxed{5026 \text{ m}^2}$$</div>
+<h4>Step 2 — Total Wind Power Available</h4>
+<div class="derivation"><span class="step-num">Wind Power</span>$$P_{wind} = \frac{1}{2} \rho A v^3 = \frac{1}{2} \times 1.225 \times 5026 \times 8^3$$$$= 0.5 \times 1.225 \times 5026 \times 512 = \boxed{1.578 \text{ MW}}$$</div>
+<h4>Step 3 — Maximum Extractable Power (Betz Limit)</h4>
+<div class="derivation"><span class="step-num">Betz Limit</span>$$P_{max} = C_{p,Betz} \times P_{wind} = \frac{16}{27} \times 1.578 = 0.593 \times 1.578 = \boxed{0.936 \text{ MW}}$$</div>
+<div class="kp">The Betz limit (Cp = 16/27 = 0.593) is the theoretical maximum — derived from momentum theory. Modern large turbines achieve Cp ≈ 0.45–0.48, giving actual output ≈ 0.45 × 1.578 ≈ 710 kW for this machine.</div>
+<div class="wp">Remember: P ∝ v³ (cube law) and P ∝ D² (area). A 10% increase in wind speed gives 1.1³ = 1.331 = 33% more power. Doubling rotor diameter quadruples swept area → quadruples power output.</div>` },
 
-  'ch6_4': { marks:1, refs:['ku-slides', 'ku-exam-2024', 'twidell'], content:`<h4>Wind Speed 10% Higher → Power Increase Calculation</h4>
+  'ch6_3': { marks:1, refs:['ku-slides', 'ku-exam-2024', 'twidell'], content:`<h4>Wind Speed 10% Higher → Power Increase Calculation</h4>
 <div class="math-eq">$$P \\propto v^3 \\quad \\Rightarrow \\quad \\frac{P_A}{P_B} = \\left(\\frac{v_A}{v_B}\\right)^3 = (1.1)^3 = 1.331 \\quad \\Rightarrow \\quad \\boxed{33\\% \\text{ increase}}$$</div>
 <div class="kp">Answer: b) 33% ✓<br>This is the most important numerical concept in wind energy: because power depends on the CUBE of wind speed, even small increases in wind speed give dramatically more power. This is why wind site selection (finding the windiest site) is so critical.</div>` },
 
-  'ch6_5': { marks:3, refs:['ku-slides', 'twidell'], content:`<h4>Capacity Factor for Wind Turbines</h4>
+  'ch6_6': { marks:3, refs:['ku-slides', 'twidell'], content:`<h4>Capacity Factor for Wind Turbines</h4>
 <h4>Definition</h4>
 <div class="math-eq">$$CF = \\frac{E_{actual}}{P_{rated} \\times 8760 \\text{ h/year}}$$</div>
 <h4>Typical Values</h4>
@@ -5090,7 +5100,7 @@ Used in: Vestas and some large offshore turbines.</div>
 <h4>Nepal Typical CF</h4>
 <p>Nepal's wind resources are largely unmapped. Known sites (Mustang, Jumla, Myagdi) show good potential. Estimated CF for well-sited onshore turbines: 25-35% in high-elevation areas, 15-20% in mid-hills.</p>` },
 
-  'ch6_6': { marks:4, refs:['ku-slides', 'twidell'], content:`<h4>Main Components of HAWT and Their Functions</h4>
+  'ch6_7': { marks:4, refs:['ku-slides', 'twidell'], content:`<h4>Main Components of HAWT and Their Functions</h4>
 <ul><li><strong>Rotor Blades (2 or 3):</strong> Capture kinetic energy from wind by generating aerodynamic lift. Manufactured from fibreglass-reinforced composite. Each blade can be 40-80m long for large turbines.</li>
 <li><strong>Hub:</strong> Connects blades to main shaft. In pitch-controlled turbines, contains pitch bearings and actuators to rotate each blade.</li>
 <li><strong>Nacelle:</strong> Enclosure at top of tower housing all drive train components. Can be the size of a bus for large turbines.</li>
@@ -5103,7 +5113,7 @@ Used in: Vestas and some large offshore turbines.</div>
 <li><strong>Tower:</strong> Tubular steel tower 60-120m tall. Taller = stronger, more consistent winds.</li></ul>
 <div class="kp">For exam: Remember cut-in (3-5 m/s), rated (11-13 m/s), cut-out (25 m/s) wind speeds for typical HAWT.</div>` },
 
-  'ch6_7': { marks:1, refs:['ku-slides', 'ku-exam-2022'], content:`<h4>HAWT vs VAWT — Which Statement is NOT True?</h4>
+  'ch6_4': { marks:1, refs:['ku-slides', 'ku-exam-2022'], content:`<h4>HAWT vs VAWT — Which Statement is NOT True?</h4>
 <div class="note-box">✅ <strong>Answer: d)</strong> HAWTs REQUIRE an active yaw drive — VAWTs don't.<br>a) Higher efficiency ✓ TRUE | b) Less aero losses ✓ TRUE | c) Lower cost-to-power ✓ TRUE<br>d) <strong>Absence of yaw drive ✗ FALSE</strong> → This is NOT true for HAWT</div>
 <div class="kp">Answer: d) Absence of active yaw drive ✗<br>HAWTs REQUIRE an active yaw drive system to rotate the nacelle and face into the wind. This is actually a DISADVANTAGE of HAWTs compared to VAWTs — VAWTs accept wind from any direction and don't need yaw systems. The yaw drive adds mechanical complexity and is a potential failure point.</div>` },
 
