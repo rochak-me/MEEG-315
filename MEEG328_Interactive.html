@@ -1618,6 +1618,55 @@ body::before {
 .q-card:nth-child(8)  { animation-delay: 0.16s; }
 .q-card:nth-child(9)  { animation-delay: 0.18s; }
 .q-card:nth-child(10) { animation-delay: 0.20s; }
+
+/* ══ ENHANCED MEMCARD FORMULA STYLES ══ */
+.mc-eq {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--accent2);
+  background: rgba(34,211,160,0.07);
+  border: 1px solid rgba(34,211,160,0.18);
+  border-radius: 7px;
+  padding: 8px 12px;
+  margin: 7px 0 6px;
+  letter-spacing: 0.02em;
+  display: block;
+  line-height: 1.5;
+}
+.mc-eq.yellow { color: var(--yellow); background: rgba(251,191,36,0.07); border-color: rgba(251,191,36,0.18); }
+.mc-eq.blue   { color: var(--accent3); background: rgba(56,189,248,0.07); border-color: rgba(56,189,248,0.18); }
+.mc-eq.red    { color: var(--red); background: rgba(248,113,113,0.07); border-color: rgba(248,113,113,0.18); }
+.mc-eq.purple { color: var(--purple); background: rgba(167,139,250,0.07); border-color: rgba(167,139,250,0.18); }
+.mc-symbols {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 10px;
+  margin: 5px 0 4px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+.mc-sym { font-family: var(--font-mono); color: var(--accent2); font-size: 10.5px; white-space: nowrap; }
+.mc-sym-def { color: var(--text2); }
+.mc-worked {
+  background: rgba(34,211,160,0.05);
+  border-left: 2px solid rgba(34,211,160,0.3);
+  border-radius: 0 5px 5px 0;
+  padding: 5px 9px;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+.mc-worked strong { color: var(--accent); }
+.mc-worked.yellow { border-left-color: rgba(251,191,36,0.4); }
+.mc-worked.yellow strong { color: var(--yellow); }
+.mc-note {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 5px;
+  line-height: 1.5;
+  font-style: italic;
+}
 </style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -2798,7 +2847,18 @@ const chapterSummaries = {
       { main: '2.1.5 Improved Cookstoves (ICS)', subs: ['Water Boiling Test — 3 phases (Cold, Hot, Simmering)', 'Types: rocket, TLUD, institutional', 'Nepal: 800,000+ ICS distributed by AEPC'] },
     ],
     memcards: [
-      { label:'🔥 LHV Formula — EXAM FAVOURITE', color:'red', content:'<strong>LHV = HHV − h_vap × (9H + M)</strong><br>H = hydrogen fraction, M = moisture fraction, h_vap = 2.442 MJ/kg (or as given).<br>Dec 2022: HHV=1000, M=0.5, H=0.1 → LHV = <strong>300 kJ/kg</strong>' },
+      { label:'🔥 LHV Formula — EXAM FAVOURITE', color:'red', content:`
+<span class='mc-eq red'>LHV = HHV − h<sub>vap</sub> × (9H + M)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>LHV</span><span class='mc-sym-def'>Lower (Net) Heating Value — usable energy [kJ/kg]</span>
+  <span class='mc-sym'>HHV</span><span class='mc-sym-def'>Higher (Gross) Heating Value — total energy [kJ/kg]</span>
+  <span class='mc-sym'>h<sub>vap</sub></span><span class='mc-sym-def'>Latent heat of vaporisation = 2.442 MJ/kg (standard) or as given</span>
+  <span class='mc-sym'>9H</span><span class='mc-sym-def'>Water from hydrogen combustion (H = hydrogen mass fraction)</span>
+  <span class='mc-sym'>M</span><span class='mc-sym-def'>Moisture mass fraction of fuel</span>
+</div>
+<div class='mc-worked red'>Dec 2022: HHV=1000 kJ/kg, M=0.5, H=0.1, h<sub>vap</sub>=500 kJ/kg<br>LHV = 1000 − 500×(9×0.1+0.5) = 1000 − 700 = <strong>300 kJ/kg</strong></div>
+<div class='mc-note'>High moisture destroys LHV. Dry wood: LHV≈16 MJ/kg. Wet dung (70% M): LHV can be near zero.</div>
+` },
       { label:'⚡ Gasifier Choice Rule', color:'yellow', content:'<strong>IC Engine?</strong> → Always Downdraft (tar <1g/Nm³)<br><strong>Direct heat?</strong> → Updraft (tar ~50g/Nm³, higher efficiency)<br><strong>Flexible/large scale?</strong> → Fluidized bed' },
       { label:'📊 Pyrolysis 3 Modes', color:'blue', content:'Slow → <strong>Biochar max (~35%)</strong> | Fast → <strong>Bio-oil max (~70-75%)</strong> | Flash → rapid bio-oil. All require NO oxygen. Fast pyrolysis: 400-600°C, <2 sec residence.' },
       { label:'🍳 WBT — NOT Controlled Cooking', color:'purple', content:'WBT phases: ① Cold Start ② Hot Start ③ Simmering<br><strong>"Controlled Cooking" is NOT part of standard WBT</strong> — this was Dec 2022 MCQ Q1.' },
@@ -2824,11 +2884,33 @@ const chapterSummaries = {
       { main: '2.2.5 Large Biogas Systems', subs: ['Commercial plants in Nepal (2 dozen+)', 'Challenges: feedstock supply, pH control, digestate market', 'Opportunities: biomethane, carbon credits'] },
     ],
     memcards: [
-      { label:'🔥 Biogas Sizing — MASTER THIS', color:'red', content:'<strong>V = W × HRT</strong> (simplified, 1:1 ratio, total slurry rate × HRT)<br><strong>Q = W × 30 L/kg</strong> (cattle dung)<br><strong>LPG = Q × 0.45 kg/m³</strong><br>Practice: 500kg/day, HRT=40d → V=40m³, Q=15m³/day, LPG=6.75kg/day' },
+      { label:'🔥 Biogas Sizing — MASTER THIS', color:'red', content:`
+<span class='mc-eq'>V = 2W × HRT &nbsp; (1:1 dung:water ratio)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>V</span><span class='mc-sym-def'>Digester volume [m³]</span>
+  <span class='mc-sym'>W</span><span class='mc-sym-def'>Daily dung input [kg/day] (equal water added → total slurry = 2W kg/day)</span>
+  <span class='mc-sym'>HRT</span><span class='mc-sym-def'>Hydraulic Retention Time = 40–60 days (cattle dung in Nepal)</span>
+</div>
+<span class='mc-eq'>Q<sub>gas</sub> = W × 30 L/kg &nbsp;|&nbsp; m<sub>LPG</sub> = Q<sub>gas</sub>[m³] × 0.45 kg/m³</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>30 L/kg</span><span class='mc-sym-def'>Standard biogas yield for cattle dung</span>
+  <span class='mc-sym'>0.45 kg/m³</span><span class='mc-sym-def'>LPG equivalent (CV_biogas/CV_LPG = 22/47 ≈ 0.47, practical = 0.45)</span>
+</div>
+<div class='mc-worked'>500 kg/day, HRT=40 d → V=(2×500×40)/1000=<strong>40 m³</strong> | Q=500×30=15,000 L=15 m³/day | LPG=15×0.45=<strong>6.75 kg/day</strong></div>
+` },
       { label:'⚡ 4 AD Stages in Order', color:'yellow', content:'① <strong>Hydrolysis</strong>: polymers→monomers ② <strong>Acidogenesis</strong>: monomers→VFAs ③ <strong>Acetogenesis</strong>: VFAs→acetate ④ <strong>Methanogenesis</strong>: acetate→CH₄+CO₂ (RATE-LIMITING)' },
       { label:'📊 3 Digester Types', color:'blue', content:'<strong>Fixed Dome:</strong> variable pressure, underground, 20+ yr life, most common Nepal<br><strong>Floating Dome:</strong> constant pressure, steel drum corrodes<br><strong>Bag:</strong> cheapest, 2-5 yr life, portable' },
       { label:'🌡️ pH & Temperature', color:'purple', content:'Optimum pH: <strong>6.8–7.2</strong>. Below 6 → acidification → methanogens die → digester fails.<br>Optimum temp: <strong>35°C mesophilic</strong>. Nepal challenge: cold winters reduce gas production.' },
-      { label:'💧 Biogas vs LPG', color:'', content:'CV_biogas = 22 MJ/m³ | CV_LPG = 47 MJ/kg<br>Ratio = 22/47 ≈ 0.47 → <strong>1 m³ biogas ≈ 0.45 kg LPG</strong><br>Composition: 55-70% CH₄, 30-45% CO₂' },
+      { label:'💧 Biogas vs LPG', color:'', content:`
+<span class='mc-eq'>1 m³ biogas ≈ 0.45 kg LPG &nbsp; (CV<sub>biogas</sub>/CV<sub>LPG</sub> = 22/47)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>CV<sub>biogas</sub></span><span class='mc-sym-def'>Calorific value of biogas = 22 MJ/m³ (varies with CH₄ %)</span>
+  <span class='mc-sym'>CV<sub>LPG</sub></span><span class='mc-sym-def'>Calorific value of LPG = 47 MJ/kg</span>
+  <span class='mc-sym'>Composition</span><span class='mc-sym-def'>Biogas: 55–70% CH₄ + 30–45% CO₂ + trace H₂S</span>
+  <span class='mc-sym'>Pressure</span><span class='mc-sym-def'>Fixed dome: 4–8 mbar (variable) | Floating dome: constant</span>
+</div>
+<div class='mc-note'>Why 0.45 and not 0.47? 5% efficiency loss assumed in burner comparison. Use 0.45 in all KU calculations.</div>
+` },
     ],
     strategy: [
       { icon:'🎯', text:'<strong>Highest marks chapter</strong> — biogas sizing appears in EVERY paper. The 11+6-mark question in Jul 2024 is a full design problem. Practice the 5-step calculation until automatic.' },
@@ -2850,11 +2932,59 @@ const chapterSummaries = {
       { main: '2.3.5 Solar Energy Storage', subs: ['Hot water storage tanks', 'Stratification', 'Rock bed storage for space heating'] },
     ],
     memcards: [
-      { label:'🔥 HWB Equation — CORE FORMULA', color:'red', content:'<strong>η = FR[τα − UL×(Ti−Ta)/G]</strong><br>Y-intercept = FRτα (optical efficiency ~0.7-0.85)<br>Slope = −FRUL (negative! efficiency drops as ΔT rises)<br>FR=0.8-0.95, τα=0.7-0.9, UL=3-8 W/m²K' },
-      { label:'⚡ Collector Area Formula', color:'yellow', content:'<strong>Ac = Q_demand / (G × η_sys × η_coll)</strong><br>Q_demand = ṁ×Cp×ΔT [kWh/day]<br>Jul 2024: 1200L/day, 45°C rise → Q=62.7 kWh/day → Ac=32.7m²' },
-      { label:'📐 Solar Geometry Quick Ref', color:'blue', content:'<strong>δ = 23.45°sin[360/365(284+n)]</strong> → range ±23.45°<br><strong>ω = (solar time−12)×15°</strong> → noon=0°<br><strong>cosθz = sinφsinδ+cosφcosδcosω</strong>' },
+      { label:'🔥 HWB Equation — CORE FORMULA', color:'', content:`
+<span class='mc-eq'>η = F<sub>R</sub>[τα − U<sub>L</sub>(T<sub>i</sub> − T<sub>a</sub>)/G]</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>η</span><span class='mc-sym-def'>Collector thermal efficiency (0–1)</span>
+  <span class='mc-sym'>F<sub>R</sub></span><span class='mc-sym-def'>Heat Removal Factor = 0.80–0.95 (heat transfer from absorber to fluid)</span>
+  <span class='mc-sym'>τα</span><span class='mc-sym-def'>Transmittance-absorptance product = 0.70–0.90 (optical efficiency)</span>
+  <span class='mc-sym'>U<sub>L</sub></span><span class='mc-sym-def'>Overall heat loss coefficient = 3–8 W/m²K</span>
+  <span class='mc-sym'>T<sub>i</sub></span><span class='mc-sym-def'>Fluid inlet temperature [°C]</span>
+  <span class='mc-sym'>T<sub>a</sub></span><span class='mc-sym-def'>Ambient temperature [°C]</span>
+  <span class='mc-sym'>G</span><span class='mc-sym-def'>Solar irradiance on collector plane [W/m²]</span>
+</div>
+<div class='mc-note'>Plot η vs (T<sub>i</sub>−T<sub>a</sub>)/G → straight line. Y-intercept = F<sub>R</sub>τα. Slope = −F<sub>R</sub>U<sub>L</sub> (NEGATIVE).</div>
+` },
+      { label:'⚡ Collector Area Formula', color:'', content:`
+<span class='mc-eq'>A<sub>c</sub> = Q<sub>demand</sub> / (G × η<sub>sys</sub> × η<sub>coll</sub>)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>A<sub>c</sub></span><span class='mc-sym-def'>Required collector area [m²]</span>
+  <span class='mc-sym'>Q<sub>demand</sub></span><span class='mc-sym-def'>Daily heat load = ṁ × C<sub>p</sub> × ΔT [kWh/day]<br>&nbsp;&nbsp;&nbsp;&nbsp;ṁ [kg/day], C<sub>p</sub>=4.18 kJ/kg·K, ΔT=T<sub>hot</sub>−T<sub>cold</sub> [°C]</span>
+  <span class='mc-sym'>G</span><span class='mc-sym-def'>Daily solar irradiation [kWh/m²/day]</span>
+  <span class='mc-sym'>η<sub>sys</sub></span><span class='mc-sym-def'>System efficiency (piping/storage losses) — given or 0.80</span>
+  <span class='mc-sym'>η<sub>coll</sub></span><span class='mc-sym-def'>Collector efficiency — given or from HWB equation</span>
+</div>
+<div class='mc-worked'>1200 L/day, ΔT=45°C, G=4, η<sub>sys</sub>=0.8, η<sub>coll</sub>=0.6:<br>Q=1.2×4.18×45=22.6 MJ=6.28 kWh/m² per m² | wait: Q<sub>total</sub>=1200×4.18×45/3600=<strong>62.7 kWh/day</strong><br>A<sub>c</sub>=62.7/(4×0.8×0.6)=<strong>32.7 m²</strong></div>
+` },
+      { label:'📐 Solar Geometry Quick Ref', color:'', content:`
+<span class='mc-eq'>δ = 23.45° sin[360/365 × (284+n)]</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>δ</span><span class='mc-sym-def'>Solar declination [°] — ±23.45° (summer/winter solstice)</span>
+  <span class='mc-sym'>n</span><span class='mc-sym-def'>Day number (Jan 1=1, Dec 21≈355)</span>
+</div>
+<span class='mc-eq'>ω = (Solar Time − 12) × 15° &nbsp;|&nbsp; Solar noon: ω = 0°</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>ω</span><span class='mc-sym-def'>Hour angle [°] — morning = negative, afternoon = positive</span>
+</div>
+<span class='mc-eq'>cos θ<sub>z</sub> = sin φ sin δ + cos φ cos δ cos ω</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>θ<sub>z</sub></span><span class='mc-sym-def'>Solar zenith angle (0° = sun directly overhead)</span>
+  <span class='mc-sym'>φ</span><span class='mc-sym-def'>Latitude [°] — Kathmandu = 27.7°N</span>
+</div>
+<div class='mc-note'>Winter solstice δ=−23.45°. Equinox δ=0°. Summer solstice δ=+23.45°</div>
+` },
       { label:'♻️ Thermosyphon — No Pump!', color:'purple', content:'Natural convection only. <strong>Hot water rises, cold sinks.</strong> Tank MUST be above collector (≥300mm). Thermal circuit: Q = ΔT/R_thermal. Good for off-grid Nepal.' },
-      { label:'📏 Row Spacing (5MW PV plant)', color:'', content:'β ≈ latitude = 27°. Winter solstice elevation α = 90−27−23.45 = 39.55°<br>h = 2.2×sin27° = 1m. D = h/tan(39.55°) = 1.21m. Row pitch = 3.17m' },
+      { label:'📏 Row Spacing (5MW PV plant)', color:'', content:`
+<span class='mc-eq'>D = h / tan(α<sub>min</sub>) &nbsp;|&nbsp; Pitch = L·cos β + D</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>D</span><span class='mc-sym-def'>Minimum shadow-free gap between rows [m]</span>
+  <span class='mc-sym'>h</span><span class='mc-sym-def'>Vertical height of module = L·sin β [m]</span>
+  <span class='mc-sym'>L</span><span class='mc-sym-def'>Module length [m] — here 2.2 m</span>
+  <span class='mc-sym'>β</span><span class='mc-sym-def'>Tilt angle ≈ latitude = 27°</span>
+  <span class='mc-sym'>α<sub>min</sub></span><span class='mc-sym-def'>Min solar altitude = 90° − φ − 23.45° (winter solstice) = 39.55°</span>
+</div>
+<div class='mc-worked'>h = 2.2×sin27° = 1.0 m | D = 1.0/tan(39.55°) = 1.21 m<br>Pitch = 2.2×cos27° + 1.21 = 1.96 + 1.21 = <strong>3.17 m</strong></div>
+` },
     ],
     strategy: [
       { icon:'🎯', text:'<strong>Jul 2025 Q1 (11 marks)</strong> = flat plate collector principle (6m) + PV row spacing calculation (5m). Hybrid question — master both topics together.' },
@@ -2877,11 +3007,59 @@ const chapterSummaries = {
       { main: '2.4.6 PV System Design', subs: ['Array sizing: P_PV = load/PR/G', 'Battery: Ah = E×N/(V×DOD)', 'PV pump: P_PV = ρgHV/(η×t×LMF×DF)', 'Inverter, charge controller sizing'] },
     ],
     memcards: [
-      { label:'🔥 PV Pump Formula — Dec 2022 + Jul 2024', color:'red', content:'<strong>P_PV = ρgHV / (η_pump × PSH × LMF × DF)</strong><br>Jul 2024: Pop=2500, 60L/day, H=220.5m, η=60%, LMF=0.8, DF=0.9, G=4.6<br>→ E_h=90kWh/day → P_pump=32.6kW → <strong>P_PV=45.3kWp</strong>' },
+      { label:'🔥 PV Pump Formula — Dec 2022 + Jul 2024', color:'', content:`
+<span class='mc-eq'>E<sub>h</sub> = ρgHV &nbsp;→&nbsp; P<sub>pump</sub> = E<sub>h</sub>/(η<sub>p</sub>×PSH) &nbsp;→&nbsp; P<sub>PV</sub> = P<sub>pump</sub>/(LMF×DF)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>E<sub>h</sub></span><span class='mc-sym-def'>Daily hydraulic energy [Wh/day] = ρ×g×H×V</span>
+  <span class='mc-sym'>ρ</span><span class='mc-sym-def'>Water density = 1000 kg/m³</span>
+  <span class='mc-sym'>g</span><span class='mc-sym-def'>9.81 m/s²</span>
+  <span class='mc-sym'>H</span><span class='mc-sym-def'>Total Dynamic Head [m] (vertical lift + friction losses)</span>
+  <span class='mc-sym'>V</span><span class='mc-sym-def'>Daily water volume [m³/day] = population × L/person/day ÷ 1000</span>
+  <span class='mc-sym'>η<sub>p</sub></span><span class='mc-sym-def'>Pump efficiency (given, e.g. 0.60)</span>
+  <span class='mc-sym'>PSH</span><span class='mc-sym-def'>Peak Sun Hours [h/day] = daily insolation [kWh/m²/day]</span>
+  <span class='mc-sym'>LMF</span><span class='mc-sym-def'>Load Mismatching Factor = 0.75–0.90 (given 0.8)</span>
+  <span class='mc-sym'>DF</span><span class='mc-sym-def'>Derating Factor = 0.85–0.95 (temp + soiling, given 0.9)</span>
+</div>
+<div class='mc-worked yellow'>Pop=2500, 60L/day, H=220.5m, η=0.6, PSH=4.6, LMF=0.8, DF=0.9<br>V=150 m³ | E<sub>h</sub>=1000×9.81×220.5×150=90 kWh | P<sub>pump</sub>=90/(0.6×4.6)=32.6kW | <strong>P<sub>PV</sub>=45.3 kWp</strong></div>
+` },
       { label:'⚡ IV Curve — Temperature Effect', color:'yellow', content:'Isc → slightly increases (+0.06%/°C)<br>Voc → <strong>decreases −2.3mV/°C per cell</strong> (dominant effect)<br>Net: efficiency <strong>drops ~0.45%/°C</strong> above 25°C (STC)' },
-      { label:'🔋 Battery Sizing', color:'blue', content:'<strong>Ah = E_daily × N_auto / (V_sys × DOD × η_bat)</strong><br>DOD: 80% for Li-ion, 50% for lead-acid<br>3 days autonomy, 2kWh/day, 12V, DOD=0.8 → <strong>694 Ah</strong>' },
-      { label:'📊 Fill Factor', color:'purple', content:'<strong>FF = Pmax / (Isc × Voc)</strong><br>Good cell: FF > 0.75. Low FF = high series resistance or shunt resistance.<br>Typical commercial cell: FF = 0.75-0.82' },
-      { label:'🏭 Namche PV System (Dec 2022)', color:'', content:'Key steps: ① Daily load Σ(P×t) ② Battery: Ah=E×days/(V×DOD) ③ Inverter = peak load×1.25 ④ PV modules = P_pv/P_module in strings×parallel' },
+      { label:'🔋 Battery Sizing', color:'', content:`
+<span class='mc-eq'>Ah = (E<sub>daily</sub> × N<sub>auto</sub>) / (V<sub>sys</sub> × DOD × η<sub>bat</sub>)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>Ah</span><span class='mc-sym-def'>Required battery capacity [Ampere-hours]</span>
+  <span class='mc-sym'>E<sub>daily</sub></span><span class='mc-sym-def'>Daily energy load [Wh/day]</span>
+  <span class='mc-sym'>N<sub>auto</sub></span><span class='mc-sym-def'>Days of autonomy without sun (typically 2–5 days)</span>
+  <span class='mc-sym'>V<sub>sys</sub></span><span class='mc-sym-def'>System voltage [V] — 12V, 24V, or 48V</span>
+  <span class='mc-sym'>DOD</span><span class='mc-sym-def'>Depth of Discharge — Li-ion: 0.80 | Lead-acid: 0.50</span>
+  <span class='mc-sym'>η<sub>bat</sub></span><span class='mc-sym-def'>Battery efficiency ≈ 0.85–0.95 (often omitted in KU, assume 1.0)</span>
+</div>
+<div class='mc-worked'>E=2000 Wh/day, N=3 days, V=12V, DOD=0.8:<br>Ah=(2000×3)/(12×0.8)=<strong>625 Ah</strong> &nbsp;|&nbsp; with η=0.9: <strong>694 Ah</strong></div>
+` },
+      { label:'📊 Fill Factor', color:'', content:`
+<span class='mc-eq'>FF = P<sub>max</sub> / (I<sub>sc</sub> × V<sub>oc</sub>)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>FF</span><span class='mc-sym-def'>Fill Factor — cell quality metric (dimensionless, 0 → 1)</span>
+  <span class='mc-sym'>P<sub>max</sub></span><span class='mc-sym-def'>Maximum power point [W] = I<sub>mp</sub> × V<sub>mp</sub></span>
+  <span class='mc-sym'>I<sub>sc</sub></span><span class='mc-sym-def'>Short-circuit current [A] — max current (at V = 0)</span>
+  <span class='mc-sym'>V<sub>oc</sub></span><span class='mc-sym-def'>Open-circuit voltage [V] — max voltage (at I = 0)</span>
+</div>
+<span class='mc-eq'>η<sub>cell</sub> = FF × I<sub>sc</sub> × V<sub>oc</sub> / (G × A<sub>cell</sub>)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>G</span><span class='mc-sym-def'>Irradiance [W/m²] | A<sub>cell</sub> = cell area [m²]</span>
+</div>
+<div class='mc-note'>Good cell: FF &gt; 0.75 | Commercial Si: 0.75–0.82 | Low FF → high series resistance (bad contacts) or low shunt resistance (leakage)</div>
+` },
+      { label:'🏭 Namche PV System (Dec 2022)', color:'', content:`
+<span class='mc-eq'>Design sequence for standalone PV system:</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>① Load</span><span class='mc-sym-def'>E<sub>daily</sub> = Σ(P<sub>load</sub> × t) [Wh/day] — sum all appliances × hours</span>
+  <span class='mc-sym'>② PV array</span><span class='mc-sym-def'>P<sub>PV</sub> = E<sub>daily</sub> / (PSH × PR) where PR = performance ratio ≈ 0.75</span>
+  <span class='mc-sym'>③ Battery</span><span class='mc-sym-def'>Ah = (E<sub>daily</sub> × N<sub>auto</sub>) / (V<sub>sys</sub> × DOD) — see battery card</span>
+  <span class='mc-sym'>④ Inverter</span><span class='mc-sym-def'>P<sub>inv</sub> = P<sub>peak load</sub> × 1.25 [W] — 25% oversize safety factor</span>
+  <span class='mc-sym'>⑤ Config</span><span class='mc-sym-def'>Modules in series = V<sub>sys</sub>/V<sub>module</sub> | Strings in parallel = P<sub>PV</sub>/(P<sub>mod</sub>×N<sub>series</sub>)</span>
+</div>
+<div class='mc-worked'>Dec 2022 Namche: Find load for year 5 (growth factor) → battery Ah → inverter size → PV array configuration with series-parallel diagram.</div>
+` },
     ],
     strategy: [
       { icon:'🎯', text:'<strong>Heaviest chapter</strong> — 23 marks in Dec 2022 (Namche PV design). Jul 2024 = 11 marks (PV pump sizing). PV design appears in EVERY paper.' },
@@ -2903,9 +3081,36 @@ const chapterSummaries = {
       { main: '2.5.5 Wind Farm Design', subs: ['Spacing: 5-7D crosswind, 7-9D downwind', 'Wake effects: 5-15% energy loss', 'Site selection criteria: wind speed, access, grid'] },
     ],
     memcards: [
-      { label:'🔥 Power Cube Rule — MUST KNOW', color:'red', content:'<strong>P ∝ v³</strong> → 10% more wind = <strong>(1.1)³ = 1.331 = 33% more power</strong><br>Betz limit = 16/27 = <strong>59.3%</strong> max extractable<br>P = ½ρAv³ | ρ_air = 1.225 kg/m³ at STC' },
-      { label:'⚡ Power Law for Height Scaling', color:'yellow', content:'<strong>v₂ = v₁ × (h₂/h₁)^α</strong><br>α values: open water=0.10, flat land=0.14, <strong>crops/hedges=0.20</strong>, forest=0.30<br>Jul 2025: 5m/s at 10m, α=0.2 → 7.93m/s at 100m → 305W/m²' },
-      { label:'📊 3 WRA Parameters', color:'blue', content:'① <strong>Wind Speed</strong> (P∝v³, most critical) ② <strong>Direction</strong> (wind rose, layout optimization) ③ <strong>Turbulence Intensity</strong> TI=σv/v̄ (fatigue/IEC class)<br>Min: 12 months at 10m, 50m, 80m, 100m' },
+      { label:'🔥 Power Cube Rule — MUST KNOW', color:'', content:`
+<span class='mc-eq'>P = ½ ρ A v³ &nbsp;|&nbsp; P<sub>max</sub> = C<sub>p</sub> × ½ρAv³</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>P</span><span class='mc-sym-def'>Wind power available [W]</span>
+  <span class='mc-sym'>ρ</span><span class='mc-sym-def'>Air density = 1.225 kg/m³ at 15°C, 1 atm (STC)</span>
+  <span class='mc-sym'>A</span><span class='mc-sym-def'>Rotor swept area = π r² [m²]</span>
+  <span class='mc-sym'>v</span><span class='mc-sym-def'>Wind speed [m/s] — P ∝ v³ (cube law)</span>
+  <span class='mc-sym'>C<sub>p</sub></span><span class='mc-sym-def'>Power coefficient — Betz max = <b>16/27 = 0.593</b>, modern turbines ≈ 0.40–0.48</span>
+</div>
+<div class='mc-worked yellow'>10% more wind: ratio = (1.1)³ = <strong>1.331 → +33.1% power</strong><br>MCQ trap: answer is 33%, NOT 22%, NOT 44%. Always cube the speed ratio!</div>
+` },
+      { label:'⚡ Power Law for Height Scaling', color:'', content:`
+<span class='mc-eq'>v₂ = v₁ × (h₂/h₁)<sup>α</sup></span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>v₂</span><span class='mc-sym-def'>Wind speed at target height h₂ [m/s]</span>
+  <span class='mc-sym'>v₁</span><span class='mc-sym-def'>Known wind speed at reference height h₁ (usually 10 m)</span>
+  <span class='mc-sym'>α</span><span class='mc-sym-def'>Hellmann exponent (terrain friction):<br>&nbsp;&nbsp;Open water: 0.10 | Flat land: 0.14 | <b>Crops/hedges: 0.20</b> | Forest: 0.30</span>
+</div>
+<span class='mc-eq'>P/A = ½ρv³ &nbsp; [W/m²] — specific power in wind</span>
+<div class='mc-worked'>Jul 2025: v₁=5m/s at h₁=10m, α=0.20, h₂=100m<br>v₂=5×(100/10)<sup>0.2</sup>=5×1.585=<strong>7.93 m/s</strong> | P/A=½×1.225×7.93³=<strong>305 W/m²</strong></div>
+` },
+      { label:'📊 3 WRA Parameters', color:'', content:`
+<span class='mc-eq'>TI = σ<sub>v</sub> / v̄ &nbsp; (Turbulence Intensity)</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>① Speed</span><span class='mc-sym-def'>Mean wind speed — most critical (P∝v³). Measured at 10m, 50m, 80m, 100m for min. 12 months.</span>
+  <span class='mc-sym'>② Direction</span><span class='mc-sym-def'>Wind rose diagram — prevailing direction for turbine orientation and wake-loss minimisation.</span>
+  <span class='mc-sym'>③ TI</span><span class='mc-sym-def'>Turbulence Intensity = σ<sub>v</sub>/v̄ | σ<sub>v</sub>=std dev, v̄=mean (10-min avg). Determines IEC class and blade fatigue loads. TI &lt; 0.16 preferred.</span>
+</div>
+<div class='mc-note'>Minimum monitoring: 12 months to capture seasonal variation. Standard heights: 10 m, 50 m, 80 m, 100 m.</div>
+` },
       { label:'🔧 HAWT Components', color:'purple', content:'Blades → Hub → Low-speed shaft → <strong>Gearbox</strong> (30rpm→1500rpm) → Generator → Nacelle. Yaw system faces rotor into wind. Controller: cut-in at 8-16mph, cut-out at 55mph.' },
       { label:'❌ HAWT vs VAWT Trick', color:'', content:'HAWTs require <strong>active yaw drive</strong> — VAWTs don\'t. This is the Dec 2022 MCQ Q6 trap. HAWT advantages: higher efficiency, lower cost-to-power, less aero losses.' },
     ],
@@ -2929,7 +3134,20 @@ const chapterSummaries = {
       { main: 'Pumped Hydro (PHES)', subs: ['95% of global grid storage', 'E = ρgVHη / 3,600,000 [MWh]', 'Nepal: enormous off-river PHES potential', 'Solves seasonal RoR deficit problem'] },
     ],
     memcards: [
-      { label:'🔥 PHES Formula', color:'red', content:'<strong>E = ρgVHη / 3,600,000 [MWh]</strong><br>V=10⁶m³, H=200m, η=0.85 → E = 463 MWh<br>Nepal potential: off-river PHES to balance seasonal RoR surplus/deficit' },
+      { label:'🔥 PHES Formula', color:'', content:`
+<span class='mc-eq'>E = (ρ × g × V × H × η) / 3,600,000 &nbsp; [MWh]</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>E</span><span class='mc-sym-def'>Stored energy [MWh]</span>
+  <span class='mc-sym'>ρ</span><span class='mc-sym-def'>Water density = 1000 kg/m³</span>
+  <span class='mc-sym'>g</span><span class='mc-sym-def'>9.81 m/s²</span>
+  <span class='mc-sym'>V</span><span class='mc-sym-def'>Upper reservoir volume [m³]</span>
+  <span class='mc-sym'>H</span><span class='mc-sym-def'>Effective head — height difference between reservoirs [m]</span>
+  <span class='mc-sym'>η</span><span class='mc-sym-def'>Round-trip efficiency = 0.70–0.85 (pump + turbine + generator)</span>
+  <span class='mc-sym'>3,600,000</span><span class='mc-sym-def'>Conversion: 1 MWh = 3,600,000 J = 3.6×10⁶ J</span>
+</div>
+<div class='mc-worked'>V=10⁶ m³, H=200m, η=0.85:<br>E=(1000×9.81×10⁶×200×0.85)/3.6×10⁶=<strong>463 MWh</strong></div>
+<div class='mc-note'>~95% of global electricity storage capacity is PHES. Nepal ideal for off-river PHES to balance RoR seasonal surplus/deficit.</div>
+` },
       { label:'⚡ Super Capacitor MCQ Trap', color:'yellow', content:'Super caps have <strong>>95% efficiency</strong> — NOT poor efficiency.<br>REAL issues: ✗ low energy density (5-10 Wh/kg) ✗ high self-discharge ✗ low cell voltage (2.5V)' },
       { label:'📊 Battery Comparison', color:'blue', content:'Lead-acid: cheapest, 200-800 cycles, 30-50 Wh/kg | Li-ion: 500-3000 cycles, 100-250 Wh/kg | Flow: 10,000+ cycles, scalable but expensive' },
       { label:'🚗 SLI Batteries — NOT for RE', color:'purple', content:'SLI = Starting, Lighting, Ignition. Range: <strong>2-100 Wh</strong>. Designed for shallow discharge (10-20% DoD). Deep cycling destroys plates in 30-50 cycles. Use deep-cycle instead.' },
@@ -2954,7 +3172,20 @@ const chapterSummaries = {
     memcards: [
       { label:'🔥 4 MCQ Answers — Memorise!', color:'red', content:'① FDC → <strong>Microhydro design</strong> (not solar dryer)<br>② OTEC min ΔT → <strong>>10°C</strong><br>③ Geothermal NOT from → <strong>Plutonium</strong> (K, Th, U are the real ones)<br>④ Tidal at 5m/s → <strong>62.5 kW/m²</strong>' },
       { label:'⚡ Geothermal Plant Types', color:'yellow', content:'<strong>Dry Steam:</strong> rare, steam direct to turbine<br><strong>Flash Steam:</strong> most common, hot brine → flashed<br><strong>Binary Cycle:</strong> moderate temp (100-180°C), secondary fluid, <strong>zero emissions</strong> — best for Nepal' },
-      { label:'💧 RoR Hydropower Formula', color:'blue', content:'<strong>P = ρgQHη</strong><br>ρ=1000 kg/m³, g=9.81, Q=flow(m³/s), H=head(m), η=0.80-0.88<br>FDC: design at Q₄₀-Q₆₀, firm power at Q₉₀' },
+      { label:'💧 RoR Hydropower Formula', color:'', content:`
+<span class='mc-eq'>P = ρ × g × Q × H × η &nbsp; [W]</span>
+<div class='mc-symbols'>
+  <span class='mc-sym'>P</span><span class='mc-sym-def'>Electrical power output [W or kW]</span>
+  <span class='mc-sym'>ρ</span><span class='mc-sym-def'>Water density = 1000 kg/m³</span>
+  <span class='mc-sym'>g</span><span class='mc-sym-def'>9.81 m/s²</span>
+  <span class='mc-sym'>Q</span><span class='mc-sym-def'>Design flow [m³/s] — chosen from Flow Duration Curve</span>
+  <span class='mc-sym'>H</span><span class='mc-sym-def'>Net head [m] = gross head − pipe friction losses</span>
+  <span class='mc-sym'>η</span><span class='mc-sym-def'>Overall efficiency = η<sub>turbine</sub> × η<sub>generator</sub> = 0.80–0.88</span>
+  <span class='mc-sym'>Q<sub>40</sub>–Q<sub>60</sub></span><span class='mc-sym-def'>FDC design flow (available 40–60% of time) — design basis</span>
+  <span class='mc-sym'>Q<sub>90</sub></span><span class='mc-sym-def'>FDC firm flow (available 90% of time) — firm power rating</span>
+</div>
+<div class='mc-note'>Example: Q=50 L/s=0.05 m³/s, H=30m, η=0.70 → P=1000×9.81×0.05×30×0.70=<strong>10.3 kW</strong></div>
+` },
       { label:'🌊 OTEC Basics', color:'purple', content:'Warm surface water (~25°C) vs cold deep water (~4°C at 1000m)<br>Min ΔT for effective OTEC: <strong>>10°C</strong><br>Commercially viable: ≥20°C | Efficiency: only 2-3% but free fuel' },
     ],
     strategy: [
