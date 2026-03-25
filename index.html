@@ -2138,7 +2138,7 @@ function updateSidebarStats(){
   const viewed = Object.keys(p.viewed||{}).length;
   const total = Object.values(chapters).reduce((s,c)=>s+(c.theory||[]).length,0);
   const pct = total>0 ? Math.round(viewed/total*100) : 0;
-  const bm = Object.keys(p.bookmarks||{}).length;
+  const bm = getBookmarks ? getBookmarks().length : 0;
   const sbQ = document.getElementById('sb-questions');
   const sbMcq = document.getElementById('sb-mcq');
   const sbProg = document.getElementById('sb-progress');
@@ -2561,55 +2561,45 @@ function renderProgress(){
 function resetMcqScores(){ mcqAnswers={}; renderView('progress'); }
 
 function renderBookmarks(){
-  const p = loadProgress();
-  const bk = p.bookmarks || {};
-  const keys = Object.keys(bk);
-  if(keys.length===0){
+  const bm = getBookmarks();
+  if(bm.length===0){
     return '<div style="text-align:center;padding:60px 20px;">' +
       '<div style="font-size:40px;margin-bottom:12px;">🔖</div>' +
       '<div style="font-family:var(--font-head);font-size:18px;font-weight:700;margin-bottom:8px;">No Bookmarks Yet</div>' +
-      '<div style="font-size:13px;color:var(--text2);">Click the ★ bookmark icon on any question to save it here for quick review.</div>' +
+      '<div style="font-size:13px;color:var(--text2);">Click the 🔖 bookmark icon on any question answer to save it here for quick review.</div>' +
       '</div>';
   }
-  let html = '<div style="font-family:var(--font-head);font-size:20px;font-weight:800;margin-bottom:18px;">🔖 Bookmarked Questions</div>';
+  let html = '<div style="font-family:var(--font-head);font-size:20px;font-weight:800;margin-bottom:18px;">🔖 Bookmarked Questions <span style="font-family:var(--font-mono);font-size:13px;color:var(--text3);font-weight:400;">' + bm.length + ' saved</span></div>';
   html += '<div style="display:flex;justify-content:flex-end;margin-bottom:12px;">' +
     '<button onclick="clearBookmarks()" style="font-family:var(--font-mono);font-size:11px;padding:6px 14px;border-radius:8px;border:1px solid rgba(248,113,113,0.3);background:rgba(248,113,113,0.06);color:var(--red);cursor:pointer;">Clear All</button></div>';
-  keys.forEach(key=>{
-    const [chKey, qIdx] = key.split('_q');
-    const ch = chapters[chKey];
+  bm.forEach(key=>{
+    const parts = key.split('_');
+    const chKey = parts[0]+'_'+(parts.length>2?parts[1]:'');
+    // key format is 'ch1_0' -> chKey='ch1', qIdx=0
+    const underscore = key.lastIndexOf('_');
+    const ch_key = key.substring(0, underscore);
+    const qIdx = parseInt(key.substring(underscore+1));
+    const ch = chapters[ch_key];
     if(!ch) return;
-    const q = ch.theory[parseInt(qIdx)];
+    const q = ch.theory[qIdx];
     if(!q) return;
-    const hasAns = answerData[chKey+'_'+qIdx] !== undefined;
+    const hasAns = answerData[key] !== undefined;
     html += '<div class="q-card" style="border-left:3px solid var(--yellow);">' +
       '<div class="q-header">' +
-        '<span class="q-num">' + ch.tag + '·Q' + (parseInt(qIdx)+1) + '</span>' +
-        '<span class="q-text">' + q.q + '</span>' +
+        '<span class="q-num">' + ch.tag + '·Q' + (qIdx+1) + '</span>' +
+        '<span class="q-text">' + q.q.substring(0,200) + (q.q.length>200?'...':'') + '</span>' +
       '</div>' +
       '<div class="q-meta">' +
         '<span class="marks-pill">[' + q.marks + ' marks]</span>' +
-        '<button class="bookmark-btn active" onclick="toggleBookmark(\'' + chKey + '\',\'' + qIdx + '\',this)">★</button>' +
-        (hasAns ? '<button class="view-ans-btn" onclick="showAnswer(\'' + chKey + '\',' + parseInt(qIdx) + ')">📖 View Answer</button>' : '') +
+        (hasAns ? '<button class="view-ans-btn" onclick="showAnswer(\'' + ch_key + '\',' + qIdx + ')">📖 View Answer</button>' : '') +
       '</div>' +
     '</div>';
   });
   return html;
 }
 
-function toggleBookmark(chKey, qIdx, btn){
-  const p = loadProgress();
-  if(!p.bookmarks) p.bookmarks = {};
-  const k = chKey+'_q'+qIdx;
-  if(p.bookmarks[k]){ delete p.bookmarks[k]; if(btn){ btn.classList.remove('active'); btn.textContent='☆'; } }
-  else { p.bookmarks[k]=1; if(btn){ btn.classList.add('active'); btn.textContent='★'; } }
-  saveProgress(p);
-  updateSidebarStats();
-}
-
 function clearBookmarks(){
-  const p = loadProgress();
-  p.bookmarks = {};
-  saveProgress(p);
+  saveBookmarks([]);
   updateSidebarStats();
   renderView('bookmarks');
 }
@@ -2779,7 +2769,9 @@ function renderReferences(){
 
 function typesettMath(){
   if(window.MathJax && MathJax.typesetPromise){
-    MathJax.typesetPromise().catch(err => console.log('MathJax error:', err));
+    const modalBody = document.getElementById('ans-body');
+    const target = modalBody ? [modalBody] : undefined;
+    MathJax.typesetPromise(target).catch(err => console.log('MathJax error:', err));
   }
 }
 
