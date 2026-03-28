@@ -4279,6 +4279,12 @@ var answerData = {
     { title:'Distorted Models', body:`<p><strong>Distorted Model:</strong> A model that is not geometrically similar to the prototype in all directions. Usually, the horizontal scale ($L_{rh}$) and vertical scale ($L_{rv}$) are different.</p>
     <p><strong>Why use them?</strong> For large horizontal expanses like rivers or harbors. If a true geometric scale is used (e.g., 1:1000), the model water depth would be too shallow (e.g., a 5m river becomes 5mm deep in the model), destroying kinematic/dynamic similarity (viscosity/surface tension take over). Distorted models maintain realistic depths and turbulent flow.</p>`}
   ]},
+  'ch8_0': { marks:'[3]', steps:[
+    { title:'Diverging Tube Usage', body:`<p>A diverging tube (area increases in flow direction):</p>
+    <ul>
+    <li><strong>Subsonic diffuser (M&lt;1):</strong> Area increase &rarr; velocity decreases, pressure increases. Used to decelerate subsonic flow.</li>
+    <li><strong>Supersonic nozzle (M&gt;1):</strong> Area increase &rarr; velocity increases further. dA/A = (M&sup2;&minus;1)du/u; for M&gt;1, dA and du have same sign.</li>
+    </ul>
     <p>Therefore, a diverging tube can be used as <strong>1 (supersonic nozzle) and 4 (subsonic diffuser)</strong>.</p>`}
   ]},
   'ch8_1': { marks:'[5]', steps:[
